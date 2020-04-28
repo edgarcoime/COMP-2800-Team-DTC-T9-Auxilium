@@ -30,8 +30,21 @@ connection.once('open', () => {
 })
 
 app.get("/", (req, res) => {
-  res.send("<h1>Hello world</h1>")
+  res.send("<h1>Login page / Landing Page</h1>");
 });
+
+app.get("/register", (req, res) => {
+  res.send("<h1>Register page</h1>");
+})
+
+app.post("/logout", (req, res) => {
+  console.log("You have been logged out");
+  res.redirect("/");
+})
+
+app.get("/home", (req, res) => {
+  res.send("<h1>This is the user's personal homepage</h1>")
+})
 
 
 const port = process.env.PORT || 5000;
