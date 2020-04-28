@@ -27,24 +27,32 @@ mongoose.connect(uri,
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established succesfully");
-})
-
-app.get("/", (req, res) => {
-  res.send("<h1>Login page / Landing Page</h1>");
 });
 
-app.get("/register", (req, res) => {
-  res.send("<h1>Register page</h1>");
-})
+const postsRouter = require("./routes/posts");
+const usersRouter = require("./routes/users");
 
-app.post("/logout", (req, res) => {
-  console.log("You have been logged out");
-  res.redirect("/");
-})
+app.use("/api/posts", postsRouter);
+app.use("/api/users", usersRouter);
 
-app.get("/home", (req, res) => {
-  res.send("<h1>This is the user's personal homepage</h1>")
-})
+
+// app.get("/", (req, res) => {
+//   res.send("<h1>Login page / Landing Page</h1>");
+// });
+
+// app.get("/register", (req, res) => {
+//   res.send("<h1>Register page</h1>");
+// })
+
+// app.post("/logout", (req, res) => {
+//   console.log("You have been logged out");
+//   res.redirect("/");
+// })
+
+// app.get("/home", (req, res) => {
+//   res.send("<h1>This is the user's personal homepage</h1>")
+// })
+
 
 
 const port = process.env.PORT || 5000;
