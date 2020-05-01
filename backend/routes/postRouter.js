@@ -5,13 +5,26 @@ import Post from "../models/Post.model";
 
 const postRouter = express.Router();
 
-// @route     GET api/posts
+// @route     GET api/posts/getall
 // @desc      Get All posts
 // @access    Public
-postRouter.get("/", async (req, res) => {
+postRouter.get("/getall", async (req, res) => {
   try {
     const response = await Post.find().sort({ date: -1 });
     res.json(response);
+  } catch (error) {
+    console.log(error)
+  }
+});
+
+// @route     GET api/posts/getone/:id
+// @desc      GET a single post based on postId
+// @access    Public
+postRouter.get("/getone/:id", async (req, res) => {
+  try {
+    const postId = req.params.id
+    const foundPost = await Post.findById(postId)
+    res.json(foundPost);
   } catch (error) {
     console.log(error)
   }
