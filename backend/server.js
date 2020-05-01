@@ -7,7 +7,10 @@ import cors from "cors";
 const dotenv = require("dotenv").config();
 
 // Routes
-import { userRouter } from "./routes/index";
+import {
+  userRouter,
+  postRouter
+} from "./routes/index";
 
 const app = express();
 
@@ -29,6 +32,7 @@ connection.once('open', () => {
 const apiRouter = express.Router();
 app.use("/api", apiRouter);
 apiRouter.use("/users", userRouter);
+apiRouter.use("/posts", postRouter);
 
 
 const port = process.env.PORT || 5000;
