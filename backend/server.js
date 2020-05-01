@@ -15,6 +15,9 @@ import {
 
 const app = express();
 
+// More difficult to see that app is using express
+app.disable("x-powered-by");
+
 // Middleware to allow Cross origin point, parsing JSON, and body
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
