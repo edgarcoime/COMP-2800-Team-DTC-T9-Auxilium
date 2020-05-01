@@ -10,7 +10,8 @@ const dotenv = require("dotenv").config();
 import { 
   userRouter, 
   postRouter, 
-  authRouter
+  authRouter,
+  commentRouter
 } from "./routes/index";
 
 const app = express();
@@ -38,7 +39,7 @@ app.use("/api", apiRouter);
 apiRouter.use("/users", userRouter);
 apiRouter.use("/posts", postRouter);
 apiRouter.use("/auth", authRouter);
-// apiRouter.use("/session", sessionRouter)
+apiRouter.use("/comments", commentRouter);
 
 
 const port = process.env.PORT || 5000;
