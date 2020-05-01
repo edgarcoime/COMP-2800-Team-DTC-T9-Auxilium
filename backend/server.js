@@ -7,9 +7,10 @@ import cors from "cors";
 const dotenv = require("dotenv").config();
 
 // Routes
-import {
-  userRouter,
-  postRouter
+import { 
+  userRouter, 
+  postRouter, 
+  authRouter
 } from "./routes/index";
 
 const app = express();
@@ -33,6 +34,8 @@ const apiRouter = express.Router();
 app.use("/api", apiRouter);
 apiRouter.use("/users", userRouter);
 apiRouter.use("/posts", postRouter);
+apiRouter.use("/auth", authRouter);
+// apiRouter.use("/session", sessionRouter)
 
 
 const port = process.env.PORT || 5000;
