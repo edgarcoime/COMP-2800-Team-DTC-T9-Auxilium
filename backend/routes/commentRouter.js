@@ -1,7 +1,7 @@
 import express from "express";
 
 // Item model to find data in DB
-import Post from "../models/Post.model";
+import Comment from "../models/Comment.model";
 
 // Auth middleware
 import auth from "../middleware/auth.middleware";
@@ -11,8 +11,13 @@ const commentRouter = express.Router();
 // @route     GET api/comments/:postId
 // @desc      Get all comments under a post by post ID 
 // @access    Public
-commentRouter.get("/:postId", async (req, res) => {
-  res.json({ msg: "This is where we get comments under a post id" })
+commentRouter.get("/", async (req, res) => {
+  try {
+    const response = await Comment.find().sort({ date: -1 });
+    res.json(response);
+  } catch (error) {
+    console.log(error)
+  }
 });
 
 // @route     Post api/comments/:postId
