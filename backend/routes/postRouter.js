@@ -3,6 +3,9 @@ import express from "express";
 // Item model to find data in DB
 import Post from "../models/Post.model";
 
+// Auth middleware
+import auth from "../middleware/auth.middleware";
+
 const postRouter = express.Router();
 
 // @route     GET api/posts/getall
@@ -33,7 +36,7 @@ postRouter.get("/getone/:id", async (req, res) => {
 // @route     POST api/posts
 // @desc      Create a post
 // @access    Private (implement auth later)
-postRouter.post("/", async (req, res) => {
+postRouter.post("/", auth, async (req, res) => {
   const { title, content, owner } = req.body
   try {
     const newPost = new Post({
@@ -41,7 +44,7 @@ postRouter.post("/", async (req, res) => {
       content,
       owner
     });
-  
+
     const registeredPost = await newPost.save();
     res.json(registeredPost);
   } catch (error) {
@@ -52,7 +55,7 @@ postRouter.post("/", async (req, res) => {
 // @route     delete api/posts/:id
 // @desc      Delete a post
 // @access    Private (implement auth later)
-postRouter.delete("/:id", async (req, res) => {
+postRouter.delete("/:id", auth, async (req, res) => {
   try {
     const foundPost = await Post.findById(req.params.id);
     foundPost.remove().then(() => res.json({ success: true }));
@@ -64,7 +67,7 @@ postRouter.delete("/:id", async (req, res) => {
 // @route     delete api/posts/:id
 // @desc      Delete a post
 // @access    Private (implement auth later)
-postRouter.put("/:id", async (req, res) => {
+postRouter.put("/:id", auth, async (req, res) => {
   try {
     const foundPost = await Post.findById(req.params.id);
     foundPost.remove().then(() => res.json({ success: true }));
