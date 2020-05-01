@@ -1,5 +1,6 @@
 import express from "express";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 // Item model to find data in DB
 import User from "../models/User.model";
@@ -11,11 +12,6 @@ const userRouter = express.Router();
 // @access    Public (implement auth later)
 userRouter.post("/", async (req, res) => {
   const { name, email, password } = req.body;
-
-  // Simple validation (maybe implement Joi later)
-  if (!name || !email || !password) {
-    return res.status(400).json({ msg: "Please enter all fields" });
-  };
 
   // Check existing user
   const foundUser = await User.findOne({ email });
@@ -35,14 +31,24 @@ userRouter.post("/", async (req, res) => {
       newUser.password = hash;
       newUser.save()
         .then(user => {
-          // This is where we generate a token for the user
-          res.json({
-            user: {
-              userId: user.id,
-              name: user.name,
-              email: user.email
+          // JWT sign in 
+          jwt.sign(
+            { id: user.id },
+            process.env.JWT_SECRET,
+            { expiresIn: 3600 },
+            (err, token) => {
+              if (err) throw err;
+              // This is where we generate a token for the user
+              res.json({
+                token, // <-- Json Web Token
+                user: {
+                  userId: user.id,
+                  name: user.name,
+                  email: user.email
+                }
+              });
             }
-          });
+          )
         });
     });
   });
