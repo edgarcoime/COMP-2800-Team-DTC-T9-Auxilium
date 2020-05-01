@@ -5,6 +5,9 @@ import jwt from "jsonwebtoken";
 // Item model to find data in DB
 import User from "../models/User.model";
 
+// Middleware
+import auth from "../middleware/auth.middleware";
+
 const userRouter = express.Router();
 
 // @route     POST api/auth
@@ -40,5 +43,14 @@ userRouter.post("/", async (req, res) => {
     }
   )
 });
+
+
+// @route     get api/auth/user
+// @desc      Get user data based on token data
+// @access    Private (implement auth later)
+userRouter.get("/user", auth, async (req, res) => {
+  const foundUser = await User.findById(req.user.id).select("-password");
+  res.json(foundUser);
+})
 
 export default userRouter;
