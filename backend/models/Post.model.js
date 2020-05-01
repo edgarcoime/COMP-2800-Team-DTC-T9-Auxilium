@@ -12,7 +12,10 @@ const PostSchema = new Schema({
   },
   content: {
     type: String,
-  }
+  },
+  comments: { type:Array,
+    default: []
+   }
 }, { timestamps: true });
 
 const Post = mongoose.model("post", PostSchema);
