@@ -6,6 +6,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 const dotenv = require("dotenv").config();
 
+// Routes
+import { userRouter } from "./routes/index";
+
 const app = express();
 
 // Middleware to allow Cross origin point, parsing JSON, and body
@@ -21,6 +24,11 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established succesfully");
 });
+
+// User Routes
+const apiRouter = express.Router();
+app.use("/api", apiRouter);
+apiRouter.use("/users", userRouter);
 
 
 const port = process.env.PORT || 5000;
