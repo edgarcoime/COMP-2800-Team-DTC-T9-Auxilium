@@ -58,19 +58,13 @@ postRouter.post("/", auth, async (req, res) => {
 postRouter.delete("/:id", auth, async (req, res) => {
   try {
     const foundPost = await Post.findById(req.params.id);
-    foundPost.remove().then(() => res.json({ success: true }));
-  } catch (error) {
-    res.status(404).json({ success: false });
-  }
-});
 
-// @route     delete api/posts/:id
-// @desc      Delete a post
-// @access    Private (implement auth later)
-postRouter.put("/:id", auth, async (req, res) => {
-  try {
-    const foundPost = await Post.findById(req.params.id);
-    foundPost.remove().then(() => res.json({ success: true }));
+    // Check if user is the one who created post
+    if (req.body.reqOwner !== foundPost.owner) {
+      res.json({ msg: "You do not have access to delete this post."})
+    } else {
+      foundPost.remove().then(() => res.json({ success: true, msg: "Succesfully deleted post" }));
+    }
   } catch (error) {
     res.status(404).json({ success: false });
   }
