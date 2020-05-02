@@ -1,0 +1,11 @@
+.header {
+    background-color: #6A7578;
+}
+
+.text-link {
+    color: whitesmoke
+}
+
+.text-link:hover {
+    color: rgb(146, 224, 226);
+}
