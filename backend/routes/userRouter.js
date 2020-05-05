@@ -11,7 +11,7 @@ const userRouter = express.Router();
 // @desc      Register a new User
 // @access    Public (implement auth later)
 userRouter.post("/", async (req, res) => {
-  const { name, email, password, firstName, lastName } = req.body;
+  const { name, email, password, firstName, lastName, userType } = req.body;
 
   // Check existing user
   const foundUser = await User.findOne({ email });
@@ -23,7 +23,8 @@ userRouter.post("/", async (req, res) => {
     email, 
     password,
     firstName,
-    lastName
+    lastName,
+    userType
   });
 
   // create Salt and hash for user password

@@ -23,6 +23,10 @@ const UserSchema = new Schema({
   lastName: {
     type: String,
     required: true
+  },
+  userType: {
+    type: Number, // 0=RegularUser, 1=Volunteer, 2=InNeedOfHelp
+    required: true
   }
 }, { timestamps: true });
 
