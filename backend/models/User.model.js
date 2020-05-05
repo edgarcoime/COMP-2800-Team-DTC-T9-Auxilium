@@ -16,7 +16,14 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  }
 }, { timestamps: true });
 
 const User = mongoose.model("user", UserSchema);
