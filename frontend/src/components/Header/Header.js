@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'reactstrap'
 import { NavLink } from 'react-router-dom'
-import Home from './../Home'
-import Covid from './../Covid'
-import About from './../About'
-import User from './../User'
+import Home from './../../pages/Home'
+import Covid from '../../pages/Covid'
+import About from '../../pages/About'
+import User from '../../pages/User'
 import Popup from "reactjs-popup";
-import logo from './../images/logo_transparent.png'
-import user from './../images/interface.png'
+import logo from './../../images/logo_transparent.png'
+import user from './../../images/interface.png'
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './header.css'
@@ -56,13 +56,6 @@ class Header extends Component {
                                 <span className="text-link"><i className="fa fa-users fa-lg "></i><span className="d-none d-sm-inline">About Us</span></span>
                             </NavLink>
                             <NavLink to="/login" className="nav-link">
-                                {/* <Popup trigger={} position="bottom right">
-                                    <form>
-                                        <input type="text" className="form-control" name="username" id="username" placeholder="Email"/>
-                                        <input type="password" className="form-control" name="username" id="username" placeholder="Email"/>
-
-                                    </form>
-                                </Popup> */}
                                 <span className="text-link">Login/Register</span>
                             </NavLink>
 

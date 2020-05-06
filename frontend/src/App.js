@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from './components//Header/Header'
-import Home from './components/Home'
-import Covid from './components/Covid'
-import About from './components/About'
-import User from './components/User'
-import Login from './components/Login'
-import Register from './components/Register'
+import Header from './components/Header/Header'
+import Home from './pages/Home'
+import Covid from './pages/Covid'
+import About from './pages/About'
+import User from './pages/User'
+import Login from './pages/Login'
+import Register from './pages/Register'
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom'
 
 function App() {
