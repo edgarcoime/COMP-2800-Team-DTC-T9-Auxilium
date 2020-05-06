@@ -3,6 +3,7 @@ import { Card, CardBody,CardTitle } from 'reactstrap'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import logo from './../images/logo_transparent.png'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 
@@ -13,8 +14,11 @@ class Login extends Component {
         this.state = {
             email: "",
             password: ""
+            
         }
     }
+
+    
 
     handleEmail = event => {
         this.setState({email: event.target.value});
@@ -24,17 +28,22 @@ class Login extends Component {
         this.setState({password: event.target.value});
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-
-        const email = this.state.email;
-        const password = this.state.password;
-
-        axios.post('http://localhost:5000/api/auth/', { email, password })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-            })
+    handleSubmit = async (e) => {
+        try {
+            e.preventDefault();
+    
+            const email = this.state.email;
+            const password = this.state.password;
+    
+            const response = await axios.post('http://localhost:5000/api/auth/', { email, password });
+            console.log(response.data)
+            if (response.data.token !== "") {
+                alert("Successfully logged in")
+                this.props.history.push("/")
+            } 
+        } catch (error) {
+            alert("Username or password is incorrect.")
+        }
     }
 
 
@@ -55,7 +64,6 @@ class Login extends Component {
                                 <input type="password" name="password" placeholder="Password" onChange={this.handlePassword} className="form-control mt-4" />
                                 <button type="submit" className="btn btn-success mt-4">Login</button>
                             </form>
-                            
                         </CardBody>
                     </Card>
                 </div>
