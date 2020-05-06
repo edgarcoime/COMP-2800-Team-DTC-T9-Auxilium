@@ -32,6 +32,11 @@ class Home extends Component {
                                 <button type="button" className="btn w-100 rounded btn-warning" > COVID-19</button>
                             </Link>
                         </Col>
+                        <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
+                            <Link to="/createpost">
+                                <button type="button" className="btn w-100 rounded btn-warning" > Create a Post</button>
+                            </Link>
+                        </Col>
                     </Row>
                     <PostTile />
                 </div>
