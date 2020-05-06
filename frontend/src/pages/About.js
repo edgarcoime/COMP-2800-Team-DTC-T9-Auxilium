@@ -13,53 +13,62 @@ class About extends Component {
     render() {
         return (
             <div>
-                <h1 class="text-center page-header">About Us</h1>
+                <h1 class="text-center page-header text-uppercase">About Us</h1>
                 <div class="mx-auto card w-75">
                     <div>
-                    <h5 class="card-header">Alireza Kakan</h5>
+                    <h5 class="card-header bg-secondary font-weight-bold text-uppercase">Front-end</h5>
                     </div>
                     <div class="card-body">
                         <blockquote class ="blockquote mb-0">
                             <p>I Am ........ sjndfisuafh usjfihaushf nfuie difhsdjf cushf 
                                 sdfbuyewufdh 
+                                <img src="https://via.placeholder.com/150" class="rounded float-right" alt="..."></img>
+
                             </p>
                             <footer class="blockquote-footer">Alireza Kakan</footer>
                         </blockquote>
                         
                     </div>
                     <div>
-                    <h5 class="card-header">Edgar</h5>
+                    <h5 class="card-header bg-secondary font-weight-bold text-uppercase">Back-end</h5>
                     </div>
                     <div class="card-body">
                         <blockquote class ="blockquote mb-0">
-                            <p>I Am ........ sjndfisuafh usjfihaushf nfuie difhsdjf cushf 
+                            <p class="text-center">
+                            <img src="https://via.placeholder.com/150" class="rounded float-left" alt="..."></img>
+                                I Am ........ sjndfisuafh usjfihaushf nfuie difhsdjf cushf 
                                 sdfbuyewufdh 
+                                <footer class="blockquote-footer">Edgar</footer>
+
                             </p>
-                            <footer class="blockquote-footer">Edgar</footer>
                         </blockquote>
                         
                     </div>
                     <div>
-                    <h5 class="card-header">Tommy</h5>
+                    <h5 class="card-header bg-secondary font-weight-bold text-uppercase">Back-end</h5>
                     </div>
                     <div class="card-body">
                         <blockquote class ="blockquote mb-0">
                             <p>I Am ........ sjndfisuafh usjfihaushf nfuie difhsdjf cushf 
-                                sdfbuyewufdh 
+                                sdfbuyewufdh
+                                <img src="https://via.placeholder.com/150" class="rounded float-right" alt="..."></img>
+                                <footer class="blockquote-footer">Tommy</footer>
+
                             </p>
-                            <footer class="blockquote-footer">Tommy</footer>
                         </blockquote>
                         
                     </div>
                     <div>
-                    <h5 class="card-header">Sayed Fahad</h5>
+                    <h5 class="card-header bg-secondary font-weight-bold text-uppercase">Front-end</h5>
                     </div>
                     <div class="card-body">
                         <blockquote class ="blockquote mb-0">
-                            <p>I Am ........ sjndfisuafh usjfihaushf nfuie difhsdjf cushf 
+                            <p class="text-center">
+                            <img src="https://via.placeholder.com/150" class="rounded float-left" alt="..."></img>
+                                I Am ........ sjndfisuafh usjfihaushf nfuie difhsdjf cushf 
                                 sdfbuyewufdh 
+                                <footer class="blockquote-footer text-center">Sayed Fahad</footer>
                             </p>
-                            <footer class="blockquote-footer">Sayed Fahad</footer>
                         </blockquote>
                         
                     </div>
