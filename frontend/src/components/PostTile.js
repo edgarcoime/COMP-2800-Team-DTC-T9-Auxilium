@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 import { Row, Col, Card, CardImg, CardText, CardBody, CardLink,CardTitle, CardSubtitle } from 'reactstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart as faHeart1 } from '@fortawesome/free-solid-svg-icons'
-import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
+import LikeComment from './LikeComment'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.min.css'
 
@@ -10,37 +9,62 @@ class PostTile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            posts: []
         }
+    }
+
+    whenPosted(createdAt) {
+        const created = Date.parse(createdAt);
+        let now = Date.now();
+        const differenceInMilliSecond = now - created;
+        const h = differenceInMilliSecond/1000/60/60;
+        console.log(h);
+        if (h >= 24) {
+            return Math.trunc(h / 24) + 'd ago';
+        } else if (h < 1) {
+            return Math.trunc(h * 60) + 'm ago';
+        }
+        return Math.trunc(h) + 'h ago';
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:5000/api/posts/getall')
+            .then(res => {
+                const posts = res.data;
+                this.setState({posts})
+            })
     }
 
     render() {
         return (
-            <Row>
-                <Col className="mt-5">
-                    <Card className="bg-light shadow-sm">
-                        <CardTitle className="p-3">
-                            <Row>
-                                <Col className="col-8 col-sm-10">
-                                    <p><strong>Username</strong></p>
-                                </Col>
-                                <Col className="col-4 col-sm-2">
-                                    <span className="float-right">2h ago</span>
-                                </Col>
-                            </Row>
-                        </CardTitle>
-                        <CardBody className="pt-0">
-                            <h4>Post Title {this.state.title}</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            <p>34 Likes</p>
-                            <div>
-                                <span><FontAwesomeIcon icon={faHeart} size="2x"/></span>
-                                <span className="ml-3"><FontAwesomeIcon icon={faComment} size="2x" /></span>
-                            </div>
-                        </CardBody>
-                    </Card>
-                </Col>
-            </Row>
+            <div>
+                {
+                    this.state.posts.map(post =>
+                        <Row>
+                            <Col className="mt-5">
+                                <Card className="bg-light shadow-sm">
+                                    <CardTitle className="p-3">
+                                        <Row>
+                                            <Col className="col-8 col-sm-10">
+                                                <p><strong>{post.owner}</strong></p>
+                                            </Col>
+                                            <Col className="col-4 col-sm-2">
+                                                {console.log(Date.parse(post.createdAt))}
+                                                <span className="float-right">{this.whenPosted(post.createdAt)}</span>
+                                            </Col>
+                                        </Row>
+                                    </CardTitle>
+                                    <CardBody className="pt-0">
+                                        <h4>{post.title}</h4>
+                                        <p>{post.content}</p>
+                                        <LikeComment />
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                        </Row>
+                    )
+                }
+            </div>
         );
     }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import { Row, Col, Card, CardImg, CardText, CardBody, CardLink,CardTitle, CardSubtitle } from 'reactstrap'
 import {Link} from 'react-router-dom'
 import PostTile from './../components/PostTile'
@@ -12,9 +13,9 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            
         }
     }
+
 
     render() {
         return (
@@ -32,7 +33,6 @@ class Home extends Component {
                             </Link>
                         </Col>
                     </Row>
-                    <PostTile />
                     <PostTile />
                 </div>
             </div>
