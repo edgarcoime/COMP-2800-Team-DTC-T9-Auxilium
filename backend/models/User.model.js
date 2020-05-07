@@ -18,15 +18,12 @@ const UserSchema = new Schema({
   },
   firstName: {
     type: String,
-    required: true
   },
   lastName: {
     type: String,
-    required: true
   },
   userType: {
     type: Number, // 0=RegularUser, 1=Volunteer, 2=InNeedOfHelp
-    required: true
   }
 }, { timestamps: true });
 

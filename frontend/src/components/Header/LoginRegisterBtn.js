@@ -1,33 +1,13 @@
-import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './header.css'
+import React from "react";
+import { NavLink } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./header.css";
 
-class LoginRegisterBtn extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            name: ""
-        }
-    }
-
-    componentDidMount() {
-        this.handleContent();   
-    }
-
-    handleContent = () => {
-        const name = localStorage.getItem('name');
-        if (name !== null) {
-            this.setState({name : name});
-        }
-    }
-
-
-    render() {
-        return (
-            <span className="text-link">{this.state.name === "" ?'Login/Register' : 'Welcom, ' + this.state.name }</span>
-        )
-    }
+export default function LoginRegisterBtn(props) {
+  const { user, isAuthenticated } = props;
+  return (
+    <NavLink to={ isAuthenticated ? "/user": "/login"} className="nav-link">
+      { isAuthenticated ? `Welcome, ${user.name}` : "Login/Register"}
+    </NavLink>
+  );
 }
-
-export default LoginRegisterBtn;
