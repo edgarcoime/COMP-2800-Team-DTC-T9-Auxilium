@@ -24,6 +24,10 @@ const UserSchema = new Schema({
   },
   userType: {
     type: Number, // 0=RegularUser, 1=Volunteer, 2=InNeedOfHelp
+  },
+  postsCreated: {
+    type: Array,
+    default: []
   }
 }, { timestamps: true });
 
