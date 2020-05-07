@@ -1,17 +1,6 @@
 import React, { Component, Fragment } from "react";
-import axios from "axios";
 import Header from "./../components/Header/Header";
-import {
-  Row,
-  Col,
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardLink,
-  CardTitle,
-  CardSubtitle,
-} from "reactstrap";
+import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import PostTile from "./../components/PostTile";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,7 +9,6 @@ import "font-awesome/css/font-awesome.min.css";
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getAllPosts, deletePost } from "../actions/postActions";
 import { login } from "../actions/authActions";
 
 class Home extends Component {
@@ -32,7 +20,7 @@ class Home extends Component {
 
   render() {
     const { isAuthenticated } = this.props;
-    console.log(isAuthenticated)
+    console.log(isAuthenticated);
 
     const createPostLink = (
       <Fragment>
@@ -71,7 +59,7 @@ class Home extends Component {
                 </button>
               </Link>
             </Col>
-            { isAuthenticated ? createPostLink : null }
+            {isAuthenticated ? createPostLink : null}
           </Row>
           <PostTile />
         </div>
@@ -91,4 +79,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { login })(Home);
-
