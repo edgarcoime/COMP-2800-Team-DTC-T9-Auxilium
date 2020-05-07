@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from "axios"
 import { Row, Col, Card, CardImg, CardText, CardBody, CardLink,CardTitle, CardSubtitle } from 'reactstrap'
 import LikeComment from './LikeComment'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -31,6 +31,7 @@ class PostTile extends Component {
         axios.get('http://localhost:5000/api/posts/getall')
             .then(res => {
                 const posts = res.data;
+                console.log(posts)
                 this.setState({posts})
             })
     }

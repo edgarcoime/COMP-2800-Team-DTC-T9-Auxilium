@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Card, CardBody,CardTitle } from 'reactstrap'
 import { NavLink } from 'react-router-dom'
 import Header from './../components/Header/Header'
-import Select from 'react-select'
 import logo from './../images/logo_transparent.png'
 
 class Register extends Component {
