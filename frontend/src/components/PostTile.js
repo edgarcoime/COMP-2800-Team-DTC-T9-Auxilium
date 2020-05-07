@@ -18,7 +18,7 @@ class PostTile extends Component {
         let now = Date.now();
         const differenceInMilliSecond = now - created;
         const h = differenceInMilliSecond/1000/60/60;
-        console.log(h);
+        // console.log(h);
         if (h >= 24) {
             return Math.trunc(h / 24) + 'd ago';
         } else if (h < 1) {
@@ -31,7 +31,7 @@ class PostTile extends Component {
         axios.get('http://localhost:5000/api/posts/getall')
             .then(res => {
                 const posts = res.data;
-                console.log(posts)
+                // console.log(posts)
                 this.setState({posts})
             })
     }
@@ -41,7 +41,7 @@ class PostTile extends Component {
             <div> 
                 {
                     this.state.posts.map(post =>
-                        <Row>
+                        <Row key={post._id}>
                             <Col className="mt-5">
                                 <Card className="bg-light shadow-sm">
                                     <CardTitle className="p-3">
@@ -50,7 +50,7 @@ class PostTile extends Component {
                                                 <p><strong>{post.owner}</strong></p>
                                             </Col>
                                             <Col className="col-4 col-sm-2">
-                                                {console.log(Date.parse(post.createdAt))}
+                                                {/* {console.log(Date.parse(post.createdAt))} */}
                                                 <span className="float-right">{this.whenPosted(post.createdAt)}</span>
                                             </Col>
                                         </Row>

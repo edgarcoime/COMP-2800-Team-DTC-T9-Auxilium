@@ -54,7 +54,7 @@ class Header extends Component {
                             </div>
                             <div>
                                 <NavLink to="/covid" className="nav-link">
-                                    <span className="nav-text ml-1 text-link"><i class="fas fa-square fa-lg"></i><span className="d-none d-sm-inline">COVID-19</span></span>
+                                    <span className="nav-text ml-1 text-link"><i className="fas fa-square fa-lg"></i><span className="d-none d-sm-inline">COVID-19</span></span>
                                 </NavLink>
                             </div>
                             
