@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart as faHeart1 } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faHeart1, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons'
+import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.min.css'
 
@@ -28,12 +29,18 @@ class LikeComment extends Component {
     render() {
         return(
             <div>
-                <p>34 Likes</p>
-                <div>
+                <span>
                     <button className="btn" onClick={this.handleLikeClick}><span><FontAwesomeIcon icon={this.state.isClicked == 1 ? faHeart1 : faHeart} size="2x"/></span></button>
-                    <button className="btn"><span className="pl-3"><FontAwesomeIcon icon={faComment} size="2x" /></span></button>
-                </div>
+                    <button className="btn" id="toggler"><span className="pl-3"><FontAwesomeIcon icon={faComment} size="2x" /></span></button>
+                </span>
+                <UncontrolledCollapse toggler="#toggler" className="mt-3">
+                    <span>
+                        <input type="text" className="form-control d-inline w-75" name="comment" placeholder="Leave a comment"></input>
+                        <button type="submit" className="btn"><FontAwesomeIcon icon={faPaperPlane} size="lg" /></button>
+                    </span>
+                </UncontrolledCollapse>
             </div>
+            
         )
     }
 }

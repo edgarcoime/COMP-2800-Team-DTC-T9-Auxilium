@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Header from './../components/Header/Header'
 
 
 class About extends Component {
@@ -13,6 +14,7 @@ class About extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <h1 class="text-center page-header text-uppercase">About Us</h1>
                 <div class="mx-auto card w-75">
                     <div>

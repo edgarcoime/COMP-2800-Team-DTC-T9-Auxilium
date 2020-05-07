@@ -37,7 +37,7 @@ class PostTile extends Component {
 
     render() {
         return (
-            <div>
+            <div> 
                 {
                     this.state.posts.map(post =>
                         <Row>
@@ -57,7 +57,8 @@ class PostTile extends Component {
                                     <CardBody className="pt-0">
                                         <h4>{post.title}</h4>
                                         <p>{post.content}</p>
-                                        <LikeComment />
+                                        <p>34 likes</p>
+                                        <LikeComment id={post.id}/>
                                     </CardBody>
                                 </Card>
                             </Col>

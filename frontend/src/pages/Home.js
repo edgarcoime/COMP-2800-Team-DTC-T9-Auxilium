@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Header from './../components/Header/Header'
 import { Row, Col, Card, CardImg, CardText, CardBody, CardLink,CardTitle, CardSubtitle } from 'reactstrap'
 import {Link} from 'react-router-dom'
 import PostTile from './../components/PostTile'
@@ -20,6 +21,7 @@ class Home extends Component {
     render() {
         return (
             <div>   
+                <Header />
                 <div className="container">
                     <Row>
                         <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
@@ -32,11 +34,7 @@ class Home extends Component {
                                 <button type="button" className="btn w-100 rounded btn-warning" > COVID-19</button>
                             </Link>
                         </Col>
-                        <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
-                            <Link to="/createpost">
-                                <button type="button" className="btn w-100 rounded btn-warning" > Create a Post</button>
-                            </Link>
-                        </Col>
+                        
                     </Row>
                     <PostTile />
                 </div>

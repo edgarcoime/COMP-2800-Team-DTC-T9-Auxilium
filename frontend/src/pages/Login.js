@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Card, CardBody,CardTitle } from 'reactstrap'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
+import Header from './../components/Header/Header'
 import logo from './../images/logo_transparent.png'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -13,8 +14,8 @@ class Login extends Component {
 
         this.state = {
             email: "",
-            password: ""
-            
+            password: "",
+
         }
     }
 
@@ -36,7 +37,7 @@ class Login extends Component {
             const password = this.state.password;
     
             const response = await axios.post('http://localhost:5000/api/auth/', { email, password });
-            console.log(response.data)
+            localStorage.setItem('name', response.data.user.name);
             if (response.data.token !== "") {
                 alert("Successfully logged in")
                 this.props.history.push("/")
@@ -50,6 +51,7 @@ class Login extends Component {
     render() {
         return (
                 <div> 
+                    <Header />
                     <Card className="bg-dark shadow">
                         <CardTitle className="text-center p-3">
                                 <NavLink to="/register" className="d-block pull-right">
