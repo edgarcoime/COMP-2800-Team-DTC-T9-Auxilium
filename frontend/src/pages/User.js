@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Header from './../components/Header/Header'
 
 
 class User extends Component {
@@ -13,6 +14,7 @@ class User extends Component {
     render() {
         return (
             <div>
+                <Header />
                 lkafslkmadkmsaflalsfmlaskflksanflkmsalfasdmlksafkmalkfj 
             </div>
         );

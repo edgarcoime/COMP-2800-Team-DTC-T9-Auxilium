@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Row, Col, Card, CardImg, CardText, CardBody, CardLink, CardTitle, CardSubtitle } from 'reactstrap'
+import Header from './../components/Header/Header'
 import { Link } from 'react-router-dom'
 import PostTile from './../components/PostTile'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -11,13 +12,14 @@ class CreatePost extends Component {
         super(props);
 
         this.state = {
-
+            isLoggedIn: true,
         }
     }
 
     render() {
         return (
             <div>
+                <Header />
                 <div className="container">
 
                     <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
@@ -40,7 +42,7 @@ class CreatePost extends Component {
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"/>
-                                <label class="form-check-label" for="inlineCheckbox2">Ask for Help</label>
+                                <label class="form-check-label" for="inlineCheckbox2"></label>
                             </div>
                             <div>
                                     <button type="submit" className="btn btn-success mt-5">Send</button>
