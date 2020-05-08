@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "axios";
 import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import LikeComment from "./LikeComment";
@@ -13,22 +13,43 @@ class PostTileCovid extends Component {
       posts: [],
     };
   }
-  whenPosted(createdAt) {
+
+  postCreated = (createdAt) => {
+    let createdWhen = "";
     const created = Date.parse(createdAt);
     let now = Date.now();
     const differenceInMilliSecond = now - created;
     const h = differenceInMilliSecond / 1000 / 60 / 60;
-    console.log(h);
     if (h >= 24) {
-      return Math.trunc(h / 24) + "d ago";
+      createdWhen = Math.trunc(h / 24) + "d ago";
     } else if (h < 1) {
-      return Math.trunc(h * 60) + "m ago";
+      createdWhen = Math.trunc(h * 60) + "m ago";
+    } else {
+      createdWhen = Math.trunc(h) + "h ago";
     }
-    return Math.trunc(h) + "h ago";
-  }
+
+    return `Created: ${createdWhen}`;
+  };
+
+  postUpdated = (updatedAt) => {
+    let updatedWhen = "";
+    const created = Date.parse(updatedAt);
+    let now = Date.now();
+    const differenceInMilliSecond = now - created;
+    const h = differenceInMilliSecond / 1000 / 60 / 60;
+    if (h >= 24) {
+      updatedWhen = Math.trunc(h / 24) + "d ago";
+    } else if (h < 1) {
+      updatedWhen = Math.trunc(h * 60) + "m ago";
+    } else {
+      updatedWhen = Math.trunc(h) + "h ago";
+    }
+
+    return `Updated: ${updatedWhen}`;
+  };
 
   componentDidMount() {
-    axios.get("http://localhost:5000/api/covid/getall").then((res) => {
+    axios.get("/api/covid/getall").then((res) => {
       const posts = res.data;
       // console.log(posts)
       this.setState({ posts });
@@ -51,13 +72,18 @@ class PostTileCovid extends Component {
                       </p>
                     </Col>
                     <Col className="col-4 col-sm-2">
-                      <span className="float-right">2h ago</span>
+                      <span className="float-right">
+                        {this.postCreated(post.createdAt)}
+                      </span>
+                      <span className="float-right">
+                        {this.postUpdated(post.updatedAt)}
+                      </span>
                     </Col>
                   </Row>
                 </CardTitle>
                 <CardBody className="pt-0">
                   <h4>{post.title}</h4>
-                  <p>{ post.content }</p>
+                  <p>{post.content}</p>
                   <p>34 Likes</p>
                   <LikeComment className="d-inline" />
                   <button className="btn btn-info float-right">Accept</button>

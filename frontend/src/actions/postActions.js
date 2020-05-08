@@ -6,7 +6,7 @@ import { returnErrors } from "./errorActions";
 export const getAllPosts = () => async (dispatch) => {
   try {
     dispatch(setItemsLoading());
-    const response = await axios.get("http://localhost:5000/api/posts/getall");
+    const response = await axios.get("/api/posts/getall");
     const payload = response.data;
 
     dispatch({
@@ -21,7 +21,7 @@ export const getAllPosts = () => async (dispatch) => {
 export const createPost = (newPost) => async (dispatch, getState) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/posts",
+      "/api/posts",
       newPost,
       tokenConfig(getState)
     );
@@ -41,7 +41,7 @@ export const deletePost = (deleteReq) => async (dispatch, getState) => {
   try {
     const postId = deleteReq.postId
     const response = await axios.delete(
-      `http://localhost:5000/api/posts/`, 
+      `/api/posts/`, 
       deleteReq,
       tokenConfig(getState)
     );
