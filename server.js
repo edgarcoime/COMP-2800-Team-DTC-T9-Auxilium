@@ -12,7 +12,6 @@ import {
   postRouter, 
   authRouter,
   commentRouter,
-  covidPostRouter
 } from "./routes/index";
 
 const app = express();
@@ -41,7 +40,6 @@ apiRouter.use("/users", userRouter);
 apiRouter.use("/posts", postRouter);
 apiRouter.use("/auth", authRouter);
 apiRouter.use("/comments", commentRouter);
-apiRouter.use("/covid", covidPostRouter);
 
 
 const port = process.env.PORT || 5000;
