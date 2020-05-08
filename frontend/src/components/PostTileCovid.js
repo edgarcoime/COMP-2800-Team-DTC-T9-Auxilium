@@ -72,16 +72,12 @@ class PostTileCovid extends Component {
                       </p>
                     </Col>
                     <Col className="col-4 col-sm-2">
-<<<<<<< HEAD
-                      <span className="float-right">{this.whenPosted(post.createdAt)}</span>
-=======
                       <span className="float-right">
                         {this.postCreated(post.createdAt)}
                       </span>
                       <span className="float-right">
                         {this.postUpdated(post.updatedAt)}
                       </span>
->>>>>>> 015fb422ca4bcc4f0a2cc494618b2e95210136c9
                     </Col>
                   </Row>
                 </CardTitle>
