@@ -5,6 +5,7 @@ import axios from "axios";
 import Header from "./../components/Header/Header";
 import logo from "./../images/logo_transparent.png";
 import "bootstrap/dist/css/bootstrap.min.css";
+import './pages.css'
 
 // Redux
 import { connect } from "react-redux";
@@ -57,9 +58,9 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div className="aux-background">
         <Header />
-        <Card className="bg-dark shadow">
+        <Card className="aux-background shadow">
           { this.state.msg ? <Alert color="danger">{ this.state.msg }</Alert> : null } 
           <CardTitle className="text-center p-3">
             <NavLink to="/register" className="d-block pull-right">

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Header from './../components/Header/Header'
+import { Row, Col, Card, CardBody, CardTitle } from 'reactstrap'
 
 
 class About extends Component {

@@ -51,7 +51,7 @@ class PostTileCovid extends Component {
                       </p>
                     </Col>
                     <Col className="col-4 col-sm-2">
-                      <span className="float-right">2h ago</span>
+                      <span className="float-right">{this.whenPosted(post.createdAt)}</span>
                     </Col>
                   </Row>
                 </CardTitle>
