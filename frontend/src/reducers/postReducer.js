@@ -1,5 +1,4 @@
 import * as actions from "../actions/types";
-import { v4 as uuid } from "uuid";
 
 const initialState = {
   posts: []

@@ -65,7 +65,6 @@ class Covid extends Component {
             { isAuthenticated ? createPostLink : null }
           </Row>
           <PostTileCovid />
-          <PostTileCovid />
         </div>
       </div>
     );

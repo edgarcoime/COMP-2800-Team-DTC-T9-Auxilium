@@ -9,8 +9,9 @@ import Header from "./../components/Header/Header";
 
 // Redux
 import { connect } from "react-redux";
-import { createPost } from "../actions/postActions";
 import PropTypes from "prop-types";
+import { createPost } from "../actions/postActions";
+import { createCovidPost } from "../actions/covidActions";
 
 class CreatePost extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class CreatePost extends Component {
       title: "",
       content: "",
       redirectToHome: false,
+      redirectToCovid: false,
       relatedToCovid: false,
       askForHelp: false,
     };
@@ -30,7 +32,6 @@ class CreatePost extends Component {
   };
 
   onChangeCheckBox = (e) => {
-    const nameOfState = e.target.name
     this.setState({ [e.target.name]: e.target.checked})
   }
 
@@ -46,7 +47,8 @@ class CreatePost extends Component {
         ownerId: this.props.user._id,
       };
       console.log(newCovidPost);
-      this.setState({ redirectToHome: true })
+      this.props.createCovidPost(newCovidPost);
+      this.setState({ redirectToCovid: true })
     } else {
       
       const newPost = {
@@ -69,6 +71,9 @@ class CreatePost extends Component {
   render() {
     if (this.state.redirectToHome) {
       return <Redirect to="/" />;
+    };
+    if (this.state.redirectToCovid) {
+      return <Redirect to="/covid" />
     }
     return (
       <div>
@@ -163,4 +168,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { createPost })(CreatePost);
+export default connect(mapStateToProps, { createPost, createCovidPost })(CreatePost);
