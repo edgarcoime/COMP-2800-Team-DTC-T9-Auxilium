@@ -1,5 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { NavLink } from "reactstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './header.css'
 
 // Redux
 import { connect } from "react-redux";
@@ -10,8 +14,8 @@ export class Logout extends Component {
   render() {
     return (
       <Fragment>
-        <NavLink onClick={this.props.logout} href="#">
-          Logout
+        <NavLink className="nav-link" onClick={this.props.logout} href="#">
+          <FontAwesomeIcon icon={faSignOutAlt} size="lg" className="text-link" />
         </NavLink>
       </Fragment>
     )

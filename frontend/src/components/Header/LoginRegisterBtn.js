@@ -7,7 +7,9 @@ export default function LoginRegisterBtn(props) {
   const { user, isAuthenticated } = props;
   return (
     <NavLink to={ isAuthenticated ? "/user": "/login"} className="nav-link">
-      { isAuthenticated ? `Welcome, ${user.name}` : "Login/Register"}
+      <span className="text-link">
+        { isAuthenticated ? `Welcome, ${user.name}` : "Login/Register"}
+      </span>
     </NavLink>
   );
 }
