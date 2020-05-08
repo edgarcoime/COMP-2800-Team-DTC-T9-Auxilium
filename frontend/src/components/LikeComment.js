@@ -11,7 +11,8 @@ class LikeComment extends Component {
         super(props);
 
         this.state = { 
-            isClicked: 0
+            isClicked: 0,
+            id: 0
         }
         this.handleLikeClick = this.handleLikeClick.bind(this);
     }
@@ -26,14 +27,25 @@ class LikeComment extends Component {
         }
     }
 
+    incrementId = () => {
+        let currentId = this.state.id;
+        currentId += 1;
+        this.setState({id : currentId});
+        return currentId;
+    }
+
+    toString = (id) => {
+        return '#' + id.toString();
+    }
+
     render() {
         return(
             <div>
                 <span>
                     <button className="btn" onClick={this.handleLikeClick}><span><FontAwesomeIcon icon={this.state.isClicked == 1 ? faHeart1 : faHeart} size="2x"/></span></button>
-                    <button className="btn" id="toggler"><span className="pl-3"><FontAwesomeIcon icon={faComment} size="2x" /></span></button>
+                    <button className="btn" id="tog"><span className="pl-3"><FontAwesomeIcon icon={faComment} size="2x" /></span></button>
                 </span>
-                <UncontrolledCollapse toggler="#toggler" className="mt-3">
+                <UncontrolledCollapse toggler="#tog" className="mt-3">
                     <span>
                         <input type="text" className="form-control d-inline w-75" name="comment" placeholder="Leave a comment"></input>
                         <button type="submit" className="btn"><FontAwesomeIcon icon={faPaperPlane} size="lg" /></button>

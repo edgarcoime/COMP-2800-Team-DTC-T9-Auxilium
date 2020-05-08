@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Card, CardBody, CardTitle, Alert } from "reactstrap";
-import Header from "./../components/Header/Header";
-import logo from "./../images/logo_transparent.png";
+import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
+import Header from '../components/Header/Header'
+import logo from './../images/logo_transparent.png'
 
 // Redux
 import { connect } from "react-redux";
@@ -17,6 +17,8 @@ class Register extends Component {
       firstName: "",
       lastName: "",
       username: "",
+      password: "",
+            password: "", 
       password: "",
       confirmPassword: "",
       msg: null,
