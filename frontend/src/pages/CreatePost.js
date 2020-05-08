@@ -110,7 +110,7 @@ class CreatePost extends Component {
                 className="form-control  mt-4"
                 rows="3"
               />
-              <div class="form-check form-check-inline">
+              <div className="form-check form-check-inline">
                 <input
                   class="form-check-input"
                   type="checkbox"
