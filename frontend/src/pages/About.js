@@ -6,12 +6,7 @@ import edgar from './../images/edgar.jpg'
 import fahad from './../images/fahad.jpg'
 import logo from './../images/logo_transparent.png'
 import Header from './../components/Header/Header'
-<<<<<<< HEAD
 import 'bootstrap/dist/css/bootstrap.min.css'
-=======
-import { Row, Col, Card, CardBody, CardTitle } from 'reactstrap'
->>>>>>> 19c0ae0ba4247c45d7e5c3b8f041dc4e2a141aa9
-
 
 class About extends Component {
     constructor(props) {
