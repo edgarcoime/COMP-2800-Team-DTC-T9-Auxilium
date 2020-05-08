@@ -8,7 +8,6 @@ import logo from './../images/logo_transparent.png'
 import Header from './../components/Header/Header'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-
 class About extends Component {
     constructor(props) {
         super(props);
