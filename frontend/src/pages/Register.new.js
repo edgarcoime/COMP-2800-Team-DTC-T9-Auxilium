@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import { Card, CardBody,CardTitle, Alert } from 'reactstrap'
 import { NavLink } from 'react-router-dom'
 import Header from '../components/Header/Header'
 import logo from './../images/logo_transparent.png'
