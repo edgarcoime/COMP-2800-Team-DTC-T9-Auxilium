@@ -5,6 +5,13 @@ export const CREATE_POST = "CREATE_POST";
 export const DELETE_POST = "DELETE_POST";
 export const POSTS_LOADING = "POSTS_LOADING";
 
+// COVID POSTS TYPES
+export const GET_ALL_C_POSTS = "GET_ALL_C_POSTS";
+export const GET_C_POST = "GET_C_POST";
+export const CREATE_C_POST = "CREATE_C_POST";
+export const DELETE_C_POST = "DELETE_C_POST";
+export const C_POSTS_LOADING = "C_POSTS_LOADING";
+
 // USER TYPES
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";

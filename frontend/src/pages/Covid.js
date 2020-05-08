@@ -1,52 +1,84 @@
-import React, { Component } from 'react'
-import Header from '../components/Header/Header'
-import { Row, Col, Card, CardImg, CardText, CardBody, CardLink,CardTitle, CardSubtitle } from 'reactstrap'
-import { Link } from 'react-router-dom'
-import PostTileCovid from './../components/PostTileCovid'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'font-awesome/css/font-awesome.min.css'
+import React, { Component, Fragment } from "react";
+import Header from "../components/Header/Header";
+import {
+  Row,
+  Col,
+} from "reactstrap";
+import { Link } from "react-router-dom";
+import PostTileCovid from "./../components/PostTileCovid";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "font-awesome/css/font-awesome.min.css";
 
+// Redux
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "../actions/authActions"
 
 class Covid extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            
-        }
-    }
+    this.state = {};
+  }
 
-    render() {
-        return (
-            <div>
-                <Header />
-                <div className="container">
-                    
-                    <Row>
-                        <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
-                            <Link to="/" className="mt-4">
-                                <button type="button" className="btn btn-menu w-100 rounded btn-warning" > General</button>
-                            </Link>
-                        </Col>
-                        <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
-                            <Link to="/covid">
-                                <button type="button" className="btn w-100 rounded btn-warning" > COVID-19</button>
-                            </Link>
-                        </Col>
-                        <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
-                            <Link to="/createpost">
-                                <button type="button" className="btn w-100 rounded btn-warning" > Create a Post</button>
-                            </Link>
-                        </Col>
-                    </Row>
-                    <PostTileCovid />
-                    <PostTileCovid />
-                </div>
-            </div>
-            
-        );
-    }
+  render() {
+    const { isAuthenticated } = this.props;
+    console.log(isAuthenticated);
 
+    const createPostLink = (
+      <Fragment>
+        <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
+          <Link to="/createpost">
+            <button type="button" className="btn w-100 rounded btn-warning">
+              {" "}
+              Create a Post
+            </button>
+          </Link>
+        </Col>
+      </Fragment>
+    );
+
+    return (
+      <div>
+        <Header />
+        <div className="container">
+          <Row>
+            <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
+              <Link to="/" className="mt-4">
+                <button
+                  type="button"
+                  className="btn btn-menu w-100 rounded btn-warning"
+                >
+                  {" "}
+                  General
+                </button>
+              </Link>
+            </Col>
+            <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
+              <Link to="/covid">
+                <button type="button" className="btn w-100 rounded btn-warning">
+                  {" "}
+                  COVID-19
+                </button>
+              </Link>
+            </Col>
+            { isAuthenticated ? createPostLink : null }
+          </Row>
+          <PostTileCovid />
+        </div>
+      </div>
+    );
+  }
 }
 
-export default Covid;
+Covid.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  error: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error,
+});
+
+export default connect(mapStateToProps, { login })(Covid);

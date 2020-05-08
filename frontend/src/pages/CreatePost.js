@@ -9,8 +9,9 @@ import Header from "./../components/Header/Header";
 
 // Redux
 import { connect } from "react-redux";
-import { createPost } from "../actions/postActions";
 import PropTypes from "prop-types";
+import { createPost } from "../actions/postActions";
+import { createCovidPost } from "../actions/covidActions";
 
 class CreatePost extends Component {
   constructor(props) {
@@ -20,6 +21,9 @@ class CreatePost extends Component {
       title: "",
       content: "",
       redirectToHome: false,
+      redirectToCovid: false,
+      relatedToCovid: false,
+      askForHelp: false,
     };
   }
 
@@ -27,20 +31,37 @@ class CreatePost extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onChangeCheckBox = (e) => {
+    this.setState({ [e.target.name]: e.target.checked})
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
+    const { title, content, relatedToCovid, askForHelp } = this.state;
 
-    const { title, content } = this.state;
-    const newPost = {
-      title,
-      content,
-      owner: this.props.user.name,
-      ownerId: this.props.user._id,
-    };
-    console.log(newPost);
-    this.props.createPost(newPost);
-    // this.props.history.push("/");
-    this.setState({ redirectToHome: true });
+    if (relatedToCovid) {
+      const newCovidPost = {
+        title,
+        content,
+        owner: this.props.user.name,
+        ownerId: this.props.user._id,
+      };
+      console.log(newCovidPost);
+      this.props.createCovidPost(newCovidPost);
+      this.setState({ redirectToCovid: true })
+    } else {
+      
+      const newPost = {
+        title,
+        content,
+        owner: this.props.user.name,
+        ownerId: this.props.user._id,
+      };
+      console.log(newPost);
+      this.props.createPost(newPost);
+      // this.props.history.push("/");
+      this.setState({ redirectToHome: true });
+    }
   };
 
   componentDidMount = () => {
@@ -50,6 +71,9 @@ class CreatePost extends Component {
   render() {
     if (this.state.redirectToHome) {
       return <Redirect to="/" />;
+    };
+    if (this.state.redirectToCovid) {
+      return <Redirect to="/covid" />
     }
     return (
       <div>
@@ -91,9 +115,15 @@ class CreatePost extends Component {
                   class="form-check-input"
                   type="checkbox"
                   id="inlineCheckbox1"
+                  name="relatedToCovid"
                   value="option1"
+                  onChange={this.onChangeCheckBox}
                 />
-                <label class="form-check-label" for="inlineCheckbox1">
+                <label
+                  class="form-check-label"
+                  name="relatedToCovid"
+                  for="inlineCheckbox1"
+                >
                   Related to COVID-19
                 </label>
               </div>
@@ -103,8 +133,14 @@ class CreatePost extends Component {
                   type="checkbox"
                   id="inlineCheckbox2"
                   value="option2"
+                  onChange={this.onChangeCheckBox}
+                  name="askForHelp"
                 />
-                <label class="form-check-label" for="inlineCheckbox2">
+                <label
+                  class="form-check-label"
+                  name="askForHelp"
+                  for="inlineCheckbox2"
+                >
                   Ask for Help
                 </label>
               </div>
@@ -132,4 +168,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { createPost })(CreatePost);
+export default connect(mapStateToProps, { createPost, createCovidPost })(CreatePost);
