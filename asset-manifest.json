@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/auxilium/static/css/main.8808f73c.chunk.css",
-    "main.js": "/auxilium/static/js/main.124e6186.chunk.js",
-    "main.js.map": "/auxilium/static/js/main.124e6186.chunk.js.map",
-    "runtime-main.js": "/auxilium/static/js/runtime-main.b616296e.js",
-    "runtime-main.js.map": "/auxilium/static/js/runtime-main.b616296e.js.map",
-    "static/css/2.2f9e5d63.chunk.css": "/auxilium/static/css/2.2f9e5d63.chunk.css",
-    "static/js/2.929994e9.chunk.js": "/auxilium/static/js/2.929994e9.chunk.js",
-    "static/js/2.929994e9.chunk.js.map": "/auxilium/static/js/2.929994e9.chunk.js.map",
-    "index.html": "/auxilium/index.html",
-    "precache-manifest.5e6b86521befd14f6d0584354f688346.js": "/auxilium/precache-manifest.5e6b86521befd14f6d0584354f688346.js",
-    "service-worker.js": "/auxilium/service-worker.js",
-    "static/css/2.2f9e5d63.chunk.css.map": "/auxilium/static/css/2.2f9e5d63.chunk.css.map",
-    "static/css/main.8808f73c.chunk.css.map": "/auxilium/static/css/main.8808f73c.chunk.css.map",
-    "static/js/2.929994e9.chunk.js.LICENSE.txt": "/auxilium/static/js/2.929994e9.chunk.js.LICENSE.txt",
-    "static/media/font-awesome.min.css": "/auxilium/static/media/fontawesome-webfont.fee66e71.woff",
-    "static/media/logo_transparent.png": "/auxilium/static/media/logo_transparent.40f99bd0.png"
+    "main.css": "/COMP-2800-Team-DTC-T9-Auxilium/static/css/main.8808f73c.chunk.css",
+    "main.js": "/COMP-2800-Team-DTC-T9-Auxilium/static/js/main.d2d9764f.chunk.js",
+    "main.js.map": "/COMP-2800-Team-DTC-T9-Auxilium/static/js/main.d2d9764f.chunk.js.map",
+    "runtime-main.js": "/COMP-2800-Team-DTC-T9-Auxilium/static/js/runtime-main.cee26552.js",
+    "runtime-main.js.map": "/COMP-2800-Team-DTC-T9-Auxilium/static/js/runtime-main.cee26552.js.map",
+    "static/css/2.da4e1092.chunk.css": "/COMP-2800-Team-DTC-T9-Auxilium/static/css/2.da4e1092.chunk.css",
+    "static/js/2.929994e9.chunk.js": "/COMP-2800-Team-DTC-T9-Auxilium/static/js/2.929994e9.chunk.js",
+    "static/js/2.929994e9.chunk.js.map": "/COMP-2800-Team-DTC-T9-Auxilium/static/js/2.929994e9.chunk.js.map",
+    "index.html": "/COMP-2800-Team-DTC-T9-Auxilium/index.html",
+    "precache-manifest.e8408b94cc0e9631eaf96b9406d56d00.js": "/COMP-2800-Team-DTC-T9-Auxilium/precache-manifest.e8408b94cc0e9631eaf96b9406d56d00.js",
+    "service-worker.js": "/COMP-2800-Team-DTC-T9-Auxilium/service-worker.js",
+    "static/css/2.da4e1092.chunk.css.map": "/COMP-2800-Team-DTC-T9-Auxilium/static/css/2.da4e1092.chunk.css.map",
+    "static/css/main.8808f73c.chunk.css.map": "/COMP-2800-Team-DTC-T9-Auxilium/static/css/main.8808f73c.chunk.css.map",
+    "static/js/2.929994e9.chunk.js.LICENSE.txt": "/COMP-2800-Team-DTC-T9-Auxilium/static/js/2.929994e9.chunk.js.LICENSE.txt",
+    "static/media/font-awesome.min.css": "/COMP-2800-Team-DTC-T9-Auxilium/static/media/fontawesome-webfont.fee66e71.woff",
+    "static/media/logo_transparent.png": "/COMP-2800-Team-DTC-T9-Auxilium/static/media/logo_transparent.40f99bd0.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.b616296e.js",
-    "static/css/2.2f9e5d63.chunk.css",
+    "static/js/runtime-main.cee26552.js",
+    "static/css/2.da4e1092.chunk.css",
     "static/js/2.929994e9.chunk.js",
     "static/css/main.8808f73c.chunk.css",
-    "static/js/main.124e6186.chunk.js"
+    "static/js/main.d2d9764f.chunk.js"
   ]
 }
