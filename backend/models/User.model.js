@@ -28,6 +28,14 @@ const UserSchema = new Schema({
   postsCreated: {
     type: Array,
     default: []
+  },
+  covidPostsCreated: {
+    type: Array,
+    default: []
+  },
+  covidPostsAccepted: {
+    type: Array,
+    default: []
   }
 }, { timestamps: true });
 
