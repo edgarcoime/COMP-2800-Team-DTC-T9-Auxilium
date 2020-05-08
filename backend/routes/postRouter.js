@@ -70,4 +70,106 @@ postRouter.delete("/:id", auth, async (req, res) => {
   }
 });
 
+
+
+postRouter.post("/:postId/like", auth, (req, res) => {
+  const like = {
+    owner: req.body.owner,
+    postId: req.body.postId  }
+
+  Post.findByIdAndUpdate(req.params.postId, {
+      $push: {
+          likes: like
+      }
+  }, {
+      new: true
+  }).exec((err, result) => {
+      if (err) {
+          return res.status(422).json({ error: err })
+      } else {
+          console.log(result);
+
+          res.json(result)
+      }
+  })
+})
+
+
+
+postRouter.post("/:postId/like/delete", auth, (req, res) => {
+  const like = {
+    owner: req.body.owner,
+    postId: req.body.postId
+
+  }
+
+  Post.findByIdAndUpdate(req.params.postId, {
+      $pull: {
+          likes: like
+      }
+  }, {
+      new: true
+  }).exec((err, result) => {
+      if (err) {
+          return res.status(422).json({ error: err })
+      } else {
+          console.log(result);
+
+          res.json(result)
+      }
+  })
+})
+
+postRouter.post("/comment", (req, res) => {
+  const comment = {
+      text: req.body.text,
+      owner: req.body.owner,
+      postId: req.body.postId
+    }
+
+  Post.findByIdAndUpdate(comment.postId, {
+          $push: {
+              comments: comment
+          }
+      }, {
+          new: true
+      })
+      .populate("comments.postedBy", "id name")
+      .exec((err, result) => {
+          if (err) {
+              return res.status(422).json({ error: err })
+          } else {
+              console.log(result);
+
+              res.json(result)
+          }
+      })
+})
+
+postRouter.post("/comment/delete", (req, res) => {
+  const comment = {
+      text: req.body.text,
+      owner: req.body.owner,
+      postId: req.body.postId
+    }
+  
+  Post.findByIdAndUpdate(comment.postId, {
+          $pull: {
+              comments: comment
+          }
+      }, {
+          new: true
+      })
+      .populate("comments.postedBy", "id name")
+      .exec((err, result) => {
+          if (err) {
+              return res.status(422).json({ error: err })
+          } else {
+              console.log(result);
+
+              res.json(result)
+          }
+      })
+})
+
 export default postRouter;

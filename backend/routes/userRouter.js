@@ -26,7 +26,7 @@ userRouter.post("/", async (req, res) => {
     lastName,
     userType
   });
-
+  try{
   // create Salt and hash for user password
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -47,7 +47,8 @@ userRouter.post("/", async (req, res) => {
                 user: {
                   userId: user.id,
                   name: user.name,
-                  email: user.email
+                  email: user.email,
+
                 }
               });
             }
@@ -55,6 +56,20 @@ userRouter.post("/", async (req, res) => {
         });
     });
   });
+}catch(err){
+  console.log(err);
+  
+}
 });
+
+userRouter.get("/getall", async (req, res) => {
+  try {
+    const response = await User.find().sort({ date: -1 });
+    res.json(response);
+  } catch (error) {
+    console.log(error)
+  }
+});
+
 
 export default userRouter;

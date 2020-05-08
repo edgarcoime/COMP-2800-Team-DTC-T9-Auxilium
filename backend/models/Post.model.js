@@ -15,8 +15,12 @@ const PostSchema = new Schema({
   },
   comments: { type:Array,
     default: []
-   }
-}, { timestamps: true });
+   },
+  likes:{
+    type:Array,
+    default: []
+  }}
+, { timestamps: true });
 
 const Post = mongoose.model("post", PostSchema);
 export default Post;

@@ -41,7 +41,11 @@ class Login extends Component {
             if (response.data.token !== "") {
                 alert("Successfully logged in")
                 this.props.history.push("/")
-            } 
+                localStorage.setItem("jwt",response.data.token)
+                
+            } else{
+                this.props.history.push("/login")
+            }
         } catch (error) {
             alert("Username or password is incorrect.")
         }

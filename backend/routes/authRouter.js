@@ -14,7 +14,7 @@ const userRouter = express.Router();
 // @desc      Authenticate the user by signing in to account
 // @access    Public (implement auth later)
 userRouter.post("/", async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password, firstName, lastName, userType } = req.body;
 
   // Check existing user
   const foundUser = await User.findOne({ email });

@@ -64,20 +64,40 @@ class Register extends Component {
     }
 
     handleSubmit = async (event) => {
-
         event.preventDefault();
-
-
-        const name = this.state.name;
-        const email = this.state.email;
-        const password = this.state.password;
-        const firstname = this.state.firstname;
-        const lastname = this.state.lastname;
-        const userType = this.state.userType;           
-        axios.post('http://localhost:5000/api/users/', { name, email, password, firstname, lastname, userType})
-        .then(res => {
-            console.log(res.data);
+        try{
+        const user = {
+            name: this.state.name,
+            email: this.state.email,
+            password : this.state.password,
+            firstname : this.state.firstname,
+            lastname : this.state.lastname,
+            userType : 0
+        }
+        console.log(user);
+        
+         
+        await axios.post('http://localhost:5000/api/users/', user)
+        .then(res => {console.log(res.data);alert("Register successfully")})
+        .then(err => {if(!err){
+            this.props.history.push("/login");
+        }else{
+            console.log(err)
+            }
         })
+        this.setState({
+            name: "",
+            email: "",
+            password: "",
+            firstname: "",
+            lastname: "", 
+            userType: 0
+        })
+    }catch(err){
+        console.log(err);
+        
+    }
+
             
         
     }
@@ -92,12 +112,12 @@ class Register extends Component {
                     </CardTitle>
                     <CardBody className="mx-auto w-50">
                         <form onSubmit={this.handleSubmit}>
-                            <input type="text" name="name" placeholder="Username" className="form-control mt-4" onChange={this.handleName} required/>
-                            <input type="text" name="email" placeholder="Email" className="form-control mt-4" onChange={this.handleEmail} required/>
-                            <input type="password" name="password" placeholder="Password" className="form-control mt-4" onChange={this.handlepassword} required/>
+                            <input type="text" name="name" placeholder="Username" className="form-control mt-4" value={this.state.name} onChange={this.handleName} required/>
+                            <input type="text" name="email" placeholder="Email" className="form-control mt-4"  value={this.state.email} onChange={this.handleEmail} required/>
+                            <input type="password" name="password" placeholder="Password" className="form-control mt-4" value={this.state.password} onChange={this.handlepassword} required/>
                             <input type="password" name="password2" placeholder="Confirm Password" className="form-control mt-4" onChange={this.handlepassword2} required/>
-                            <input type="text" name="firstname" placeholder="First name" className="form-control mt-4" onChange={this.handleFirstname} required/>
-                            <input type="text" name="lastname" placeholder="Last name" className="form-control mt-4" onChange={this.handleLastname} required/>
+                            <input type="text" name="firstname" placeholder="First name" className="form-control mt-4" value={this.state.firstname} onChange={this.handleFirstname} required/>
+                            <input type="text" name="lastname" placeholder="Last name" className="form-control mt-4" value={this.state.lastName} onChange={this.handleLastname} required/>
                             <select className="form-control mt-4" name="userType" placeholder="Select Type" onChange={this.handleUsertype}>
                                 <option>General</option>
                                 <option>Volunteer</option>
