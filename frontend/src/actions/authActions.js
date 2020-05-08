@@ -10,7 +10,7 @@ export const loadUser = () => async (dispatch, getState) => {
 
     // Fetch user
     const response = await axios.get(
-      "http://localhost:5000/api/auth/user",
+      "/api/auth/user",
       tokenConfig(getState)
     );
     dispatch({
@@ -51,7 +51,7 @@ export const register = ({
       password,
     });
     const response = await axios.post(
-      "http://localhost:5000/api/users",
+      "/api/users",
       body,
       config
     );
@@ -88,7 +88,7 @@ export const login = ({
       password
     });
     const response = await axios.post(
-      "http://localhost:5000/api/auth",
+      "/api/auth",
       body,
       config
     );

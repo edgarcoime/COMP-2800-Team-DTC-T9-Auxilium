@@ -28,7 +28,7 @@ class PostTileCovid extends Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:5000/api/covid/getall").then((res) => {
+    axios.get("/api/covid/getall").then((res) => {
       const posts = res.data;
       // console.log(posts)
       this.setState({ posts });
