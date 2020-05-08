@@ -83,7 +83,7 @@ postRouter.post("/", auth, async (req, res) => {
 // @access    Private (implement auth later)
 postRouter.delete("/:id", auth, async (req, res) => {
   try {
-    const { reqOwner, postId } = req.body;
+    const { reqOwner, reqOwnerId, postId } = req.body;
 
     const foundPost = await Post.findById(postId);
 
@@ -91,11 +91,16 @@ postRouter.delete("/:id", auth, async (req, res) => {
     if (reqOwner !== foundPost.owner) {
       res.json({ msg: "You do not have access to delete this post." });
     } else {
-      foundPost
-        .remove()
-        .then(() =>
+      
+      // Delete made post in user profile
+      console.log(foundPost, reqOwnerId)
+      User.updateOne({ _id: reqOwnerId }, { $pull: { postsCreated: foundPost._id } }).then(
+        (data) => {
+          console.log(data);
+          const response = foundPost.remove();
           res.json({ success: true, msg: "Succesfully deleted post" })
-        );
+        }
+      );
     }
   } catch (error) {
     res.status(404).json({ success: false });
