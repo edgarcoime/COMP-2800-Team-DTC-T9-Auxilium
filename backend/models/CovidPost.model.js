@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 // Create Schema
-const PostSchema = new Schema(
+const CovidPostSchema = new Schema(
   {
     title: {
       type: String,
@@ -18,10 +18,12 @@ const PostSchema = new Schema(
     content: {
       type: String,
     },
-    comments: { type: Array, default: [] },
+    assignedTo: {
+      type: Object
+    },
   },
   { timestamps: true }
 );
 
-const Post = mongoose.model("post", PostSchema);
-export default Post;
+const CovidPost = mongoose.model("covidPost", CovidPostSchema);
+export default CovidPost;

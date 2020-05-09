@@ -16,7 +16,24 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  userType: {
+    type: Number, // 0=RegularUser, 1=Volunteer, 2=InNeedOfHelp
+  },
+  postsCreated: [{
+    type:mongoose.Schema.Types.ObjectId, ref: 'post'
+  }],
+  covidPostsCreated: [{
+    type:mongoose.Schema.Types.ObjectId, ref: 'covidPost'
+  }],
+  covidPostsAccepted: [{
+    type:mongoose.Schema.Types.ObjectId, ref: 'covidPost'
+  }]
 }, { timestamps: true });
 
 const User = mongoose.model("user", UserSchema);
