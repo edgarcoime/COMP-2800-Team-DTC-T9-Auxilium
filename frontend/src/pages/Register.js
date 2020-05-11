@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Card, CardBody,CardTitle } from 'reactstrap'
 import { NavLink } from 'react-router-dom'
 import Header from './../components/Header/Header'
-import Select from 'react-select'
 import logo from './../images/logo_transparent.png'
 
 class Register extends Component {
@@ -63,7 +62,7 @@ class Register extends Component {
         } 
     }
 
-    handleSubmit = async (event) => {
+    handleSubmit =  (event) => {
         event.preventDefault();
         try{
         const user = {
@@ -77,7 +76,7 @@ class Register extends Component {
         console.log(user);
         
          
-        await axios.post('http://localhost:5000/api/users/', user)
+         axios.post('http://localhost:5000/api/users/', user)
         .then(res => {console.log(res.data);alert("Register successfully")})
         .then(err => {if(!err){
             this.props.history.push("/login");

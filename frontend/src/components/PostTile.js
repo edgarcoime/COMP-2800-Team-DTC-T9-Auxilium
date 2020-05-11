@@ -18,6 +18,7 @@ class PostTile extends Component {
             isClicked: 0,
             comments: [],
             newData:[],
+            post:[],
         }
         this.handleLikeClick = this.handleLikeClick.bind(this);
         this.makeComment = this.makeComment.bind(this);
@@ -35,7 +36,7 @@ class PostTile extends Component {
         let now = Date.now();
         const differenceInMilliSecond = now - created;
         const h = differenceInMilliSecond/1000/60/60;
-        console.log(h);
+        // console.log(h);
         if (h >= 24) {
             return Math.trunc(h / 24) + 'd ago';
         } else if (h < 1) {
@@ -52,15 +53,56 @@ class PostTile extends Component {
             })
     }
 
-    handleLikeClick() {
-        if(this.state.isClicked == 0) {
-            this.setState({isClicked: 1});
-        } else {
-            this.setState({isClicked: 0});
-        }
+    getPostById =(postId)=> {
+        axios.get(`http://localhost:5000/api/posts/${postId}`)
+            .then(res => {
+                const post = res.data;
+                console.log(post);            
+                this.setState({post})
+            })
     }
 
-    makeComment = async(text,postId) =>{
+    handleLikeClick = async(postId) => {
+        this.state.posts.map(post =>{
+            console.log(post)
+            if(post._id==postId){
+                console.log("pass1");
+                console.log(this.state.isClicked);
+                if(this.state.isClicked == 0) {    
+                    console.log("pass1");
+                
+                    this.setState({isClicked: 1});
+                    console.log(this.state.isClicked);
+                } else {
+                    console.log("pass2");
+
+                    this.setState({isClicked: 0});
+                    console.log(this.state.isClicked);
+
+                }
+            }else{
+                console.log(this.state.isClicked);
+
+                console.log("pass2");
+
+                this.setState({isClicked: 0});
+            }
+        })
+        // if(this.state.isClicked == 0) {
+        //     console.log("pass1");
+
+        //     this.setState({isClicked: 1});
+        //     console.log(this.state.isClicked)
+        // } else {
+        //     console.log("pass2");
+        //     this.setState({isClicked: 0});
+        //     console.log(this.state.isClicked)
+
+        // }
+    }
+
+
+    makeComment = (text,postId) =>{
         const comment = {
             text: text,
             owner: localStorage.getItem("name"),
@@ -74,26 +116,26 @@ class PostTile extends Component {
         }
         // const OMG = JSON.parse(JSON.stringify(newConfig))        
         
-        await axios.post('http://localhost:5000/api/posts/comment',comment)
+         axios.post('http://localhost:5000/api/posts/comment',comment)
         .then(res =>  {
             const result = res.data;
-            console.log(result.comments.length);
+            // console.log(result.comments.length);
             const newData = this.state.posts.map(post =>{
-            console.log(post)
+            // console.log(post)
             if(post._id==result._id){
-                console.log("pass1");
-                console.log(result.comments.length);
+                // console.log("pass1");
+                // console.log(result.comments.length);
                 
                 return result;
                 
             }else{
-                console.log("pass2");
+                // console.log("pass2");
 
                 return post;
 
             }
             })
-            console.log(newData)
+            // console.log(newData)
             this.setState(newData);
         })
         .catch(err => console.log(err))   
@@ -117,31 +159,30 @@ class PostTile extends Component {
         await axios.post('http://localhost:5000/api/posts/comment/delete',comment)
         .then(res =>  {
             const result = res.data;
-            console.log(result.comments.length);
             const newData = this.state.posts.map(post =>{
-            console.log(post)
+            // console.log(post)
             if(post._id==result._id){
-                console.log("pass1");
-                console.log(result.comments.length);
+                // console.log("pass1");
+                // console.log(result.comments.length);
                 
                 return result;
                 
             }else{
-                console.log("pass2");
+                // console.log("pass2");
 
                 return post;
 
             }
             })
-            console.log(newData)
-            this.setState(newData);
+            // console.log(newData)
+            this.setState({newData});
         })
         .catch(err => console.log(err))   
     }
 
     addLike = async(click,postId) =>{
         this.setState({isClicked: 1});
-        console.log(click)
+        // console.log(click)
         if(this.state.isClicked !=0){
         const like = {
             owner: localStorage.getItem("name"),
@@ -157,22 +198,22 @@ class PostTile extends Component {
         await axios.post('http://localhost:5000/api/posts/like',like)
         .then(res =>  {
             const result = res.data;
-            console.log(result.likes.length);
+            // console.log(result.likes.length);
             const newData = this.state.posts.map(post =>{
-            console.log(post)
+            // console.log(post)
             if(post._id==result._id){
-                console.log("pass1");                
+                // console.log("pass1");                
                 return result;
                 
             }else{
-                console.log("pass2");
+                // console.log("pass2");
 
                 return post;
 
             }
             })
-            console.log(newData)
-            this.setState(newData);
+            // console.log(newData)
+            this.setState({newData});
         })
         .catch(err => console.log(err))
    
@@ -192,26 +233,34 @@ class PostTile extends Component {
         await axios.post('http://localhost:5000/api/posts/like/delete',like)
         .then(res =>  {
             const result = res.data;
-            console.log(result.likes.length);
+            // console.log(result.likes.length);
             const newData = this.state.posts.map(post =>{
-            console.log(post)
+            // console.log(post)
             if(post._id==result._id){
-                console.log("pass1");                
+                // console.log("pass1");                
                 return result;
                 
             }else{
-                console.log("pass2");
+                // console.log("pass2");
 
                 return post;
 
             }
             })
-            console.log(newData)
-            this.setState(newData);
+            // console.log(newData)
+            this.setState({newData});
         })
         .catch(err => console.log(err))  
      
     }
+    }
+    deletePost  = (postId) => {
+        axios.delete(`http://localhost:5000/api/posts/${postId}`)
+        .then(res => {
+            const post = res.data;
+            console.log(post);            
+            this.setState({post})
+        })
     }
     
    
@@ -232,7 +281,7 @@ class PostTile extends Component {
                                                 <p><strong>{post.owner}</strong></p>
                                             </Col>
                                             <Col className="col-4 col-sm-2">
-                                                {console.log(Date.parse(post.createdAt))}
+                                               
                                                 <span className="float-right">{this.whenPosted(post.createdAt)}</span>
                                             </Col>
                                         </Row>
@@ -246,7 +295,10 @@ class PostTile extends Component {
                             e.preventDefault()
                             this.addLike(this.state.isClicked, post._id)
                         }}> 
-                    <button className="btn" onClick={this.handleLikeClick}><span><FontAwesomeIcon icon={this.state.isClicked == 1 ? faHeart1 : faHeart} size="2x"/></span></button>
+                    <button className="btn" onClick={this.onClick=(e)=>{
+                            e.preventDefault()
+                            this.handleLikeClick(post._id)
+                        }}><span><FontAwesomeIcon icon={this.state.isClicked == 1 ? faHeart1 : faHeart} size="2x"/></span></button>
                     <button className="btn" id="toggler"><span className="pl-3"><FontAwesomeIcon icon={faComment} size="2x" /></span></button>
                     </form>
                 </span>
