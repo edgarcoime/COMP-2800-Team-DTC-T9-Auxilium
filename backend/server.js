@@ -12,7 +12,8 @@ import {
   postRouter, 
   authRouter,
   commentRouter,
-  covidPostRouter
+  covidPostRouter,
+  likeRouter
 } from "./routes/index";
 
 const app = express();
@@ -40,8 +41,9 @@ app.use("/api", apiRouter);
 apiRouter.use("/users", userRouter);
 apiRouter.use("/posts", postRouter);
 apiRouter.use("/auth", authRouter);
-apiRouter.use("/comments", commentRouter);
+apiRouter.use("/comment", commentRouter);
 apiRouter.use("/covid", covidPostRouter);
+apiRouter.use("/like", likeRouter);
 
 
 const port = process.env.PORT || 5000;

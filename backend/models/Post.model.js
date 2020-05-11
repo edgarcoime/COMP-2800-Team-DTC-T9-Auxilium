@@ -1,5 +1,21 @@
 import mongoose, { Schema } from "mongoose";
 
+// Create chridren schema : comment
+const commentSchema = new Schema({
+  text: {
+    type: String,
+  },
+  owner: {
+    type: String,
+    required: true
+  },
+  ownerId: {
+    type: String,
+    required: true
+  }
+}, { timestamps: true });
+
+
 // Create Schema
 const PostSchema = new Schema(
   {
@@ -18,7 +34,11 @@ const PostSchema = new Schema(
     content: {
       type: String,
     },
-    comments: { type: Array, default: [] },
+    comments: { type: [commentSchema], default: [] },
+    likes:{
+    type:Array,
+    default: []
+    },
   },
   { timestamps: true }
 );
