@@ -6,7 +6,7 @@ import { returnErrors } from "./errorActions";
 export const createCovidPost = (newPost) => async (dispatch, getState) => {
   try {
     const response = await axios.post(
-      "/api/covid",
+      "https://auxilium-dtc-t9-backend-api.herokuapp.com/api/covid",
       newPost,
       tokenConfig(getState)
     );
@@ -26,7 +26,7 @@ export const deleteCovidPost = (deleteReq) => async (dispatch, getState) => {
   try {
     const postId = deleteReq.postId
     const response = await axios.delete(
-      `/api/posts/`, 
+      `https://auxilium-dtc-t9-backend-api.herokuapp.com/api/posts/`, 
       deleteReq,
       tokenConfig(getState)
     );

@@ -21,7 +21,7 @@ export const getAllPosts = () => async (dispatch) => {
 export const createPost = (newPost) => async (dispatch, getState) => {
   try {
     const response = await axios.post(
-      "/api/posts",
+      "https://auxilium-dtc-t9-backend-api.herokuapp.com/api/posts",
       newPost,
       tokenConfig(getState)
     );
@@ -41,7 +41,7 @@ export const deletePost = (deleteReq) => async (dispatch, getState) => {
   try {
     const postId = deleteReq.postId
     const response = await axios.delete(
-      `/api/posts/`, 
+      `https://auxilium-dtc-t9-backend-api.herokuapp.com/api/posts/`, 
       deleteReq,
       tokenConfig(getState)
     );

@@ -49,7 +49,7 @@ class PostTileCovid extends Component {
   };
 
   componentDidMount() {
-    axios.get("/api/covid/getall").then((res) => {
+    axios.get("https://auxilium-dtc-t9-backend-api.herokuapp.com/api/covid/getall").then((res) => {
       const posts = res.data;
       // console.log(posts)
       this.setState({ posts });

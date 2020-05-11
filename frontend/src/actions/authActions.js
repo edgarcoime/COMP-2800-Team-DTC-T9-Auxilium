@@ -10,7 +10,7 @@ export const loadUser = () => async (dispatch, getState) => {
 
     // Fetch user
     const response = await axios.get(
-      "/api/auth/user",
+      "https://auxilium-dtc-t9-backend-api.herokuapp.com/api/auth/user",
       tokenConfig(getState)
     );
     dispatch({
@@ -51,7 +51,7 @@ export const register = ({
       password,
     });
     const response = await axios.post(
-      "/api/users",
+      "https://auxilium-dtc-t9-backend-api.herokuapp.com/api/users",
       body,
       config
     );
@@ -88,7 +88,7 @@ export const login = ({
       password
     });
     const response = await axios.post(
-      "/api/auth",
+      "https://auxilium-dtc-t9-backend-api.herokuapp.com/api/auth",
       body,
       config
     );
