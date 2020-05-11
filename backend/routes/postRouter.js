@@ -14,7 +14,7 @@ const postRouter = express.Router();
 // @access    Public
 postRouter.get("/getall", async (req, res) => {
   try {
-    const response = await Post.find().sort({ updatedAt: -1 });
+    const response = await Post.find().sort({ createdAt: -1 });
     res.json(response);
   } catch (error) {
     console.log(error);

@@ -14,7 +14,7 @@ const covidPostRouter = express.Router();
 // @access    Public
 covidPostRouter.get("/getall", async (req, res) => {
   try {
-    const response = await CovidPost.find().sort({ updatedAt: -1 });
+    const response = await CovidPost.find().sort({ createdAt: -1 });
     res.json(response);
   } catch (error) {
     console.log(error);
