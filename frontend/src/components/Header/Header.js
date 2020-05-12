@@ -31,7 +31,6 @@ class Header extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
-    console.log(isAuthenticated);
     
     return (
       <Row className="header">
