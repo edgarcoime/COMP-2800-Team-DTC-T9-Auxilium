@@ -93,8 +93,12 @@ class LikeComment extends Component {
         },
         data: commentData,
       }).then(response => {
+        const newComment = response.data;
+        let newStateComments = [...this.state.postComments];
+        newStateComments.push(newComment);
         console.log(response)
-        this.setState({ comment: "", isCommentClicked: 0, refreshComponent: true });
+        // this.setState({ comment: "", isCommentClicked: 0, refreshComponent: true });
+        this.setState({ comment: "", isCommentClicked: 0, refreshComponent: true, postComments: newStateComments })
       });
     }
   };

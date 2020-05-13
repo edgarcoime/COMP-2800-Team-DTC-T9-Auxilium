@@ -33,11 +33,12 @@ commentRouter.post("/getpostcomments", async (req, res) => {
 commentRouter.post("/", auth, async (req, res) => {
   const { text, owner, ownerId, postId } = req.body;
   try {
+    const newComment = { text, owner, ownerId, postId}
     const post = await Post.findByIdAndUpdate(
       postId,
       {
         $push: {
-          comments: { text: text, owner: owner, ownerId: ownerId },
+          comments: newComment,
         },
       },
       {
@@ -50,7 +51,8 @@ commentRouter.post("/", auth, async (req, res) => {
           msg: "Please provide correct owner name, owerId and postid",
         });
       } else {
-        res.json(result);
+        const lastComment = (result.comments).slice(-1)[0];
+        res.json( lastComment )
       }
     });
   } catch (error) {
