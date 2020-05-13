@@ -67,7 +67,7 @@ class Home extends Component {
             </Col>
             {isAuthenticated ? createPostLink : null}
           </Row>
-          <PostTile />
+          <PostTile isAuthenticated={isAuthenticated}/>
         </div>
       </div>
     );

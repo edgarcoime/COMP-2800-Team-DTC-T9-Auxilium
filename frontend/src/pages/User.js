@@ -9,29 +9,24 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { tokenConfig } from "../actions/authActions";
 
+// Components
+import Post from "../components/partials/Post.component";
+
 class User extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
+    this.state = {};
   }
 
-  componentWillMount() {
-    console.log(`Component Will mount:`, this.props);
+  componentDidMount() {
+    const { isAuthenticated } = this.props;
+    if (!isAuthenticated) {
+      this.props.history.push("/");
+    }
   }
 
   render() {
-    const {
-      firstName,
-      lastName,
-      name,
-      email,
-      covidPostsCreated,
-      covidPostsAccepted,
-      postsCreated
-    } = this.props.user
-    console.log(postsCreated)
     return (
       <div>
         <Header />
@@ -39,39 +34,48 @@ class User extends Component {
           <h1 className="text-center">Profile</h1>
           <Row>
             <Col className="col-12 col-sm-6">
-              <p className="text-center mt-3">First Name: {firstName}</p>
+              <p className="text-center mt-3">
+                First Name: {this.props.user.firstName}
+              </p>
             </Col>
             <Col className="col-12 col-sm-6">
-              <p className="text-center mt-3">Last Name: {lastName}</p>
+              <p className="text-center mt-3">
+                Last Name: {this.props.user.lastName}
+              </p>
             </Col>
             <Col className="col-12 col-sm-6">
-              <p className="text-center mt-3">Username: {name}</p>
+              <p className="text-center mt-3">
+                Username: {this.props.user.name}
+              </p>
             </Col>
             <Col className="col-12 col-sm-6">
-              <p className="text-center mt-3  ">Email: {email}</p>
+              <p className="text-center mt-3  ">
+                Email: {this.props.user.email}
+              </p>
             </Col>
           </Row>
           <Row></Row>
         </div>
 
         <h2>Posts Created</h2>
-        {
-          postsCreated.map(post => (
-            <p>{post.title}</p>
-          ))
-        }
+        {this.props.user.postsCreated.map((post) => (
+          <Post
+            _id={post._id}
+            owner={post.owner}
+            createdAt={post.createdAt}
+            title={post.title}
+            content={post.content}
+            likes={post.likes}
+          />
+        ))}
         <h2>COVID Posts Created</h2>
-        {
-          covidPostsCreated.map(post => (
-            <p>{post.title}</p>
-          ))
-        }
+        {this.props.user.covidPostsCreated.map((post) => (
+          <p>{post.title}</p>
+        ))}
         <h2>COVID Posts Accepted</h2>
-        {
-          covidPostsAccepted.map(post => (
-            <p>{post.title}</p>
-          ))
-        }
+        {this.props.user.covidPostsAccepted.map((post) => (
+          <p>{post.title}</p>
+        ))}
       </div>
     );
   }
