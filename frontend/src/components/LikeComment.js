@@ -66,7 +66,7 @@ class LikeComment extends Component {
   };
 
   submitComment = (e) => {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
       alert("Please sign in to comment");
     } else {
@@ -92,39 +92,15 @@ class LikeComment extends Component {
           "x-auth-token": token,
         },
         data: commentData,
-      }).then((response) => console.log(response));
-      this.setState({ isCommentClicked: 0, refreshComponent: true });
-      this.forceUpdate();
-      e.target.value = "";
+      }).then(response => {
+        console.log(response)
+        this.setState({ comment: "", isCommentClicked: 0, refreshComponent: true });
+      });
     }
   };
 
   render() {
-    // const stateComment 
-    // const renderedStateComments = (
-    //   <Fragment>
-    //   {
-
-    //   }
-    //                 {comments.map((comment) => (
-    //           <CommentTile
-    //             key={"commentTile" + comment._id}
-    //             commentId={comment._id}
-    //             commentOwner={comment.owner}
-    //             text={comment.text}
-    //             ownerId={comment.ownerId}
-    //           />
-    //         ))}
-    //   </Fragment>
-    // )
-    // let comments = null;
     const comments = this.state.postComments;
-    // const propsComments = this.props.comments;
-    // if (!stateComments) {
-    //   comments = propsComments;
-    // } else {
-    //   comments = stateComments;
-    // }
     return (
       <div>
         <span>
