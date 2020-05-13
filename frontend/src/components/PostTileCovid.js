@@ -84,6 +84,7 @@ class PostTileCovid extends Component {
                 <CardBody className="pt-0">
                   <h4>{post.title}</h4>
                   <p>{post.content}</p>
+
                   <p>34 Likes</p>
                   <button className="btn btn-info float-right">Accept</button>
                   <LikeComment className="d-inline" />

@@ -83,7 +83,7 @@ class PostTile extends Component {
                 <CardBody className="pt-0">
                   <h4>{post.title}</h4>
                   <p>{post.content}</p>
-                  <p>34 likes</p>
+                  <p>{post.likes.length} likes</p>
                   <LikeComment id={post.id} />
                 </CardBody>
               </Card>
