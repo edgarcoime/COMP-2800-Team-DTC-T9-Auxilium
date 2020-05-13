@@ -83,6 +83,7 @@ class LikeComment extends Component {
         postId,
       };
       // console.log(commentData)
+
       axios({
         method: "post",
         url: "http://localhost:5000/api/comment/",
@@ -95,11 +96,12 @@ class LikeComment extends Component {
       }).then((response) => console.log(response));
       this.setState({ isCommentClicked: 0, refreshComponent: true });
       this.forceUpdate();
-      e.target.value = "";
+      e.target.value = "";      
     }
   };
 
   render() {
+    const { user, isAuthenticated, id, token } = this.props;
     // const stateComment 
     // const renderedStateComments = (
     //   <Fragment>
@@ -152,6 +154,11 @@ class LikeComment extends Component {
                 commentOwner={comment.owner}
                 text={comment.text}
                 ownerId={comment.ownerId}
+                user={user.name}
+                userId={user._id}
+                isAuthenticated={isAuthenticated}
+                postId={id}
+                token={token}
               />
             ))}
             <input
