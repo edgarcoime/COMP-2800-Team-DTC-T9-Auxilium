@@ -8,11 +8,15 @@ import PostTile from "./../components/PostTile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import './pages.css'
+import easter from './../images/easter.mp4'
+
 
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../actions/authActions";
+
+const EasterEgg = require('react-easter');
 
 class Home extends Component {
   constructor(props) {
@@ -22,6 +26,13 @@ class Home extends Component {
   }
 
   render() {
+    const easterCode = [
+      'arrowup',
+      'arrowup',
+      'arrowdown',
+      'arrowdown',
+    
+    ];
     const { isAuthenticated } = this.props;
     console.log(isAuthenticated);
 
@@ -41,7 +52,16 @@ class Home extends Component {
     );
 
     return (
-      <div>
+      
+      <div >
+        <EasterEgg
+        keys={easterCode}
+        timeout={8000}>
+      <iframe class="embed-responsive embed-responsive-16by9"
+                  src={easter}
+                  frameborder="0"
+                  allowfullscreen />
+    </EasterEgg>
         <Header />
         <div className="container">
           <h1 className="text-center mt-3">General</h1>
@@ -85,3 +105,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { login })(Home);
+
