@@ -9,7 +9,7 @@ import CovidPost from "../models/CovidPost.model";
 
 const commentRouter = express.Router();
 
-// @route     POST api/comment
+// @route     POST api/comment/getpostcomments
 // @desc      Post comment
 // @access    Private (implement auth later)
 commentRouter.post("/getpostcomments", async (req, res) => {
@@ -23,7 +23,23 @@ commentRouter.post("/getpostcomments", async (req, res) => {
   } catch (error) {
     console.log(error)
     res.status(400).json({ msg: "Could not get comments for post", error })
-    // res.json({ error });
+  }
+});
+
+// @route     POST api/comment/getcovidcomments
+// @desc      Post comment
+// @access    Private (implement auth later)
+commentRouter.post("/getcovidcomments", async (req, res) => {
+  try {
+    const { postId } = req.body;
+    const foundPost = await CovidPost.findById(postId);
+    console.log(foundPost.comments);
+    res.json({ comments: foundPost.comments });
+    // console.log(req.body)
+    // res.json("Hello comments")
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ msg: "Could not get comments for post", error })
   }
 });
 
@@ -31,8 +47,8 @@ commentRouter.post("/getpostcomments", async (req, res) => {
 // @desc      Post comment
 // @access    Private (implement auth later)
 commentRouter.post("/", auth, async (req, res) => {
-  const { text, owner, ownerId, postId } = req.body;
   try {
+    const { text, owner, ownerId, postId } = req.body;
     const newComment = { text, owner, ownerId, postId}
     const post = await Post.findByIdAndUpdate(
       postId,
@@ -100,13 +116,14 @@ commentRouter.post("/delete/:commentId", auth, async (req, res) => {
 // @desc      Post comment
 // @access    Private (implement auth later)
 commentRouter.post("/covid", auth, async (req, res) => {
-  const { text, owner, ownerId, postId } = req.body;
   try {
+    const { text, owner, ownerId, postId } = req.body;
+    const newComment = { text, owner, ownerId, postId}
     const post = await CovidPost.findByIdAndUpdate(
       postId,
       {
         $push: {
-          comments: { text: text, owner: owner, ownerId: ownerId },
+          comments: newComment,
         },
       },
       {
@@ -119,11 +136,12 @@ commentRouter.post("/covid", auth, async (req, res) => {
           msg: "Please provide correct owner name, owerId and postid",
         });
       } else {
-        res.json(result);
+        const lastComment = (result.comments).slice(-1)[0];
+        res.json( lastComment )
       }
     });
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ error })
   }
 });
 

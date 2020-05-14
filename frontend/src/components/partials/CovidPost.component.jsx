@@ -1,15 +1,15 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import LikeComment from "../LikeComment";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 
-export default class Post extends Component {
+export class CovidPost extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isCovid: false
+      isCovid: true,
     };
   }
 
@@ -42,7 +42,7 @@ export default class Post extends Component {
       isAuthenticated,
     } = this.props;
     return (
-      <Fragment>
+      <div>
         <Row key={_id}>
           <Col className="mt-5">
             <Card className="bg-light shadow-sm">
@@ -53,7 +53,6 @@ export default class Post extends Component {
                       <strong>{owner}</strong>
                     </p>
                   </Col>
-                  {/* {console.log(Date.parse(post.createdAt))} */}
                   <Col className="col-4 col-sm-2">
                     <span className="float-right">
                       {this.postCreated(createdAt)}
@@ -62,20 +61,24 @@ export default class Post extends Component {
                 </Row>
               </CardTitle>
               <CardBody className="pt-0">
-                <h4>{title}</h4>
-                <p>{content}</p>
-                <p>{likes.length} likes</p>
+                <h4>{ title }</h4>
+                <p>{ content }</p>
+
+                <p>{ likes.length }</p>
+                <button className="btn btn-info float-right">Accept</button>
                 <LikeComment
-                  id={_id}
-                  comments={comments}
-                  isAuthenticated={isAuthenticated}
-                  isCovid={ this.state.isCovid }
+                  id={ _id }
+                  comments= { comments }
+                  isAuthenticated = { isAuthenticated }
+                  isCovid = { this.state.isCovid }
                 />
               </CardBody>
             </Card>
           </Col>
         </Row>
-      </Fragment>
+      </div>
     );
   }
 }
+
+export default CovidPost;

@@ -32,8 +32,9 @@ class LikeComment extends Component {
 
   componentDidMount = async () => {
     try {
-      const { id } = this.props;
-      const url = "http://localhost:5000/api/comment/getpostcomments";
+      const { id, isCovid } = this.props;
+      let url = "";
+      isCovid ? url="http://localhost:5000/api/comment/getcovidcomments" : url="http://localhost:5000/api/comment/getpostcomments"
       const data = { postId: id };
       const response = await axios.post(url, data);
       this.setState({
@@ -66,7 +67,7 @@ class LikeComment extends Component {
   };
 
   submitComment = (e) => {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, isCovid } = this.props;
     if (!isAuthenticated) {
       alert("Please sign in to comment");
     } else {
@@ -82,10 +83,14 @@ class LikeComment extends Component {
         ownerId: userId,
         postId,
       };
+      let apiURL = "";
+      isCovid ? apiURL="http://localhost:5000/api/comment/covid" : apiURL="http://localhost:5000/api/comment/"
+      // console.log(apiURL)
+
       // console.log(commentData)
       axios({
         method: "post",
-        url: "http://localhost:5000/api/comment/",
+        url: apiURL,
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*",
@@ -101,7 +106,7 @@ class LikeComment extends Component {
         this.setState({ comment: "", isCommentClicked: 0, refreshComponent: true, postComments: newStateComments })
       });
     }
-  };
+  }
 
   render() {
     const comments = this.state.postComments;
