@@ -10,8 +10,6 @@ import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
 import './pages/pages.css'
 
 
-import EasterEgg from 'react-easter-egg';
-
 // Redux
 import { Provider } from "react-redux";
 import store from "./store";
