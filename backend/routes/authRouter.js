@@ -60,13 +60,6 @@ userRouter.post("/", async (req, res) => {
 // @desc      Get user data based on token data
 // @access    Private (implement auth later)
 userRouter.get("/user", auth, async (req, res) => {
-  // const foundUser = await User.findById(req.user.id).select("-password");
-  // res.json(foundUser);
-  // User.findById(req.user.id)
-  //   .populate("postsCreated").exec((err, populatedUser) => {
-  //     if (err) { console.log(err)}
-  //     res.json(populatedUser)
-  //   })
   try {
     const populatedUser = await User.findById(req.user.id)
       .populate("postsCreated")
