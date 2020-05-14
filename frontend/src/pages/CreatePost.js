@@ -77,7 +77,7 @@ class CreatePost extends Component {
     }
     return (
       <div>
-        <Header />
+        <Header history={this.props.history}/>
         <div className="container">
           <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
             <Link to="/" className="mt-4">

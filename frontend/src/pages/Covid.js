@@ -44,7 +44,7 @@ class Covid extends Component {
 
     return (
       <div>
-        <Header />
+        <Header history={this.props.history}/>
         <div className="container">
         <h1 className="text-center mt-3">COVID-19</h1>
           <Row>

@@ -30,7 +30,8 @@ class Header extends Component {
   }
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { history, auth: {isAuthenticated, user} } = this.props;
+    console.log(history)
     
     return (
       <Row className="header">
@@ -85,7 +86,7 @@ class Header extends Component {
                     <LoginRegisterBtn user={user} isAuthenticated={isAuthenticated} />
                 </NavItem>
                 <NavItem className="mr-2">
-                  { isAuthenticated ? <Logout /> : null }
+                  { isAuthenticated ? <Logout history={history}/> : null }
                 </NavItem>
               </Nav>
           </Collapse>
@@ -98,10 +99,15 @@ class Header extends Component {
 
 Header.propTypes = {
   auth: PropTypes.object.isRequired,
+  history: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
+const mapStateToProps = (state, ownProps) => {
+  const { history } = ownProps
+  return {
+    auth: state.auth,
+    history
+  }
+};
 
 export default connect(mapStateToProps, null)(Header);
