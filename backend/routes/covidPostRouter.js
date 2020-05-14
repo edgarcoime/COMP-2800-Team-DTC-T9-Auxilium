@@ -14,7 +14,9 @@ const covidPostRouter = express.Router();
 // @access    Public
 covidPostRouter.get("/getall", async (req, res) => {
   try {
-    const response = await CovidPost.find().sort({ createdAt: -1 });
+    const response = await CovidPost.find()
+      .populate("assignedTo")
+      .sort({ createdAt: -1 });
     res.json(response);
   } catch (error) {
     console.log(error);
@@ -112,7 +114,7 @@ covidPostRouter.delete("/:id", auth, async (req, res) => {
 // @route     POST api/covid/acceptrequest
 // @desc      POST by accepting a COVID request
 // @access    Private (implement auth later)
-covidPostRouter.post("/acceptrequest", auth, async (req, res) => {
+covidPostRouter.post("/acceptrequest", async (req, res) => {
   try {
     const { reqOwner, reqOwnerId, covidPostId } = req.body;
 
