@@ -28,7 +28,9 @@ class LikeComment extends Component {
       comment: "",
       refreshComponent: true,
     };
+
   }
+
 
   componentDidMount = async () => {
     try {
@@ -101,7 +103,6 @@ class LikeComment extends Component {
   };
 
   render() {
-    const { user, isAuthenticated, id, token } = this.props;
     // const stateComment 
     // const renderedStateComments = (
     //   <Fragment>
@@ -120,13 +121,29 @@ class LikeComment extends Component {
     //   </Fragment>
     // )
     // let comments = null;
-    const comments = this.state.postComments;
+
     // const propsComments = this.props.comments;
     // if (!stateComments) {
     //   comments = propsComments;
     // } else {
     //   comments = stateComments;
     // }
+    // const { user, isAuthenticated, id, token } = this.props;
+    // var user = "";
+    // var isAuthenticated = "";
+    // var id = "";
+    // var token = "";
+    // var username= "";
+    // var userId = "";
+  
+    if(this.props.user){
+      var{ user, isAuthenticated, id, token } = this.props;
+      var username = user.name
+      var userId = user.userId
+    }else{
+      var {user, isAuthenticated, id, token} = "";
+    }
+    const comments = this.state.postComments;
     return (
       <div>
         <span>
@@ -148,14 +165,15 @@ class LikeComment extends Component {
           <span>
             {/* MAP CODE TO LOOP THROUGH COMMENTS */}
             {comments.map((comment) => (
+              
               <CommentTile
                 key={"commentTile" + comment._id}
                 commentId={comment._id}
                 commentOwner={comment.owner}
                 text={comment.text}
                 ownerId={comment.ownerId}
-                user={user.name}
-                userId={user._id}
+                user={username}
+                userId={userId}
                 isAuthenticated={isAuthenticated}
                 postId={id}
                 token={token}
@@ -178,6 +196,7 @@ class LikeComment extends Component {
     );
   }
 }
+
 
 LikeComment.propTypes = {
   isAuthenticated: PropTypes.bool,
