@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Header from "./../components/Header/Header";
+import CreatedPost from './../components/CreatedPost'
 import { Row, Col } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import './pages.css'
 
 // Redux
 import { connect } from "react-redux";
@@ -35,7 +37,7 @@ class User extends Component {
     return (
       <div>
         <Header />
-        <div>
+        <div className="container">
           <h1 className="text-center">Profile</h1>
           <Row>
             <Col className="col-12 col-sm-6">
@@ -51,27 +53,42 @@ class User extends Component {
               <p className="text-center mt-3  ">Email: {email}</p>
             </Col>
           </Row>
-          <Row></Row>
-        </div>
+          <h2 className="mt-5"><strong><i>General Posts</i></strong></h2>
+            <hr />
+          <Row>
+            <Col className="col-12">
+              {
+                postsCreated.map(post => (
+                  <CreatedPost post={post} />
+                ))
+              }
+            </Col>
+          </Row>
+          <h2 className="mt-5"><strong><i>COVID Posts</i></strong></h2>
+          <hr/>
+          <Row>
 
-        <h2>Posts Created</h2>
-        {
-          postsCreated.map(post => (
-            <p>{post.title}</p>
-          ))
-        }
-        <h2>COVID Posts Created</h2>
-        {
-          covidPostsCreated.map(post => (
-            <p>{post.title}</p>
-          ))
-        }
-        <h2>COVID Posts Accepted</h2>
-        {
-          covidPostsAccepted.map(post => (
-            <p>{post.title}</p>
-          ))
-        }
+            <Col className="col-12">
+              {
+                covidPostsCreated.map(post => (
+                  <CreatedPost post={post} />
+                ))
+              }
+            </Col>
+          </Row>
+          <h2 className="mt-5"><strong><i>Accepted Posts</i></strong></h2>
+          <hr/>
+          <Row>
+
+            <Col className="col-12">
+              {
+                covidPostsAccepted.map(post => (
+                  <CreatedPost post={post} />
+                ))
+              }
+            </Col>
+          </Row>
+        </div>
       </div>
     );
   }

@@ -7,6 +7,7 @@ import CreatePost from "./pages/CreatePost";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './pages/pages.css'
 
 // Redux
@@ -14,7 +15,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { loadUser } from "./actions/authActions";
 
-import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 class App extends Component {
   componentDidMount() {
@@ -25,7 +26,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <div className="mh-100">
+          <div className="container-fluid">
             <Switch>
               <Route path="/" component={Home} exact />
               <Route path="/covid" component={Covid} exact />
