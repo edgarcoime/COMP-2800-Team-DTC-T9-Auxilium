@@ -38,6 +38,7 @@ class LikeComment extends Component {
       const url = "http://localhost:5000/api/comment/getpostcomments";
       const data = { postId: id };
       const response = await axios.post(url, data);
+      console.log( response.data.comments)
       this.setState({
         postComments: response.data.comments,
         refreshComponent: false,
@@ -139,7 +140,7 @@ class LikeComment extends Component {
     if(this.props.user){
       var{ user, isAuthenticated, id, token } = this.props;
       var username = user.name
-      var userId = user.userId
+      var userId = user._id;
     }else{
       var {user, isAuthenticated, id, token} = "";
     }

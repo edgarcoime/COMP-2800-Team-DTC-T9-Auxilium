@@ -22,7 +22,7 @@ export class Comment extends Component {
         ownerId: userId,
         postId:postId,
       };
-      // console.log(commentData)
+      console.log(commentData)
 
       axios({
         method: "post",
