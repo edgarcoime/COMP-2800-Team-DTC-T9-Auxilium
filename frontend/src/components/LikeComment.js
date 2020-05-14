@@ -66,17 +66,20 @@ class LikeComment extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  submitComment = (e) => {
+  submitComment = async (e) => {
     const { isAuthenticated, isCovid } = this.props;
     if (!isAuthenticated) {
       alert("Please sign in to comment");
     } else {
+      // Destructuring Objects
       const { comment } = this.state;
       const {
         token,
         id: postId,
         user: { name, _id: userId },
       } = this.props;
+
+      // Initializing fetch request data for axios
       const commentData = {
         text: comment,
         owner: name,
@@ -85,10 +88,10 @@ class LikeComment extends Component {
       };
       let apiURL = "";
       isCovid ? apiURL="http://localhost:5000/api/comment/covid" : apiURL="http://localhost:5000/api/comment/"
-      // console.log(apiURL)
 
-      // console.log(commentData)
-      axios({
+
+      // Axios request to post comment to mongo using backend api
+      const response = await axios({
         method: "post",
         url: apiURL,
         headers: {
@@ -97,14 +100,13 @@ class LikeComment extends Component {
           "x-auth-token": token,
         },
         data: commentData,
-      }).then(response => {
-        const newComment = response.data;
-        let newStateComments = [...this.state.postComments];
-        newStateComments.push(newComment);
-        console.log(response)
-        // this.setState({ comment: "", isCommentClicked: 0, refreshComponent: true });
-        this.setState({ comment: "", isCommentClicked: 0, refreshComponent: true, postComments: newStateComments })
       });
+
+      // parsing through resopnse data and setting Component state to display comment
+      const newComment = response.data;
+      let newStateComments = [...this.state.postComments];
+      newStateComments.push(newComment);
+      this.setState({ comment: "", isCommentClicked: 0, refreshComponent: true, postComments: newStateComments })
     }
   }
 
