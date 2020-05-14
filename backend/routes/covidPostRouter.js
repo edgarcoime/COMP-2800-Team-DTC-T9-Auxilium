@@ -112,7 +112,7 @@ covidPostRouter.delete("/:id", auth, async (req, res) => {
 // @route     POST api/covid/acceptrequest
 // @desc      POST by accepting a COVID request
 // @access    Private (implement auth later)
-covidPostRouter.post("/acceptrequest", async (req, res) => {
+covidPostRouter.post("/acceptrequest", auth, async (req, res) => {
   try {
     const { reqOwner, reqOwnerId, covidPostId } = req.body;
 
@@ -139,7 +139,7 @@ covidPostRouter.post("/acceptrequest", async (req, res) => {
 // @route     POST api/covid/deleterequest
 // @desc      POST by deleting a covidpost from user profile and from Covid Post
 // @access    Private (implement auth later)
-covidPostRouter.post("/deleterequest", async (req, res) => {
+covidPostRouter.post("/deleterequest", auth, async (req, res) => {
   try {
     const { reqOwner, reqOwnerId, covidPostId } = req.body;
 
