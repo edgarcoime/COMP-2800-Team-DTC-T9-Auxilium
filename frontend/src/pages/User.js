@@ -27,10 +27,17 @@ class User extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const { isAuthenticated } = this.props;
+    if (!isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
+
   render() {
     return (
       <div>
-        <Header />
+        <Header history={this.props.history}/>
         <div>
           <h1 className="text-center">Profile</h1>
           <Row>

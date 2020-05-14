@@ -58,7 +58,7 @@ class Login extends Component {
   render() {
     return (
       <div className="aux-background">
-        <Header />
+        <Header history={this.props.history}/>
         <Card className="aux-background shadow">
           { this.state.msg ? <Alert color="danger">{ this.state.msg }</Alert> : null } 
           <CardTitle className="text-center p-3">
