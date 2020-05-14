@@ -19,7 +19,7 @@ import {
 const app = express();
 
 // More difficult to see that app is using express
-app.disable("x-powered-by");
+app.disable("x-powered-by"); 
 
 // Middleware to allow Cross origin point, parsing JSON, and body
 app.use(cors());
@@ -28,7 +28,7 @@ app.use(express.json())
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, 
-  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
+  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false }
 );
 const connection = mongoose.connection;
 connection.once('open', () => {

@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
-import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
-import LikeComment from "./LikeComment";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
+
+// Component
+import CovidPost from "./partials/CovidPost.component";
 
 class PostTileCovid extends Component {
   constructor(props) {
@@ -61,37 +62,16 @@ class PostTileCovid extends Component {
     return (
       <div>
         {posts.map((post) => (
-          <Row key={post._id}>
-            <Col className="mt-5">
-              <Card className="bg-light shadow-sm">
-                <CardTitle className="p-3">
-                  <Row>
-                    <Col className="col-8 col-sm-10">
-                      <p>
-                        <strong>{post.owner}</strong>
-                      </p>
-                    </Col>
-                    <Col className="col-4 col-sm-2">
-                      <span className="float-right">
-                        {this.postCreated(post.createdAt)}
-                      </span>
-                      <span className="float-right">
-                        {this.postUpdated(post.updatedAt)}
-                      </span>
-                    </Col>
-                  </Row>
-                </CardTitle>
-                <CardBody className="pt-0">
-                  <h4>{post.title}</h4>
-                  <p>{post.content}</p>
-
-                  <p>34 Likes</p>
-                  <button className="btn btn-info float-right">Accept</button>
-                  <LikeComment className="d-inline" />
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+          <CovidPost 
+            _id={post._id}
+            owner={post.owner}
+            createdAt={post.createdAt}
+            title={post.title}
+            content={post.content}
+            likes={post.likes}
+            comments={post.comments}
+            isAuthenticated={ this.props.isAuthenticated }
+          />
         ))}
       </div>
     );

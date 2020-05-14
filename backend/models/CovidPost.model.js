@@ -39,7 +39,8 @@ const CovidPostSchema = new Schema(
     default: []
     },
     assignedTo: {
-      type: Object
+      type:mongoose.Schema.Types.ObjectId, 
+      ref: 'user',
     },
   },
   { timestamps: true }
