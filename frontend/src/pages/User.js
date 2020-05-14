@@ -11,6 +11,7 @@ import { tokenConfig } from "../actions/authActions";
 
 // Components
 import Post from "../components/partials/Post.component";
+import CovidPost from "../components/partials/CovidPost.component";
 
 class User extends Component {
   constructor(props) {
@@ -60,6 +61,7 @@ class User extends Component {
         <h2>Posts Created</h2>
         {this.props.user.postsCreated.map((post) => (
           <Post
+            key={post._id}
             _id={post._id}
             owner={post.owner}
             createdAt={post.createdAt}
@@ -70,7 +72,15 @@ class User extends Component {
         ))}
         <h2>COVID Posts Created</h2>
         {this.props.user.covidPostsCreated.map((post) => (
-          <p>{post.title}</p>
+          <CovidPost
+            key={post._id}
+            _id={post._id}
+            owner={post.owner}
+            createdAt={post.createdAt}
+            title={post.title}
+            content={post.content}
+            likes={post.likes}
+          />
         ))}
         <h2>COVID Posts Accepted</h2>
         {this.props.user.covidPostsAccepted.map((post) => (
