@@ -25,6 +25,7 @@ class LikeComment extends Component {
       isClicked: 0,
       isCommentClicked: 0,
       postComments: [],
+      postLikes: [],
       comment: "",
       refreshComponent: true,
     };
@@ -32,27 +33,137 @@ class LikeComment extends Component {
 
   componentDidMount = async () => {
     try {
-      const { id, isCovid } = this.props;
+      const { id, isCovid, loggedInUser, loggedInUserId } = this.props;
       let url = "";
       isCovid ? url="http://localhost:5000/api/comment/getcovidcomments" : url="http://localhost:5000/api/comment/getpostcomments"
       const data = { postId: id };
       const response = await axios.post(url, data);
+
+      // Check if user has liked this post
+      console.log(loggedInUser, loggedInUserId)
+
       this.setState({
         postComments: response.data.comments,
+        postLikes: response.data.likes,
         refreshComponent: false,
       });
     } catch (error) {
       console.log(error);
     }
   };
-
+  
   handleLikeClick = () => {
-    if (this.state.isClicked == 0) {
-      this.setState({ isClicked: 1 });
+    const { isAuthenticated } = this.props;
+    if (!isAuthenticated) {
+      alert("You must be signed in to like a post!")
     } else {
-      this.setState({ isClicked: 0 });
+      if (this.state.isClicked == 0) {
+        this.likePost();
+      } else {
+        this.unLikePost();
+      }
     }
   };
+  
+  likePost = async () => {
+    try {
+      // Destructuring objects
+      const {
+        token,
+        id: postId,
+        user: { name, _id: userId },
+        isCovid,
+      } = this.props;
+
+      // initialize fetch URL
+      const likeData = {
+        owner: name,
+        ownerId: userId,
+        postId,
+      }
+      let apiURL = "";
+      isCovid ? apiURL="http://localhost:5000/api/like/covid" : apiURL="http://localhost:5000/api/like"
+
+      // Axios request to post comment to mongo using backend api
+      const response = await axios({
+        method: "post",
+        url: apiURL,
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "x-auth-token": token,
+        },
+        data: likeData,
+      });
+
+      // parsing through resopnse data and setting Component state to display comment
+      const updatedPost = response.data;
+      console.log(updatedPost)
+      const newLike = {
+        ownerId: userId,
+        owner: name
+      }
+      let newStateLikes = [...this.state.postLikes];
+      newStateLikes.push(newLike);
+      this.setState({ isCommentClicked: 0, refreshComponent: true, postLikes: newStateLikes })
+
+      // Set like to Clicked
+      this.setState({ isClicked: 1 })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  unLikePost = async () => {
+    try {
+      // Destructuring objects
+      const {
+        token,
+        id: postId,
+        user: { name, _id: userId },
+        isCovid,
+      } = this.props;
+
+      // initialize fetch URL
+      const likeData = {
+        owner: name,
+        ownerId: userId,
+        postId,
+      }
+      let apiURL = "";
+      isCovid ? apiURL="http://localhost:5000/api/like/covid/delete" : apiURL="http://localhost:5000/api/like/delete"
+
+      // Axios request to post comment to mongo using backend api
+      const response = await axios({
+        method: "post",
+        url: apiURL,
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "x-auth-token": token,
+        },
+        data: likeData,
+      });
+
+      // parsing through resopnse data and setting Component state to display comment
+      const updatedPost = response.data;
+      console.log(updatedPost)
+      const newLike = {
+        ownerId: userId,
+        owner: name
+      }
+      let originalStateLikes = [...this.state.postLikes];
+      const newStateLikes = originalStateLikes.filter(like => like.ownerId !== userId)
+      console.log(originalStateLikes, newStateLikes)
+      this.setState({ isCommentClicked: 0, refreshComponent: true, postLikes: newStateLikes })
+
+      // Set like to Clicked
+      this.setState({ isClicked: 0 });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
 
   handleCommentClick = (e) => {
     if (this.state.isCommentClicked == 0) {
@@ -111,9 +222,11 @@ class LikeComment extends Component {
   }
 
   render() {
-    const comments = this.state.postComments;
+    // const comments = this.state.postComments;
+    const { postLikes, postComments: comments } = this.state;
     return (
       <div>
+      <p>{postLikes.length} likes</p>
         <span>
           <button className="btn" onClick={this.handleLikeClick}>
             <span>

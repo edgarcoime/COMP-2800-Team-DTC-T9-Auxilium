@@ -64,7 +64,6 @@ export class CovidPost extends Component {
                 <h4>{ title }</h4>
                 <p>{ content }</p>
 
-                <p>{ likes.length }</p>
                 <button className="btn btn-info float-right">Accept</button>
                 <LikeComment
                   id={ _id }
