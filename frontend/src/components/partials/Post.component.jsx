@@ -63,7 +63,6 @@ export default class Post extends Component {
               <CardBody className="pt-0">
                 <h4>{title}</h4>
                 <p>{content}</p>
-                <p>{likes.length} likes</p>
                 <LikeComment
                   id={_id}
                   comments={comments}
