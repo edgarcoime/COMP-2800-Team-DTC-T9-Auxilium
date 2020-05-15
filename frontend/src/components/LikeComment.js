@@ -131,21 +131,10 @@ class LikeComment extends Component {
         </span>
         <Collapse isOpen={this.state.isCommentClicked} className="mt-3">
           <span>
-            {/* MAP CODE TO LOOP THROUGH COMMENTS */}
-            {comments.map((comment) => (
-              <CommentTile
-                key={"commentTile" + comment._id}
-                commentId={comment._id}
-                commentOwner={comment.owner}
-                text={comment.text}
-                ownerId={comment.ownerId}
-              />
-            ))}
             <input
               type="text"
               className="form-control d-inline w-75"
               name="comment"
-              class="comment"
               placeholder="Leave a comment"
               onChange={this.onChange}
             ></input>
@@ -153,6 +142,16 @@ class LikeComment extends Component {
               <FontAwesomeIcon icon={faPaperPlane} size="lg" />
             </button>
           </span>
+          {comments.map((comment) => (
+              <CommentTile
+                key={"commentTile" + comment._id}
+                commentId={comment._id}
+                commentOwner={comment.owner}
+                text={comment.text}
+                ownerId={comment.ownerId}
+                createdAt={comment.createdAt}
+              />
+            ))}
         </Collapse>
       </div>
     );

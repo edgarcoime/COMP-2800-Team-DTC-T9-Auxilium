@@ -43,7 +43,7 @@ class PostTile extends Component {
 
   render() {
     return (
-      <div className="posts-container">
+      <div className="container">
         {this.state.posts.map((post) => (
           <Post 
             _id={post._id}

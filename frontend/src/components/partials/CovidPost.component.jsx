@@ -27,7 +27,7 @@ export class CovidPost extends Component {
       createdWhen = Math.trunc(h) + "h ago";
     }
 
-    return `Created: ${createdWhen}`;
+    return `${createdWhen}`;
   };
 
   render() {

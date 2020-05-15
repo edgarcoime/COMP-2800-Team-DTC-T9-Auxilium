@@ -27,7 +27,7 @@ export default class Post extends Component {
       createdWhen = Math.trunc(h) + "h ago";
     }
 
-    return `Created: ${createdWhen}`;
+    return `${createdWhen}`;
   };
 
   render() {
@@ -44,8 +44,8 @@ export default class Post extends Component {
     return (
       <Fragment>
         <Row key={_id}>
-          <Col className="mt-5">
-            <Card className="bg-light shadow-sm">
+          <Col className="mt-3">
+            <Card className="bg- shadow-sm">
               <CardTitle className="p-3">
                 <Row>
                   <Col className="col-8 col-sm-10">
@@ -53,7 +53,6 @@ export default class Post extends Component {
                       <strong>{owner}</strong>
                     </p>
                   </Col>
-                  {/* {console.log(Date.parse(post.createdAt))} */}
                   <Col className="col-4 col-sm-2">
                     <span className="float-right">
                       {this.postCreated(createdAt)}
