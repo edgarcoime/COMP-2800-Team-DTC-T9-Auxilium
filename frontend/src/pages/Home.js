@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../actions/authActions";
 
-const EasterEgg = require('react-easter');
+// const EasterEgg = require('react-easter-egg');
 
 class Home extends Component {
   constructor(props) {
@@ -54,14 +54,14 @@ class Home extends Component {
     return (
       
       <div >
-        <EasterEgg
+        {/* <EasterEgg
         keys={easterCode}
         timeout={8000}>
       <iframe class="embed-responsive embed-responsive-16by9"
                   src={easter}
                   frameborder="0"
                   allowfullscreen />
-    </EasterEgg>
+    </EasterEgg> */}
         <Header history={this.props.history}/>
         <div className="container">
           <h1 className="text-center mt-3">General</h1>

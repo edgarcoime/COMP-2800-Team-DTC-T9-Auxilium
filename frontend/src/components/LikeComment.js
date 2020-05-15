@@ -110,10 +110,18 @@ class LikeComment extends Component {
     }
   }
 
+
+
   render() {
+    const {likes} = this.props
+    if(this.props.isAuthenticated){
+      var addLike = likes +1
+    }
+    console.log(likes)
     const comments = this.state.postComments;
     return (
       <div>
+        <p>{this.state.isClicked == 1 ? (typeof(addLike) == "undefined"? likes:addLike):likes} likes</p>
         <span>
           <button className="btn" onClick={this.handleLikeClick}>
             <span>

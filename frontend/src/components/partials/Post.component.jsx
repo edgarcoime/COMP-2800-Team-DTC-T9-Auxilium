@@ -41,6 +41,7 @@ export default class Post extends Component {
       comments,
       isAuthenticated,
     } = this.props;
+    // console.log(likes.length)
     return (
       <Fragment>
         <Row key={_id}>
@@ -64,12 +65,12 @@ export default class Post extends Component {
               <CardBody className="pt-0">
                 <h4>{title}</h4>
                 <p>{content}</p>
-                <p>{likes.length} likes</p>
                 <LikeComment
                   id={_id}
                   comments={comments}
                   isAuthenticated={isAuthenticated}
                   isCovid={ this.state.isCovid }
+                  likes={likes.length}
                 />
               </CardBody>
             </Card>

@@ -63,14 +63,13 @@ export class CovidPost extends Component {
               <CardBody className="pt-0">
                 <h4>{ title }</h4>
                 <p>{ content }</p>
-
-                <p>{ likes.length }</p>
                 <button className="btn btn-info float-right">Accept</button>
                 <LikeComment
                   id={ _id }
                   comments= { comments }
                   isAuthenticated = { isAuthenticated }
                   isCovid = { this.state.isCovid }
+                  likes={likes.length}
                 />
               </CardBody>
             </Card>
