@@ -124,9 +124,40 @@ class LikeComment extends Component {
         isCovid,
       } = this.props;
 
-      // // initialize fetch URL
-      // let apiURL = "";
-      // isCovid ? apiURL="http://localhost:5000/api/comment/covid" : apiURL="http://localhost:5000/api/comment/"
+      // initialize fetch URL
+      const likeData = {
+        owner: name,
+        ownerId: userId,
+        postId,
+      }
+      let apiURL = "";
+      isCovid ? apiURL="http://localhost:5000/api/like/covid/delete" : apiURL="http://localhost:5000/api/like/delete"
+
+      // Axios request to post comment to mongo using backend api
+      const response = await axios({
+        method: "post",
+        url: apiURL,
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "x-auth-token": token,
+        },
+        data: likeData,
+      });
+
+      // parsing through resopnse data and setting Component state to display comment
+      const updatedPost = response.data;
+      console.log(updatedPost)
+      const newLike = {
+        ownerId: userId,
+        owner: name
+      }
+      let originalStateLikes = [...this.state.postLikes];
+      const newStateLikes = originalStateLikes.filter(like => like.ownerId !== userId)
+      console.log(originalStateLikes, newStateLikes)
+      this.setState({ isCommentClicked: 0, refreshComponent: true, postLikes: newStateLikes })
+
+      // Set like to Clicked
       this.setState({ isClicked: 0 });
     } catch (error) {
       console.log(error)
