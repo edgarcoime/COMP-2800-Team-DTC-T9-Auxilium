@@ -69,7 +69,7 @@ export class CovidPost extends Component {
                   comments= { comments }
                   isAuthenticated = { isAuthenticated }
                   isCovid = { this.state.isCovid }
-                  likes={likes.length}
+                  likes={likes}
                 />
               </CardBody>
             </Card>

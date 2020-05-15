@@ -60,10 +60,11 @@ likeRouter.post("/delete", auth, async(req, res) => {
       owner: req.body.owner,
       ownerId:req.body.ownerId
     }
+    console.log(like);
     try {
     await Post.findByIdAndUpdate(req.body.postId, {
         $pull: {
-            likes: like
+            likes: like 
         }
     }, {
         new: true

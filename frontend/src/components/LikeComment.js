@@ -27,6 +27,7 @@ class LikeComment extends Component {
       postComments: [],
       comment: "",
       refreshComponent: true,
+      likeNumbers:0,
     };
   }
 
@@ -110,24 +111,112 @@ class LikeComment extends Component {
     }
   }
 
+  submitLike = async(e) =>{
+    e.preventDefault();
+    const {
+      isAuthenticated,
+      isCovid
+    } = this.props;
+    if(this.state.isClicked == 0){
+    if (!isAuthenticated) {
+      alert("Please sign in to add like");
+    } else {
+    const {
+      token,
+      id: postId,
+      user: { name, _id: userId }
+    } = this.props;
+    // Initializing fetch request data for axios
+    const likeData = {
+      owner: name,
+      postId:postId,
+      ownerId: userId,
+    };
+    // console.log(likeData)
+    // Axios request to post comment to mongo using backend api
+    const response = await axios({
+      method: "post",
+      url:  isCovid ? "http://localhost:5000/api/like/covid":"http://localhost:5000/api/like",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        "x-auth-token": token,
+      },
+      data: likeData,
+    });  
+    console.log(response.data) 
+    this.setState({likeNumbers: response.data.likes.length})
+  }
+  }else{
+    if (!isAuthenticated) {
+      alert("Please sign in to delete like");
+    } else {
+
+    const {
+        token,
+        id: postId,
+        user: { name, _id: userId }
+    } = this.props;
+    // Initializing fetch request data for axios
+    const likeData = {
+      owner: name,
+      postId:postId,
+      ownerId: userId,
+    };
+    // console.log(likeData)
+
+
+    // Axios request to post comment to mongo using backend api
+    const response = await axios({
+      method: "post",
+      url:  isCovid ? "http://localhost:5000/api/like/covid/delete":"http://localhost:5000/api/like/delete",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        "x-auth-token": token,
+      },
+      data: likeData,
+    });    console.log(response.data) 
+    this.setState({likeNumbers: response.data.likes.length})
+
+  }
+  }
+
+}
+
+
 
 
   render() {
-    const {likes} = this.props
+    // function makeArray(likes){
+    //   const like_list = [];
+    //   for(let i = 0;i < likes.length;i++){
+    //     like_list.push(likes[i].owner)
+    //   }
+    //   return like_list
+    // }
+    const {likes} = this.props;
     if(this.props.isAuthenticated){
-      var addLike = likes +1
-    }
-    console.log(likes)
+      // const like_list = makeArray(likes)
+      var {user} = this.props;
+      var addLike = likes.length +1;}
+    //   if(like_list.includes(user.name)){
+    //     this.state.isClicked = 1;
+    //   }
+    // }
+    // console.log(likes)
     const comments = this.state.postComments;
     return (
       <div>
-        <p>{this.state.isClicked == 1 ? (typeof(addLike) == "undefined"? likes:addLike):likes} likes</p>
+        {/* <p>{this.state.isClicked == 1 ? (typeof(addLike) == "undefined"?  likes.length:addLike): likes.length} likes</p> */}
+        <p>{this.state.likeNumbers == 0? likes.length:this.state.likeNumbers} likes</p>
         <span>
           <button className="btn" onClick={this.handleLikeClick}>
             <span>
               <FontAwesomeIcon
                 icon={this.state.isClicked == 1 ? faHeart1 : faHeart}
                 size="2x"
+                onClick={this.submitLike}
               />
             </span>
           </button>
