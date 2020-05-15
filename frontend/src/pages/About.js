@@ -20,8 +20,8 @@ class About extends Component {
     render() {
         return (
             <div>
-                
-                <Header />
+                <Header history={this.props.history}/>
+                <h1 class="text-center page-header text-uppercase">About Us</h1>
                 <div className="container h-100">
                     <h1 class="text-center page-header text-uppercase">About Us</h1>
                     <Row  className="h-100 justify-content-center align-items-center">

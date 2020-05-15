@@ -81,7 +81,7 @@ class CreatePost extends Component {
     }
     return (
       <div>
-        <Header />
+        <Header history={this.props.history}/>
         <Link to="/" className="mt-4">
           <button
             type="button"

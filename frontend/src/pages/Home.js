@@ -51,7 +51,7 @@ class Home extends Component {
     return (
       
       <div >
-        <Header />
+        <Header history={this.props.history}/>
         <div className="container">
           <h1 className="text-center mt-3">General</h1>
           <Row className="btn-group-toggle" data-toggle="buttons">
