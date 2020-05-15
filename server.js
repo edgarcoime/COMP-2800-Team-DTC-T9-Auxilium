@@ -1,52 +1,38 @@
 // ESM syntax is supported.
-export {};
+export {}
 
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import favicon from "express-favicon";
-import path from "path";
 const dotenv = require("dotenv").config();
 
 // Routes
-import {
-  userRouter,
-  postRouter,
+import { 
+  userRouter, 
+  postRouter, 
   authRouter,
   commentRouter,
   covidPostRouter,
+  likeRouter
 } from "./routes/index";
 
 const app = express();
 
 // More difficult to see that app is using express
-app.disable("x-powered-by");
+app.disable("x-powered-by"); 
 
 // Middleware to allow Cross origin point, parsing JSON, and body
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(favicon(__dirname + "/build/favicon.ico"));
-// the __dirname is the current directory from where the script is running
-app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, "build")));
+app.use(express.json())
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(uri, 
+  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false }
+);
 const connection = mongoose.connection;
-connection.once("open", () => {
+connection.once('open', () => {
   console.log("MongoDB database connection established succesfully");
-});
-
-app.get("/ping", function (req, res) {
-  return res.send("pong");
-});
-app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 // User Routes
@@ -55,11 +41,13 @@ app.use("/api", apiRouter);
 apiRouter.use("/users", userRouter);
 apiRouter.use("/posts", postRouter);
 apiRouter.use("/auth", authRouter);
-apiRouter.use("/comments", commentRouter);
+apiRouter.use("/comment", commentRouter);
 apiRouter.use("/covid", covidPostRouter);
+apiRouter.use("/like", likeRouter);
+
 
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
-  console.log(`Server is running on port: ${port}`);
-});
+  console.log(`Server is running on port: ${port}`)
+})
