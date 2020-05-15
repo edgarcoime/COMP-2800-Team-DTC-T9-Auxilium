@@ -30,8 +30,8 @@ class Covid extends Component {
 
     const createPostLink = (
       <Fragment>
-        <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
-        <Link to="/createpost" className="float-right">
+        <Col className="col-12 col-sm-4 mt-5">
+          <Link to="/createpost" className="float-right">
             
             <button type="button" id="createpostbtn" className="btn rounded">
               <FontAwesomeIcon icon={faPlusCircle} className="createpostbtn" size="3x" /> 

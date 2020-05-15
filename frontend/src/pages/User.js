@@ -31,8 +31,8 @@ class User extends Component {
     return (
       <div>
         <Header />
-        <div>
-          <h1 className="text-center">Profile</h1>
+        <div className="container">
+        <h1 className="text-center">Profile</h1>
           <Row>
             <Col className="col-12 col-sm-6">
               <p className="text-center mt-3">
@@ -55,37 +55,39 @@ class User extends Component {
               </p>
             </Col>
           </Row>
-          <Row></Row>
+          <h2 className="mt-5"><strong>Posts Created</strong></h2>
+          <hr />
+          {this.props.user.postsCreated.map((post) => (
+            <Post
+              key={post._id}
+              _id={post._id}
+              owner={post.owner}
+              createdAt={post.createdAt}
+              title={post.title}
+              content={post.content}
+              likes={post.likes}
+            />
+          ))}
+          <h2 className="mt-5"><strong>COVID Posts Created</strong></h2>
+          <hr />
+          {this.props.user.covidPostsCreated.map((post) => (
+            <Post
+              key={post._id}
+              _id={post._id}
+              owner={post.owner}
+              createdAt={post.createdAt}
+              title={post.title}
+              content={post.content}
+              likes={post.likes}
+            />
+          ))}
+          <h2 className="mt-5"><strong>COVID Posts Accepted</strong></h2>
+          <hr />
+          {this.props.user.covidPostsAccepted.map((post) => (
+            <p>{post.title}</p>
+          ))}
         </div>
-
-        <h2>Posts Created</h2>
-        {this.props.user.postsCreated.map((post) => (
-          <Post
-            key={post._id}
-            _id={post._id}
-            owner={post.owner}
-            createdAt={post.createdAt}
-            title={post.title}
-            content={post.content}
-            likes={post.likes}
-          />
-        ))}
-        <h2>COVID Posts Created</h2>
-        {this.props.user.covidPostsCreated.map((post) => (
-          <CovidPost
-            key={post._id}
-            _id={post._id}
-            owner={post.owner}
-            createdAt={post.createdAt}
-            title={post.title}
-            content={post.content}
-            likes={post.likes}
-          />
-        ))}
-        <h2>COVID Posts Accepted</h2>
-        {this.props.user.covidPostsAccepted.map((post) => (
-          <p>{post.title}</p>
-        ))}
+        
       </div>
     );
   }

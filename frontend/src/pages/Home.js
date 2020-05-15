@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Header from "./../components/Header/Header";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
@@ -8,15 +8,12 @@ import PostTile from "./../components/PostTile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import './pages.css'
-import easter from './../images/easter.mp4'
 
 
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../actions/authActions";
-
-const EasterEgg = require('react-easter');
 
 class Home extends Component {
   constructor(props) {
@@ -54,14 +51,6 @@ class Home extends Component {
     return (
       
       <div >
-        <EasterEgg
-        keys={easterCode}
-        timeout={8000}>
-      <iframe class="embed-responsive embed-responsive-16by9"
-                  src={easter}
-                  frameborder="0"
-                  allowfullscreen />
-    </EasterEgg>
         <Header />
         <div className="container">
           <h1 className="text-center mt-3">General</h1>
@@ -72,7 +61,6 @@ class Home extends Component {
                   type="button"
                   className="btn btn-menu w-100 rounded btn-aux"
                 >
-                  {" "}
                   General
                 </button>
               </Link>

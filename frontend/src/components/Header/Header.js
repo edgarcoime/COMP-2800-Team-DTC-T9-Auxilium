@@ -33,65 +33,71 @@ class Header extends Component {
     const { isAuthenticated, user } = this.props.auth;
     
     return (
-      <Row className="header">
-        <Col className="col-2 col-sm-2 col-md-2 order-12 order-sm-1">
-          <NavLink to="/" className="figure text-decoration-none mr-5">
-            <img src={logo} alt="an image" height="80" width="80" />
-          </NavLink>
-        </Col>
-        <Col className="col-5 col-sm-3 col-md-3 d-none d-md-inline order-2  order-sm-2">
-          <form class='navbar-form rounded'>
-            <div class='input-group mt-3 rounded'>
-              <input class='form-control' type='text' name='search' placeholder='Location' />
-              <span class="input-group-btn">
-                <button type='submit' class='btn text-link'>
-                  <span class='fa fa-search fa-lg'></span>
-                </button>
-              </span>
-
-            </div>
-          </form>
-        </Col>
-        <Col className="col col-sm col-md order-1 order-sm-1 order-md-12">
-          <Navbar light expand="md" className="float-md-right">
-          <NavbarToggler onClick={this.handleToggle} />
-          <Collapse  isOpen={this.state.isOpen} navbar>
-              <Nav className=" mt-2 w-100" navbar>
-                <NavItem className="mr-2">
-                  <NavLink to="/" className="nav-link ">
-                    <span className="text-link">
-                      <i className=" fa fa-home fa-lg mr-1"></i>
-                      <span className="d-sm-inline d-md-none d-lg-inline">Home</span>
-                    </span>
-                  </NavLink>
-                </NavItem>
-                <NavItem className="mr-2">
-                  <NavLink to="/covid" className="nav-link">
-                  <span className="nav-text ml-1 text-link">
-                    <FontAwesomeIcon icon={faViruses} size="lg" className="mr-1"/>
-                    <span className=" d-sm-inline d-md-none d-lg-inline">COVID-19</span>
+      <div className="header">
+        <div className="container">
+          <Row>
+            <Col className="col-4 col-sm-2 col-md-2 order-2 order-sm-2 order-md-1 ">
+              <NavLink to="/" className="justify-content-end">
+                <img src={logo} alt="an image" width="80"/>
+              </NavLink>
+            </Col>
+            <Col className="col-5 col-sm-3 d-none d-md-inline order-md-2">
+              <form class='navbar-form rounded'>
+                <div class='input-group mt-3 rounded'>
+                  <input class='form-control' type='text' name='search' placeholder='Location' />
+                  <span class="input-group-btn">
+                    <button type='submit' class='btn text-link'>
+                      <span class='fa fa-search fa-lg'></span>
+                    </button>
                   </span>
-                  </NavLink>
-                </NavItem>
-                <NavItem className="mr-2">
-                  <NavLink to="/about" className="nav-link">
-                    <span className="text-link">
-                      <i className="fa fa-users fa-lg mr-1"></i>
-                      <span className="d-sm-inline d-md-none d-lg-inline">About Us</span>
-                    </span>
-                  </NavLink>
-                </NavItem>
-                <NavItem className="mr-2">
-                    <LoginRegisterBtn user={user} isAuthenticated={isAuthenticated} />
-                </NavItem>
-                <NavItem className="mr-2">
-                  { isAuthenticated ? <Logout /> : null }
-                </NavItem>
-              </Nav>
-          </Collapse>
-          </Navbar>
-        </Col>
-      </Row>
+
+                </div>
+              </form>
+            </Col>
+            <Col className="col col-sm col-md order-1 order-sm-1 order-md-3">
+              <Navbar dark expand="md" className="mt-2 float-md-right">
+              <NavbarToggler onClick={this.handleToggle} className="text-white"/>
+              <Collapse  isOpen={this.state.isOpen} navbar>
+                  <Nav className=" w-100" navbar>
+                    <NavItem className="mr-2">
+                      <NavLink to="/" className="nav-link ">
+                        <span className="text-link">
+                          <i className=" fa fa-home fa-lg mr-1"></i>
+                          <span className="d-sm-inline d-md-none d-lg-inline">Home</span>
+                        </span>
+                      </NavLink>
+                    </NavItem>
+                    <NavItem className="mr-2">
+                      <NavLink to="/covid" className="nav-link">
+                      <span className="nav-text ml-1 text-link">
+                        <FontAwesomeIcon icon={faViruses} size="lg" className="mr-1"/>
+                        <span className=" d-sm-inline d-md-none d-lg-inline">COVID-19</span>
+                      </span>
+                      </NavLink>
+                    </NavItem>
+                    <NavItem className="mr-2">
+                      <NavLink to="/about" className="nav-link">
+                        <span className="text-link">
+                          <i className="fa fa-users fa-lg mr-1"></i>
+                          <span className="d-sm-inline d-md-none d-lg-inline">About Us</span>
+                        </span>
+                      </NavLink>
+                    </NavItem>
+                    <NavItem className="mr-2">
+                        <LoginRegisterBtn user={user} isAuthenticated={isAuthenticated} />
+                    </NavItem>
+                    <NavItem className="mr-2">
+                      { isAuthenticated ? <Logout /> : null }
+                    </NavItem>
+                  </Nav>
+              </Collapse>
+              </Navbar>
+            </Col>
+          </Row>
+        </div>
+        
+      </div>
+      
     );
   }
 }
