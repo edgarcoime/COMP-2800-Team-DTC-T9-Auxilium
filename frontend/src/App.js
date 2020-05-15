@@ -34,16 +34,36 @@ class App extends Component {
   
 
   render() {
+    const easterCodeDesktop = [
+      'arrowup',
+      'arrowup',
+      'arrowdown',
+      'arrowdown',
+      'enter'
+    ]
     const easterCode = [
-      'arrowup',
-      'arrowup',
-      'arrowdown',
-      'arrowdown',
-    
+      'e',
+      'a',
+      's',
+      't',
+      'e',
+      'r'
     ];
     return (
       <Provider store={store}>
         <BrowserRouter>
+          <EasterEgg
+              keys={easterCodeDesktop}
+              timeout={5000}>
+            <Modal isOpen={true} className="text-center bg-light">
+              <ModalHeader closeButton>
+                <h2 className="text-center"><strong>Happy Easter </strong></h2>
+              </ModalHeader>
+              <ModalBody>
+                <img className="" src={easter} alt="easter egg" height="320" width="320"/>
+              </ModalBody>
+            </Modal>
+          </EasterEgg>
           <EasterEgg
               keys={easterCode}
               timeout={5000}>
