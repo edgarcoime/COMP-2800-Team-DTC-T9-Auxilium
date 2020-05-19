@@ -77,7 +77,7 @@ class Register extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header history={this.props.history}/>
         <Card className="bg-dark shadow">
           {this.state.msg ? (
             <Alert color="danger">{this.state.msg}</Alert>

@@ -4,11 +4,11 @@
 }
 
 .btn-aux {
-    background-color: rgb(101, 168, 154);
+    background-color: rgb(22, 168, 179);
 }
 
 .btn-aux:hover {
-    background-color: rgb(46, 76, 78);
+    background-color: rgb(8, 16, 46);
     color: rgb(200, 220, 250);
 }
 

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Header from "./../components/Header/Header";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
@@ -8,6 +8,7 @@ import PostTile from "./../components/PostTile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import './pages.css'
+
 
 // Redux
 import { connect } from "react-redux";
@@ -22,6 +23,13 @@ class Home extends Component {
   }
 
   render() {
+    const easterCode = [
+      'arrowup',
+      'arrowup',
+      'arrowdown',
+      'arrowdown',
+    
+    ];
     const { isAuthenticated } = this.props;
     console.log(isAuthenticated);
 
@@ -41,8 +49,9 @@ class Home extends Component {
     );
 
     return (
-      <div>
-        <Header />
+      
+      <div >
+        <Header history={this.props.history}/>
         <div className="container">
           <h1 className="text-center mt-3">General</h1>
           <Row className="btn-group-toggle" data-toggle="buttons">
@@ -52,7 +61,6 @@ class Home extends Component {
                   type="button"
                   className="btn btn-menu w-100 rounded btn-aux"
                 >
-                  {" "}
                   General
                 </button>
               </Link>
@@ -67,7 +75,7 @@ class Home extends Component {
             </Col>
             {isAuthenticated ? createPostLink : null}
           </Row>
-          <PostTile />
+          <PostTile isAuthenticated={isAuthenticated}/>
         </div>
       </div>
     );
@@ -85,3 +93,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { login })(Home);
+
