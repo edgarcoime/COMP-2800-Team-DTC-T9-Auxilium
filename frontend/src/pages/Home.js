@@ -3,7 +3,7 @@ import Header from "./../components/Header/Header";
 import { Row, Col, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
 import PostTile from "./../components/PostTile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -19,17 +19,16 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      filterMsg: "",
+    };
+  }
+
+  handleSearchChange = (event) => {
+
   }
 
   render() {
-    const easterCode = [
-      'arrowup',
-      'arrowup',
-      'arrowdown',
-      'arrowdown',
-    
-    ];
     const { isAuthenticated } = this.props;
     console.log(isAuthenticated);
 
@@ -53,6 +52,7 @@ class Home extends Component {
       <div >
         <Header history={this.props.history}/>
         <div className="container">
+          
           <h1 className="text-center mt-3">General</h1>
           <Row className="btn-group-toggle" data-toggle="buttons">
             <Col className="col-4 col-sm-4 d-none d-sm-block mt-5">
