@@ -8,5 +8,5 @@ export default combineReducers({
   post: postReducer,
   error: errorReducer,
   auth: authReducer,
-  covidPosts: covidPostsReducer,
+  covidPost: covidPostsReducer,
 });

@@ -14,6 +14,7 @@ import './pages.css'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../actions/authActions";
+import {getAllPosts} from "../actions/postActions";
 
 class Home extends Component {
   constructor(props) {
@@ -31,7 +32,6 @@ class Home extends Component {
     
     ];
     const { isAuthenticated } = this.props;
-    console.log(isAuthenticated);
 
     const createPostLink = (
       <Fragment>
@@ -85,11 +85,13 @@ class Home extends Component {
 Home.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
+  posts: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
+  posts: state.posts
 });
 
 export default connect(mapStateToProps, { login })(Home);

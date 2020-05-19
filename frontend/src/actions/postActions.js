@@ -13,6 +13,7 @@ export const getAllPosts = () => async (dispatch) => {
       type: actions.GET_ALL_POSTS,
       payload,
     });
+    
   } catch (error) {
     dispatch(returnErrors(error.response.data, error.response.status));
   }
@@ -53,6 +54,21 @@ export const deletePost = (deleteReq) => async (dispatch, getState) => {
     });
   } catch (error) {
     dispatch(returnErrors(error.response.data, error.response.status));
+  }
+};
+
+export const filterPost = (posts, word) => async (dispatch) => {
+  try {
+    return dispatch({
+      type:actions.FILTER_POSTS,
+      payload:{
+        word:word,
+        results:word === ''? posts:posts.filter(a => {return a.title.toLowerCase().indexOf(word.toLowerCase()) !== -1})
+      }
+    })
+  } catch (error) {
+    // dispatch(returnErrors(error.response.data, error.response.status));
+    console.log(error)
   }
 };
 

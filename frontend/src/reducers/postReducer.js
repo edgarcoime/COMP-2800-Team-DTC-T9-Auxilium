@@ -1,7 +1,9 @@
 import * as actions from "../actions/types";
 
 const initialState = {
-  posts: []
+  posts: [],
+  filterPosts: [],
+  word:""
 }
 
 export default function postReducer(state = initialState, action) {
@@ -9,8 +11,14 @@ export default function postReducer(state = initialState, action) {
     case actions.GET_ALL_POSTS:
       return {
         ...state,
-        posts: action.payload
+        posts: action.payload,
+        filterPosts: action.payload
       }
+      case actions.FILTER_POSTS:
+        return {
+          ...state,
+          filterPosts: action.payload.posts, word: action.payload.word
+        }
       case actions.DELETE_POST:
         return {
           ...state,

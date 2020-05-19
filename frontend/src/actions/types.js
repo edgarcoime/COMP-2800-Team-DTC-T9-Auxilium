@@ -30,3 +30,7 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 // ERROR TYPES
 export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+
+
+// FILTER POSTS
+export const FILTER_POSTS = "FILTER_POSTS";

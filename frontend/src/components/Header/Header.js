@@ -13,6 +13,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import LoginRegisterBtn from "./LoginRegisterBtn";
 import Logout from "./Logout.component";
+import Filter from "../partials/Filter.component";
+import {getAllPosts} from "../../actions/postActions";
 
 class Header extends Component {
   constructor(props) {
@@ -20,7 +22,7 @@ class Header extends Component {
 
     this.state = {
       name: "",
-      isOpen: false
+      isOpen: false,
     };
   }
 
@@ -28,6 +30,19 @@ class Header extends Component {
     const currentState = this.state.isOpen;
     this.setState({isOpen: !currentState});
   }
+  // handleChangeWord = (e) => {
+  //   this.setState({word: e.target.value});
+  //   this.listPost();
+  // }
+  // listPost = () =>{
+  //   this.setState(state=>{
+  //     if(state.word !=''){
+  //       return { posts: state.posts.filter(a=>
+  //         a.avilablePosts.indexof(state.word.toUpperCase())>=0
+  //         )}
+  //     }
+  //   })
+  // }
 
   render() {
     const { history, auth: {isAuthenticated, user} } = this.props;
@@ -42,7 +57,7 @@ class Header extends Component {
               </NavLink>
             </Col>
             <Col className="col-5 col-sm-3 d-none d-md-inline order-md-2">
-              <form class='navbar-form rounded'>
+              {/* <form class='navbar-form rounded'>
                 <div class='input-group mt-3 rounded'>
                   <input class='form-control' type='text' name='search' placeholder='Location' />
                   <span class="input-group-btn">
@@ -51,7 +66,8 @@ class Header extends Component {
                     </button>
                   </span>
                 </div>
-              </form>
+              </form> */}
+              < Filter />
             </Col>
             <Col className="col col-sm col-md order-1 order-sm-1 order-md-3">
               <Navbar dark expand="md" className="mt-2 float-md-right">
@@ -102,14 +118,14 @@ class Header extends Component {
 
 Header.propTypes = {
   auth: PropTypes.object.isRequired,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 const mapStateToProps = (state, ownProps) => {
   const { history } = ownProps
   return {
     auth: state.auth,
-    history
+    history,
   }
 };
 

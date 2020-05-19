@@ -3,13 +3,13 @@ import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import LikeComment from "../LikeComment";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
-
-export default class Post extends Component {
+import { connect } from "react-redux";
+class Post extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isCovid: false
+      isCovid: false,
     };
   }
 
@@ -77,3 +77,8 @@ export default class Post extends Component {
     );
   }
 }
+const mapStateToProps = state =>({
+  posts: state.posts,
+})
+// export default  connect()(Filter);
+export default connect(mapStateToProps)(Post) ; 

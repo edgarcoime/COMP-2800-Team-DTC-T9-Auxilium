@@ -4,9 +4,13 @@ import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import LikeComment from "./LikeComment";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
+import store from '../store';
+
 
 // Components
 import Post from "./partials/Post.component";
+import {getAllPosts} from "../actions/postActions";
+import {connect} from "react-redux";
 
 class PostTile extends Component {
   constructor(props) {
@@ -34,31 +38,45 @@ class PostTile extends Component {
   };
 
   componentDidMount() {
-    axios.get("/api/posts/getall").then((res) => {
-      const posts = res.data;
-      // console.log(posts)
-      this.setState({ posts });
-    });
+    this.props.getAllPosts()
   }
 
   render() {
+
     return (
+      // <div className="container">
+      //   {this.state.posts.map((post) => (
+      //     <Post 
+      //       _id={post._id}
+      //       owner={post.owner}
+      //       createdAt={post.createdAt}
+      //       title={post.title}
+      //       content={post.content}
+      //       likes={post.likes}
+      //       comments={post.comments}
+      //       isAuthenticated={ this.props.isAuthenticated }
+      //     />
+      //   ))}
+      // </div>
       <div className="container">
-        {this.state.posts.map((post) => (
-          <Post 
-            _id={post._id}
-            owner={post.owner}
-            createdAt={post.createdAt}
-            title={post.title}
-            content={post.content}
-            likes={post.likes}
-            comments={post.comments}
-            isAuthenticated={ this.props.isAuthenticated }
-          />
-        ))}
-      </div>
+      {this.props.posts.map((post) => (
+        <Post 
+          _id={post._id}
+          owner={post.owner}
+          createdAt={post.createdAt}
+          title={post.title}
+          content={post.content}
+          likes={post.likes}
+          comments={post.comments}
+          isAuthenticated={ this.props.isAuthenticated }
+        />
+      ))}
+    </div>
     );
   }
 }
+const mapStateToProps = (state) => ({
+    posts: state.post.posts
+  });
 
-export default PostTile;
+export default connect(mapStateToProps, {getAllPosts})(PostTile);

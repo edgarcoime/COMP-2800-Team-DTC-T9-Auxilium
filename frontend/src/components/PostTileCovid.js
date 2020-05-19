@@ -5,6 +5,8 @@ import "font-awesome/css/font-awesome.min.css";
 
 // Component
 import CovidPost from "./partials/CovidPost.component";
+import {getAllCovidPosts} from "../actions/covidActions";
+import {connect} from "react-redux";
 
 class PostTileCovid extends Component {
   constructor(props) {
@@ -50,32 +52,48 @@ class PostTileCovid extends Component {
   };
 
   componentDidMount() {
-    axios.get("/api/covid/getall").then((res) => {
-      const posts = res.data;
-      // console.log(posts)
-      this.setState({ posts });
-    });
+    this.props.getAllCovidPosts();
   }
 
   render() {
-    const { posts } = this.state;
     return (
-      <div>
-        {posts.map((post) => (
-          <CovidPost 
-            _id={post._id}
-            owner={post.owner}
-            createdAt={post.createdAt}
-            title={post.title}
-            content={post.content}
-            likes={post.likes}
-            comments={post.comments}
-            isAuthenticated={ this.props.isAuthenticated }
-          />
-        ))}
-      </div>
+      // <div>
+      //   {posts.map((post) => (
+      //     <CovidPost 
+      //       _id={post._id}
+      //       owner={post.owner}
+      //       createdAt={post.createdAt}
+      //       title={post.title}
+      //       content={post.content}
+      //       likes={post.likes}
+      //       comments={post.comments}
+      //       isAuthenticated={ this.props.isAuthenticated }
+      //       filteredPosts = {this.state.filteredPosts}
+      //     />
+      //   ))}
+      // </div>
+            <div>
+            {this.props.coviPosts.map((post) => (
+              <CovidPost 
+                _id={post._id}
+                owner={post.owner}
+                createdAt={post.createdAt}
+                title={post.title}
+                content={post.content}
+                likes={post.likes}
+                comments={post.comments}
+                isAuthenticated={ this.props.isAuthenticated }
+                filteredPosts = {this.state.filteredPosts}
+              />
+            ))}
+          </div>
+      
     );
   }
 }
 
-export default PostTileCovid;
+const mapStateToProps = (state) => ({
+  coviPosts: state.covidPost.covidPosts
+});
+
+export default connect(mapStateToProps, {getAllCovidPosts})(PostTileCovid);
