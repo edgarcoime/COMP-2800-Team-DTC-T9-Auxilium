@@ -85,7 +85,7 @@ export class CovidPost extends Component {
       </Fragment>
     );
     return (
-      <div>
+      <div id={"post" + _id}>
         <Row key={_id}>
           <Col className="mt-5">
             <Card className="bg-light shadow-sm">
