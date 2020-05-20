@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import { Row, Col } from 'reactstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -26,22 +27,59 @@ export class Comment extends Component {
 
     return `${createdWhen}`;
   };
+  submitDeleteComment = (e) => {
+    const {isAuthenticated, commentId, isCovid} = this.props;
+    console.log(commentId)
+    if (!isAuthenticated) {
+      alert("Only the comment owenr has the right to delete");
+    } else {
+      const {text, user, userId, token, postId} = this.props;
+      const commentData = {
+        text: text,
+        owner: user,
+        ownerId: userId,
+        postId:postId,
+      };
+      console.log(commentData)
+
+      axios({
+        method: "post",
+        url: isCovid? `http://localhost:5000/api/comment/covid/delete/${commentId}`:`http://localhost:5000/api/comment/delete/${commentId}`,
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "x-auth-token": token,
+        },
+        data: commentData,
+      }).then((response) => console.log(response));
+      this.forceUpdate();
+      e.target.value = "";
+    }
+    const removeButton = document.getElementById("comment" + commentId);
+    removeButton.parentNode.removeChild(removeButton);
+  };
   render() {
-    const { commentId, commentOwner, text, ownerId, createdAt } = this.props;
-    return (
-      <div className="mt-4">
-        <Row>
-          <Col className="col-12">
-            <b className="d-inline"><i>{`${commentOwner} : `}</i></b>
-            <span>{`${text}`}</span><br />
-            <span className="float-right">{this.commentCreated(createdAt)}</span>
-          </Col>
-          
-        </Row>
-        <hr className="bg-info"/> 
-      </div>
-    )
-  }
+      const { commentId, commentOwner, text } = this.props;
+      if(this.props.isAuthenticated){
+        var { userId, user } = this.props;
+      }
+      if(commentOwner == user){
+        return (
+        <div class="comment-tile" id={"comment" + commentId}>
+          <button type="submit" className="btn close position-relative" onClick={this.submitDeleteComment}>x</button>
+          <p>{`${commentOwner}: ${text}`}</p>
+        </div>
+      )
+        }
+        else{
+          return (
+            <div class="comment-tile" id={"comment" + commentId}>
+              <p>{`${commentOwner}: ${text}`}</p>
+            </div>
+          )
+        }
+      
+    }
 }
 
 export default Comment

@@ -6,6 +6,10 @@ import "font-awesome/css/font-awesome.min.css";
 // Component
 import CovidPost from "./partials/CovidPost.component";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+
 class PostTileCovid extends Component {
   constructor(props) {
     super(props);
@@ -58,6 +62,11 @@ class PostTileCovid extends Component {
   }
 
   render() {
+    if(this.props.isAuthenticated){
+      var {user, token} = this.props;
+      var username = user.name;
+      var userId = user._id;
+      }
     const { posts } = this.state;
     return (
       <div>
@@ -71,11 +80,32 @@ class PostTileCovid extends Component {
             likes={post.likes}
             comments={post.comments}
             isAuthenticated={ this.props.isAuthenticated }
+            username = {username}
+            userId = {userId}
+            token = {token}
           />
         ))}
       </div>
     );
   }
 }
+PostTileCovid.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  error: PropTypes.object.isRequired,
+  id: PropTypes.string,
+  user: PropTypes.object,
+  token: PropTypes.string,
+};
 
-export default PostTileCovid;
+const mapStateToProps = (state, ownProps) => {
+  const {id} = ownProps;
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error,
+    id,
+    user: state.auth.user,
+    token: state.auth.token,
+  };
+};
+
+export default connect(mapStateToProps, null)(PostTileCovid);
