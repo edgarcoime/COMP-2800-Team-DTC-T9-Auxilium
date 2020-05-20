@@ -84,7 +84,7 @@ covidPostRouter.post("/", auth, async (req, res) => {
 // @route     delete api/covid/:id
 // @desc      Delete a post
 // @access    Private (implement auth later)
-covidPostRouter.delete("/:id", auth, async (req, res) => {
+covidPostRouter.delete("/", auth, async (req, res) => {
   try {
     const { reqOwner, reqOwnerId, postId } = req.body;
 

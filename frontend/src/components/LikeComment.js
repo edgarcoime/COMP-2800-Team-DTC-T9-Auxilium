@@ -276,6 +276,13 @@ class LikeComment extends Component {
   };
 
   render() {
+    if(this.props.isAuthenticated){
+      var{ user, isAuthenticated, id, token } = this.props;
+      var username = user.name
+      var userId = user._id;
+    }else{
+      var {user, isAuthenticated, id, token} = "";
+    }
     // const comments = this.state.postComments;
     const { postLikes, postComments: comments } = this.state;
     return (
@@ -317,6 +324,11 @@ class LikeComment extends Component {
               text={comment.text}
               ownerId={comment.ownerId}
               createdAt={comment.createdAt}
+              user={username}
+              userId={userId}
+              isAuthenticated={isAuthenticated}
+              postId={id}
+              token={token}
             />
           ))}
         </Collapse>

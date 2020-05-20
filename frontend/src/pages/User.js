@@ -35,6 +35,11 @@ class User extends Component {
   }
 
   render() {
+    if(this.props.isAuthenticated){
+      var {user, token} = this.props;
+      var username = user.name;
+      var userId = user._id;
+      }
     return (
       <div>
         <Header history={this.props.history}/>
@@ -73,6 +78,11 @@ class User extends Component {
               title={post.title}
               content={post.content}
               likes={post.likes}
+              comments={post.comments}
+              isAuthenticated={ this.props.isAuthenticated }
+              username = {username}
+              userId = {userId}
+              token = {token}
             />
           ))}
           <h2 className="mt-5"><strong>COVID Posts Created</strong></h2>
@@ -86,6 +96,11 @@ class User extends Component {
               title={post.title}
               content={post.content}
               likes={post.likes}
+              comments={post.comments}
+              isAuthenticated={ this.props.isAuthenticated }
+              username = {username}
+              userId = {userId}
+              token = {token}
             />
           ))}
           <h2 className="mt-5"><strong>COVID Posts Accepted</strong></h2>
@@ -110,6 +125,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
   user: state.auth.user,
+  token: state.auth.token,
 });
 
 export default connect(mapStateToProps, null)(User);
