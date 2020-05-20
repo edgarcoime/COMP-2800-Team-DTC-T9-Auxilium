@@ -1,3 +1,4 @@
+
 import React, { Component, Fragment } from "react";
 import Header from "./../components/Header/Header";
 import { Row, Col } from "reactstrap";
@@ -6,10 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import PostTile from "./../components/PostTile";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-social";
 import "font-awesome/css/font-awesome.min.css";
 import './pages.css'
 import easter from './../images/easter.mp4'
-
 
 // Redux
 import { connect } from "react-redux";
@@ -85,10 +86,15 @@ class Home extends Component {
                 </button>
               </Link>
             </Col>
+            <Col className="col-4 col-sm-2 d-none d-sm-block mt-5">
+          <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="btn btn-block btn-social btn-twitter"  data-size="small" data-text="Hi checkout this new website." data-url="https://master.dqek9jhclyvix.amplifyapp.com/" data-hashtags="auxilium" data-show-count="false" ><span class="fa fa-twitter"></span>Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </Col>
             {isAuthenticated ? createPostLink : null}
           </Row>
           <PostTile />
-        </div>
+          
+      </div>
+
       </div>
     );
   }
