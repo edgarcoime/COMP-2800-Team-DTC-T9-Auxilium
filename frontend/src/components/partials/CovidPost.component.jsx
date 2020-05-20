@@ -59,6 +59,19 @@ export class CovidPost extends Component {
     removeButton.parentNode.removeChild(removeButton);
   };
 
+  acceptRequest = (e) => {
+    // console.log("Accepted request", e);
+    const {
+      isAuthenticated,
+      _id: postId,
+      username: loggedInUsername,
+      userId: loggedInUserId,
+      owner: postOwnerName,
+      ownerId: postOwnerId,
+    } = this.props;
+    console.log(loggedInUsername, loggedInUserId, postOwnerName, postOwnerId);
+  };
+
   render() {
     const {
       _id,
@@ -69,10 +82,12 @@ export class CovidPost extends Component {
       comments,
       isAuthenticated,
       username,
+      userId,
+      ownerId
     } = this.props;
     // console.log(this.props.likes)
 
-    const userIsTheSame = username === owner;
+    const userIsTheSame = userId === ownerId;
     const deleteBtn = (
       <Fragment>
         <button
@@ -81,6 +96,16 @@ export class CovidPost extends Component {
           onClick={this.submitDeleteComment}
         >
           Delete
+        </button>
+      </Fragment>
+    );
+    const acceptBtn = (
+      <Fragment>
+        <button
+          className="btn btn-info float-right"
+          onClick={this.acceptRequest}
+        >
+          Accept
         </button>
       </Fragment>
     );
@@ -106,10 +131,8 @@ export class CovidPost extends Component {
               <CardBody className="pt-0">
                 <h4>{title}</h4>
                 <p>{content}</p>
-                {
-                  userIsTheSame ? deleteBtn : null
-                }
-                <button className="btn btn-info float-right">Accept</button>
+                {userIsTheSame ? deleteBtn : null}
+                {userIsTheSame ? null: acceptBtn }
                 <LikeComment
                   id={_id}
                   comments={comments}

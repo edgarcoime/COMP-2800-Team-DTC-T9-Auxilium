@@ -71,10 +71,12 @@ export default class Post extends Component {
       comments,
       isAuthenticated,
       username,
+      userId,
+      ownerId
     } = this.props;
     // console.log(this.props.likes)
 
-    const userIsTheSame = username === owner;
+    const userIsTheSame = userId === ownerId;
     const deleteBtn = (
       <Fragment>
         <button

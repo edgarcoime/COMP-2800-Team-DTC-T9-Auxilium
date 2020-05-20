@@ -74,6 +74,7 @@ class PostTileCovid extends Component {
           <CovidPost 
             _id={post._id}
             owner={post.owner}
+            ownerId={post.ownerId}
             createdAt={post.createdAt}
             title={post.title}
             content={post.content}

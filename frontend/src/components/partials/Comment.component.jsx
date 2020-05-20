@@ -61,11 +61,11 @@ export class Comment extends Component {
     removeButton.parentNode.removeChild(removeButton);
   };
   render() {
-    const { commentId, commentOwner, text } = this.props;
+    const { commentId, commentOwner, text, ownerId:commentOwnerId } = this.props;
     let userIsTheSame = false;
     if (this.props.isAuthenticated) {
       var { userId, user } = this.props;
-      userIsTheSame = commentOwner === user;
+      userIsTheSame = commentOwnerId === userId;
     }
     const deleteBtn = (
       <Fragment>
