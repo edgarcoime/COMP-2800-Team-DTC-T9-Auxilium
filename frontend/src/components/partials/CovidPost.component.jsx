@@ -83,11 +83,18 @@ export class CovidPost extends Component {
       isAuthenticated,
       username,
       userId,
-      ownerId
+      ownerId,
     } = this.props;
     // console.log(this.props.likes)
 
     const userIsTheSame = userId === ownerId;
+    const assignedTo = (
+      <Fragment>
+        <Col xs="auto">
+          <span>Assigned to Edgar</span>
+        </Col>
+      </Fragment>
+    );
     const deleteBtn = (
       <Fragment>
         <button
@@ -110,18 +117,19 @@ export class CovidPost extends Component {
       </Fragment>
     );
     return (
-      <div>
+      <div id={"post" + _id}>
         <Row key={_id}>
           <Col className="mt-5">
             <Card className="bg-light shadow-sm">
               <CardTitle className="p-3">
                 <Row>
-                  <Col className="col-8 col-sm-10">
+                  <Col>
                     <p>
                       <strong>{owner}</strong>
                     </p>
                   </Col>
-                  <Col className="col-4 col-sm-2">
+                  { assignedTo }
+                  <Col>
                     <span className="float-right">
                       {this.postCreated(createdAt)}
                     </span>
@@ -132,7 +140,7 @@ export class CovidPost extends Component {
                 <h4>{title}</h4>
                 <p>{content}</p>
                 {userIsTheSame ? deleteBtn : null}
-                {userIsTheSame ? null: acceptBtn }
+                {userIsTheSame ? null : acceptBtn}
                 <LikeComment
                   id={_id}
                   comments={comments}
