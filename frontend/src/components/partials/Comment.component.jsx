@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import { Row, Col } from 'reactstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React, { Component, Fragment } from "react";
+import axios from "axios";
+import { Row, Col } from "reactstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export class Comment extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      commentOwner: props.ownerId
-    }
+      commentOwner: props.ownerId,
+    };
   }
   commentCreated = (createdAt) => {
     let createdWhen = "";
@@ -28,23 +28,25 @@ export class Comment extends Component {
     return `${createdWhen}`;
   };
   submitDeleteComment = (e) => {
-    const {isAuthenticated, commentId, isCovid} = this.props;
-    console.log(commentId)
+    const { isAuthenticated, commentId, isCovid } = this.props;
+    console.log(commentId);
     if (!isAuthenticated) {
       alert("Only the comment owenr has the right to delete");
     } else {
-      const {text, user, userId, token, postId} = this.props;
+      const { text, user, userId, token, postId } = this.props;
       const commentData = {
         text: text,
         owner: user,
         ownerId: userId,
-        postId:postId,
+        postId: postId,
       };
-      console.log(commentData)
+      console.log(commentData);
 
       axios({
         method: "post",
-        url: isCovid? `http://localhost:5000/api/comment/covid/delete/${commentId}`:`http://localhost:5000/api/comment/delete/${commentId}`,
+        url: isCovid
+          ? `http://localhost:5000/api/comment/covid/delete/${commentId}`
+          : `http://localhost:5000/api/comment/delete/${commentId}`,
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*",
@@ -59,27 +61,32 @@ export class Comment extends Component {
     removeButton.parentNode.removeChild(removeButton);
   };
   render() {
-      const { commentId, commentOwner, text } = this.props;
-      if(this.props.isAuthenticated){
-        var { userId, user } = this.props;
-      }
-      if(commentOwner == user){
-        return (
-        <div class="comment-tile" id={"comment" + commentId}>
-          <button type="submit" className="btn close position-relative" onClick={this.submitDeleteComment}>x</button>
-          <p>{`${commentOwner}: ${text}`}</p>
-        </div>
-      )
-        }
-        else{
-          return (
-            <div class="comment-tile" id={"comment" + commentId}>
-              <p>{`${commentOwner}: ${text}`}</p>
-            </div>
-          )
-        }
-      
+    const { commentId, commentOwner, text } = this.props;
+    let userIsTheSame = false;
+    if (this.props.isAuthenticated) {
+      var { userId, user } = this.props;
+      userIsTheSame = commentOwner === user;
     }
+    const deleteBtn = (
+      <Fragment>
+        <button
+          type="submit"
+          className="btn close position-relative"
+          onClick={this.submitDeleteComment}
+        >
+          x
+        </button>
+      </Fragment>
+    );
+    return (
+      <div class="comment-tile" id={"comment" + commentId}>
+        {
+          userIsTheSame ? deleteBtn : null
+        }
+        <p>{`${commentOwner}: ${text}`}</p>
+      </div>
+    );
+  }
 }
 
-export default Comment
+export default Comment;
