@@ -11,6 +11,7 @@ export class CovidPost extends Component {
 
     this.state = {
       isCovid: true,
+      acceptedBy: null,
     };
   }
 
@@ -34,7 +35,7 @@ export class CovidPost extends Component {
   submitDeleteComment = (e) => {
     const { isAuthenticated, _id } = this.props;
     if (!isAuthenticated) {
-      alert("Only the psit owenr has the right to delete");
+      alert("Only the post owner has the right to delete");
     } else {
       const { username, userId, token } = this.props;
       const postData = {
@@ -59,17 +60,126 @@ export class CovidPost extends Component {
     removeButton.parentNode.removeChild(removeButton);
   };
 
-  acceptRequest = (e) => {
-    // console.log("Accepted request", e);
-    const {
-      isAuthenticated,
-      _id: postId,
-      username: loggedInUsername,
-      userId: loggedInUserId,
-      owner: postOwnerName,
-      ownerId: postOwnerId,
-    } = this.props;
-    console.log(loggedInUsername, loggedInUserId, postOwnerName, postOwnerId);
+  acceptRequest = async (e) => {
+    try {
+      const { isAuthenticated, _id: postId } = this.props;
+      if (!isAuthenticated) {
+        alert("You must be logged in to volunteer to help individuals!");
+      } else {
+        // console.log("Accepted request", e);
+        const {
+          token,
+          username: loggedInUsername,
+          userId: loggedInUserId,
+          owner: postOwnerName,
+          ownerId: postOwnerId,
+        } = this.props;
+
+        const postData = {
+          reqOwner: loggedInUsername,
+          reqOwnerId: loggedInUserId,
+          covidPostId: postId,
+        };
+
+        const response = await axios({
+          method: "post",
+          url: "http://localhost:5000/api/covid/acceptrequest",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token,
+          },
+          data: postData,
+        });
+        console.log(response);
+        console.log(
+          loggedInUsername,
+          loggedInUserId,
+          postOwnerName,
+          postOwnerId
+        );
+        this.setState({
+          acceptedBy: {
+            name: loggedInUsername,
+            _id: loggedInUserId,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  deleteVolunteerRequest = () => {
+    console.log("Rescind request goes here");
+  };
+
+  acceptedRequestText = () => {
+    if (!this.props.assignedTo) {
+      return null;
+    } else {
+      if (!this.state.acceptedBy) {
+        const { _id, name } = this.props.assignedTo;
+        return (
+          <Fragment>
+            <Col xs="auto">
+              <span>Assigned to {name}</span>
+            </Col>
+          </Fragment>
+        );
+      } else {
+        const { _id, name } = this.state;
+        return (
+          <Fragment>
+            <Col xs="auto">
+              <span>Assigned to {name}</span>
+            </Col>
+          </Fragment>
+        );
+      }
+    }
+  };
+
+  acceptRequestButton = () => {
+    console.log(this.props.assignedTo)
+    if (this.props.assignedTo) {
+      if (this.props.assignedTo._id === this.props.userId) {
+        return (
+          <Fragment>
+            <button
+              className="btn btn-warning float-right"
+              onClick={this.deleteVolunteerRequest}
+            >
+              Rescind Request
+            </button>
+          </Fragment>
+        );
+      } else {
+        return (
+          <Fragment>
+            <button
+              className="btn btn-info float-right"
+              onClick={this.acceptRequest}
+            >
+              Accept
+            </button>
+          </Fragment>
+        );
+      }
+    } else if (this.props.isAuthenticated) {
+      return (
+        <Fragment>
+          <button
+            className="btn btn-info float-right"
+            onClick={this.acceptRequest}
+          >
+            Accept
+          </button>
+        </Fragment>
+      );
+    } else {
+      return null;
+    }
   };
 
   render() {
@@ -88,13 +198,6 @@ export class CovidPost extends Component {
     // console.log(this.props.likes)
 
     const userIsTheSame = userId === ownerId;
-    const assignedTo = (
-      <Fragment>
-        <Col xs="auto">
-          <span>Assigned to Edgar</span>
-        </Col>
-      </Fragment>
-    );
     const deleteBtn = (
       <Fragment>
         <button
@@ -106,19 +209,9 @@ export class CovidPost extends Component {
         </button>
       </Fragment>
     );
-    const acceptBtn = (
-      <Fragment>
-        <button
-          className="btn btn-info float-right"
-          onClick={this.acceptRequest}
-        >
-          Accept
-        </button>
-      </Fragment>
-    );
     return (
       <div id={"post" + _id}>
-        <Row key={_id}>
+        <Row>
           <Col className="mt-5">
             <Card className="bg-light shadow-sm">
               <CardTitle className="p-3">
@@ -128,7 +221,7 @@ export class CovidPost extends Component {
                       <strong>{owner}</strong>
                     </p>
                   </Col>
-                  { assignedTo }
+                  {this.acceptedRequestText()}
                   <Col>
                     <span className="float-right">
                       {this.postCreated(createdAt)}
@@ -140,7 +233,7 @@ export class CovidPost extends Component {
                 <h4>{title}</h4>
                 <p>{content}</p>
                 {userIsTheSame ? deleteBtn : null}
-                {userIsTheSame ? null : acceptBtn}
+                {userIsTheSame ? null : this.acceptRequestButton()}
                 <LikeComment
                   id={_id}
                   comments={comments}

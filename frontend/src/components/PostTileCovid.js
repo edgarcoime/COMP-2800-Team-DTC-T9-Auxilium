@@ -72,6 +72,7 @@ class PostTileCovid extends Component {
       <div>
         {posts.map((post) => (
           <CovidPost 
+            key={post._id}
             _id={post._id}
             owner={post.owner}
             ownerId={post.ownerId}
@@ -80,6 +81,7 @@ class PostTileCovid extends Component {
             content={post.content}
             likes={post.likes}
             comments={post.comments}
+            assignedTo={post.assignedTo}
             isAuthenticated={ this.props.isAuthenticated }
             username = {username}
             userId = {userId}
