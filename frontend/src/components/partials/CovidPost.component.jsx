@@ -68,8 +68,9 @@ export class CovidPost extends Component {
       content,
       comments,
       isAuthenticated,
-      username
+      username,
     } = this.props;
+    // console.log(this.props.likes)
     if(username == owner){
     return (
       <div id={"post"+_id}>
@@ -99,6 +100,7 @@ export class CovidPost extends Component {
                   comments= { comments }
                   isAuthenticated = { isAuthenticated }
                   isCovid = { this.state.isCovid }
+                  likes={this.props.likes}
                 />
                 <button type="submit" className="btn btn-danger float-right" onClick={this.submitDeleteComment}>Delete</button>  
 
@@ -138,6 +140,7 @@ export class CovidPost extends Component {
                       comments= { comments }
                       isAuthenticated = { isAuthenticated }
                       isCovid = { this.state.isCovid }
+                      likes={this.props.likes}
                     />
                   </CardBody>
                 </Card>

@@ -25,7 +25,7 @@ class LikeComment extends Component {
       isClicked: 0,
       isCommentClicked: 0,
       postComments: [],
-      postLikes: [],
+      postLikes: this.props.likes,
       comment: "",
       refreshComponent: true,
     };
@@ -261,6 +261,7 @@ class LikeComment extends Component {
         },
         data: commentData,
       });
+      console.log(response.data)
 
       // parsing through resopnse data and setting Component state to display comment
       const newComment = response.data;
@@ -279,7 +280,7 @@ class LikeComment extends Component {
     if(this.props.isAuthenticated){
       var{ user, isAuthenticated, id, token } = this.props;
       var username = user.name
-      var userId = user._id;
+      var userId = this.props.user._id;
     }else{
       var {user, isAuthenticated, id, token} = "";
     }
@@ -329,6 +330,7 @@ class LikeComment extends Component {
               isAuthenticated={isAuthenticated}
               postId={id}
               token={token}
+              isCovid={this.props.isCovid}
             />
           ))}
         </Collapse>
