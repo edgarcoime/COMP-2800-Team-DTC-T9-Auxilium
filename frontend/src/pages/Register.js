@@ -85,6 +85,7 @@ class Register extends Component {
           <CardTitle className="text-center p-3">
             <img
               src={logo}
+              alt="Auxilium Logo"
               className="d-block mx-auto  "
               height="150"
               width="150"

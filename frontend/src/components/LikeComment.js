@@ -49,7 +49,7 @@ class LikeComment extends Component {
       if (userLiked) {
         this.setState({ isClicked: 1 });
       }
-    };
+    }
   };
 
   componentDidMount = async () => {
@@ -257,7 +257,7 @@ class LikeComment extends Component {
         },
         data: commentData,
       });
-      console.log(response.data)
+      console.log(response.data);
 
       // parsing through resopnse data and setting Component state to display comment
       const newComment = response.data;
@@ -273,14 +273,21 @@ class LikeComment extends Component {
   };
 
   render() {
-    if(this.props.isAuthenticated){
-      var{ user, isAuthenticated, id, token } = this.props;
-      var username = user.name
-      var userId = this.props.user._id;
-    }else{
-      var {user, isAuthenticated, id, token} = "";
-    }
-    // const comments = this.state.postComments;
+    // Setting initial state to prevent REACT crashing due to null
+    const { isAuthenticated } = this.props;
+    let token = "";
+    let user = "";
+    let id = "";
+    let username = "";
+    let userId = "";
+    if (isAuthenticated) {
+      token = this.props.token;
+      user = this.props.user;
+      id = this.props.id;
+      username = user.name;
+      userId = user._id;
+    } 
+
     const { postLikes, postComments: comments } = this.state;
     return (
       <div>
@@ -289,7 +296,7 @@ class LikeComment extends Component {
           <button className="btn" onClick={this.handleLikeClick}>
             <span>
               <FontAwesomeIcon
-                icon={this.state.isClicked == 1 ? faHeart1 : faHeart}
+                icon={this.state.isClicked === 1 ? faHeart1 : faHeart}
                 size="2x"
               />
             </span>

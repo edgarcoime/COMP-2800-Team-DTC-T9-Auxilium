@@ -71,8 +71,6 @@ export class CovidPost extends Component {
           token,
           username: loggedInUsername,
           userId: loggedInUserId,
-          owner: postOwnerName,
-          ownerId: postOwnerId,
         } = this.props;
 
         const postData = {
@@ -118,8 +116,6 @@ export class CovidPost extends Component {
           token,
           username: loggedInUsername,
           userId: loggedInUserId,
-          owner: postOwnerName,
-          ownerId: postOwnerId,
         } = this.props;
 
         // Forming request data
@@ -208,7 +204,6 @@ export class CovidPost extends Component {
       content,
       comments,
       isAuthenticated,
-      username,
       userId,
       ownerId,
     } = this.props;
