@@ -35,7 +35,7 @@ export default class Post extends Component {
   submitDeleteComment = (e) => {
     const { isAuthenticated, _id } = this.props;
     if (!isAuthenticated) {
-      alert("Only the psit owenr has the right to delete");
+      alert("Only the post owenr has the right to delete");
     } else {
       const { username, userId, token } = this.props;
       const postData = {
@@ -72,10 +72,12 @@ export default class Post extends Component {
       comments,
       isAuthenticated,
       username,
+      userId,
+      ownerId
     } = this.props;
     // console.log(this.props.likes)
 
-    const userIsTheSame = username === owner;
+    const userIsTheSame = userId === ownerId;
     const deleteBtn = (
       <Fragment>
         <button
@@ -90,7 +92,7 @@ export default class Post extends Component {
     return (
       <div id={"post" + _id}>
         <Fragment>
-          <Row key={_id}>
+          <Row>
             <Col className="mt-3">
               <Card className="bg- shadow-sm">
                 <CardTitle className="p-3">

@@ -39,10 +39,14 @@ covidPostRouter.get("/getone/:id", async (req, res) => {
 // @route     GET api/covid/getSet
 // @desc      GET a set of posts based on array of postIDs
 // @access    Public
-covidPostRouter.get("/getset", async (req, res) => {
+covidPostRouter.post("/getset", async (req, res) => {
   try {
     const { postSet } = req.body;
-    const foundSet = await CovidPost.find().where("_id").in(postSet).exec();
+    const foundSet = await CovidPost.find()
+      .where("_id")
+      .in(postSet)
+      .populate("assignedTo")
+      .exec();
     res.json(foundSet);
   } catch (error) {
     console.log(error);
@@ -130,8 +134,8 @@ covidPostRouter.post("/acceptrequest", async (req, res) => {
       { _id: reqOwnerId },
       { $push: { covidPostsAccepted: covidPostId } }
     );
-    console.log(userResponse)
-    res.json({ success: true, msg: "Succesfully registed post to user" })
+    console.log(userResponse);
+    res.json({ success: true, msg: "Succesfully registed post to user" });
   } catch (error) {
     console.log(error);
     res.status(400).json({ msg: "Could not accept request", error });
@@ -149,19 +153,24 @@ covidPostRouter.post("/deleterequest", auth, async (req, res) => {
     const foundPost = await CovidPost.findById(covidPostId);
     foundPost.assignedTo = undefined;
     const response = await foundPost.save();
-    console.log(response)
+    console.log(response);
 
     // Delete post in user profile
     const userResponse = await User.updateOne(
       { _id: reqOwnerId },
       { $pull: { covidPostsAccepted: covidPostId } }
     );
-    console.log(userResponse)
-    res.json({ success: true, msg: "Succesfully assigned post from user Profile" })
+    console.log(userResponse);
+    res.json({
+      success: true,
+      msg: "Succesfully assigned post from user Profile",
+    });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ msg: "Could not delete post from user Profile", error }) 
+    res
+      .status(400)
+      .json({ msg: "Could not delete post from user Profile", error });
   }
-})
+});
 
 export default covidPostRouter;
