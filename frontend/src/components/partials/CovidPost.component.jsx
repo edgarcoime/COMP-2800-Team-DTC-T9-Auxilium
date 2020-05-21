@@ -7,12 +7,21 @@ import "font-awesome/css/font-awesome.min.css";
 
 export class CovidPost extends Component {
   constructor(props) {
+    console.log("Constructor runs");
     super(props);
 
     this.state = {
       isCovid: true,
-      acceptedBy: null,
+      acceptedBy: this.props.assignedTo,
     };
+  }
+
+  componentDidMount() {
+    console.log("component mounting");
+  }
+
+  componentDidUpdate() {
+    console.log("component updated");
   }
 
   postCreated = (createdAt) => {
@@ -81,23 +90,16 @@ export class CovidPost extends Component {
           covidPostId: postId,
         };
 
-        const response = await axios({
-          method: "post",
-          url: "http://localhost:5000/api/covid/acceptrequest",
-          headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            "Access-Control-Allow-Origin": "*",
-            "x-auth-token": token,
-          },
-          data: postData,
-        });
-        console.log(response);
-        console.log(
-          loggedInUsername,
-          loggedInUserId,
-          postOwnerName,
-          postOwnerId
-        );
+        // const response = await axios({
+        //   method: "post",
+        //   url: "http://localhost:5000/api/covid/acceptrequest",
+        //   headers: {
+        //     "Content-Type": "application/json;charset=UTF-8",
+        //     "Access-Control-Allow-Origin": "*",
+        //     "x-auth-token": token,
+        //   },
+        //   data: postData,
+        // });
         this.setState({
           acceptedBy: {
             name: loggedInUsername,
@@ -112,38 +114,28 @@ export class CovidPost extends Component {
 
   deleteVolunteerRequest = () => {
     console.log("Rescind request goes here");
+    this.setState({
+      acceptedBy: null,
+    });
   };
 
   acceptedRequestText = () => {
-    if (!this.props.assignedTo) {
+    if (!this.state.acceptedBy) {
       return null;
     } else {
-      if (!this.state.acceptedBy) {
-        const { _id, name } = this.props.assignedTo;
-        return (
-          <Fragment>
-            <Col xs="auto">
-              <span>Assigned to {name}</span>
-            </Col>
-          </Fragment>
-        );
-      } else {
-        const { _id, name } = this.state;
-        return (
-          <Fragment>
-            <Col xs="auto">
-              <span>Assigned to {name}</span>
-            </Col>
-          </Fragment>
-        );
-      }
+      return (
+        <Fragment>
+          <Col xs="auto">
+            <span>Assigned to {this.state.acceptedBy.name}</span>
+          </Col>
+        </Fragment>
+      );
     }
   };
 
   acceptRequestButton = () => {
-    console.log(this.props.assignedTo)
-    if (this.props.assignedTo) {
-      if (this.props.assignedTo._id === this.props.userId) {
+    if (this.state.acceptedBy) {
+      if (this.state.acceptedBy._id === this.props.userId) {
         return (
           <Fragment>
             <button
@@ -155,18 +147,9 @@ export class CovidPost extends Component {
           </Fragment>
         );
       } else {
-        return (
-          <Fragment>
-            <button
-              className="btn btn-info float-right"
-              onClick={this.acceptRequest}
-            >
-              Accept
-            </button>
-          </Fragment>
-        );
+        return null;
       }
-    } else if (this.props.isAuthenticated) {
+    } else {
       return (
         <Fragment>
           <button
@@ -177,12 +160,11 @@ export class CovidPost extends Component {
           </button>
         </Fragment>
       );
-    } else {
-      return null;
     }
   };
 
   render() {
+    console.log("component rerenders");
     const {
       _id,
       owner,
@@ -233,7 +215,8 @@ export class CovidPost extends Component {
                 <h4>{title}</h4>
                 <p>{content}</p>
                 {userIsTheSame ? deleteBtn : null}
-                {userIsTheSame ? null : this.acceptRequestButton()}
+                {!userIsTheSame ? this.acceptRequestButton() : null}
+                {/* {isAuthenticated ? this.acceptRequestButton() : null} */}
                 <LikeComment
                   id={_id}
                   comments={comments}
