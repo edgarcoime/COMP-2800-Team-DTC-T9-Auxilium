@@ -81,7 +81,7 @@ postRouter.post("/", auth, async (req, res) => {
 // @route     delete api/posts/:id
 // @desc      Delete a post
 // @access    Private (implement auth later)
-postRouter.delete("/:id", auth, async (req, res) => {
+postRouter.delete("/", auth, async (req, res) => {
   try {
     const { reqOwner, reqOwnerId, postId } = req.body;
 

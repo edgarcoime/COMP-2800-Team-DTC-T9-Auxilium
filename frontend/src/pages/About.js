@@ -22,7 +22,6 @@ class About extends Component {
             <div>
                 <Header history={this.props.history}/>
                 <div className="container h-100">
-                    <h1 class="text-center page-header text-uppercase">About Us</h1>
                     <Row  className="h-100 justify-content-center align-items-center">
                         <Col className="col-12 col-sm-12  text-center">
                             <img src={logo} className="rounded-circle my-4" height="300" width="300" alt="..."></img>

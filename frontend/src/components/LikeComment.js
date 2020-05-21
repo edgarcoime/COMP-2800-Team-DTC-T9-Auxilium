@@ -25,22 +25,42 @@ class LikeComment extends Component {
       isClicked: 0,
       isCommentClicked: 0,
       postComments: [],
-      postLikes: [],
+      postLikes: this.props.likes,
       comment: "",
       refreshComponent: true,
     };
   }
 
+  componentWillUnmount = () => {
+    const { isAuthenticated } = this.props;
+    if (!isAuthenticated) {
+      this.setState({
+        isClicked: 0,
+        isCommentClicked: 0,
+      });
+    }
+  };
+
+  componentDidUpdate = () => {
+    const { isClicked } = this.state;
+    const { isAuthenticated } = this.props;
+    if (!isClicked && isAuthenticated) {
+      let userLiked = this.userAlreadyLiked();
+      if (userLiked) {
+        this.setState({ isClicked: 1 });
+      }
+    };
+  };
+
   componentDidMount = async () => {
     try {
-      const { id, isCovid, loggedInUser, loggedInUserId } = this.props;
+      const { id, isCovid } = this.props;
       let url = "";
-      isCovid ? url="http://localhost:5000/api/comment/getcovidcomments" : url="http://localhost:5000/api/comment/getpostcomments"
+      isCovid
+        ? (url = "http://localhost:5000/api/comment/getcovidcomments")
+        : (url = "http://localhost:5000/api/comment/getpostcomments");
       const data = { postId: id };
       const response = await axios.post(url, data);
-
-      // Check if user has liked this post
-      console.log(loggedInUser, loggedInUserId)
 
       this.setState({
         postComments: response.data.comments,
@@ -51,11 +71,26 @@ class LikeComment extends Component {
       console.log(error);
     }
   };
-  
+
+  userAlreadyLiked = () => {
+    const {
+      user: { name: username, _id: userId },
+    } = this.props;
+    const { postLikes } = this.state;
+    const userLoggedIn = { ownerId: userId, owner: username };
+    let alreadyLiked = false;
+    postLikes.forEach((like) => {
+      if (like.ownerId === userLoggedIn.ownerId) {
+        alreadyLiked = true;
+      }
+    });
+    return alreadyLiked;
+  };
+
   handleLikeClick = () => {
     const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
-      alert("You must be signed in to like a post!")
+      alert("You must be signed in to like a post!");
     } else {
       if (this.state.isClicked == 0) {
         this.likePost();
@@ -64,7 +99,7 @@ class LikeComment extends Component {
       }
     }
   };
-  
+
   likePost = async () => {
     try {
       // Destructuring objects
@@ -80,9 +115,11 @@ class LikeComment extends Component {
         owner: name,
         ownerId: userId,
         postId,
-      }
+      };
       let apiURL = "";
-      isCovid ? apiURL="http://localhost:5000/api/like/covid" : apiURL="http://localhost:5000/api/like"
+      isCovid
+        ? (apiURL = "http://localhost:5000/api/like/covid")
+        : (apiURL = "http://localhost:5000/api/like");
 
       // Axios request to post comment to mongo using backend api
       const response = await axios({
@@ -98,21 +135,25 @@ class LikeComment extends Component {
 
       // parsing through resopnse data and setting Component state to display comment
       const updatedPost = response.data;
-      console.log(updatedPost)
+      console.log(updatedPost);
       const newLike = {
         ownerId: userId,
-        owner: name
-      }
+        owner: name,
+      };
       let newStateLikes = [...this.state.postLikes];
       newStateLikes.push(newLike);
-      this.setState({ isCommentClicked: 0, refreshComponent: true, postLikes: newStateLikes })
+      this.setState({
+        isCommentClicked: 0,
+        refreshComponent: true,
+        postLikes: newStateLikes,
+      });
 
       // Set like to Clicked
-      this.setState({ isClicked: 1 })
+      this.setState({ isClicked: 1 });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   unLikePost = async () => {
     try {
@@ -129,9 +170,11 @@ class LikeComment extends Component {
         owner: name,
         ownerId: userId,
         postId,
-      }
+      };
       let apiURL = "";
-      isCovid ? apiURL="http://localhost:5000/api/like/covid/delete" : apiURL="http://localhost:5000/api/like/delete"
+      isCovid
+        ? (apiURL = "http://localhost:5000/api/like/covid/delete")
+        : (apiURL = "http://localhost:5000/api/like/delete");
 
       // Axios request to post comment to mongo using backend api
       const response = await axios({
@@ -147,23 +190,28 @@ class LikeComment extends Component {
 
       // parsing through resopnse data and setting Component state to display comment
       const updatedPost = response.data;
-      console.log(updatedPost)
+      console.log(updatedPost);
       const newLike = {
         ownerId: userId,
-        owner: name
-      }
+        owner: name,
+      };
       let originalStateLikes = [...this.state.postLikes];
-      const newStateLikes = originalStateLikes.filter(like => like.ownerId !== userId)
-      console.log(originalStateLikes, newStateLikes)
-      this.setState({ isCommentClicked: 0, refreshComponent: true, postLikes: newStateLikes })
+      const newStateLikes = originalStateLikes.filter(
+        (like) => like.ownerId !== userId
+      );
+      console.log(originalStateLikes, newStateLikes);
+      this.setState({
+        isCommentClicked: 0,
+        refreshComponent: true,
+        postLikes: newStateLikes,
+      });
 
       // Set like to Clicked
       this.setState({ isClicked: 0 });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  
+  };
 
   handleCommentClick = (e) => {
     if (this.state.isCommentClicked == 0) {
@@ -198,8 +246,9 @@ class LikeComment extends Component {
         postId,
       };
       let apiURL = "";
-      isCovid ? apiURL="http://localhost:5000/api/comment/covid" : apiURL="http://localhost:5000/api/comment/"
-
+      isCovid
+        ? (apiURL = "http://localhost:5000/api/comment/covid")
+        : (apiURL = "http://localhost:5000/api/comment/");
 
       // Axios request to post comment to mongo using backend api
       const response = await axios({
@@ -212,21 +261,34 @@ class LikeComment extends Component {
         },
         data: commentData,
       });
+      console.log(response.data)
 
       // parsing through resopnse data and setting Component state to display comment
       const newComment = response.data;
       let newStateComments = [...this.state.postComments];
       newStateComments.push(newComment);
-      this.setState({ comment: "", isCommentClicked: 0, refreshComponent: true, postComments: newStateComments })
+      this.setState({
+        comment: "",
+        isCommentClicked: 0,
+        refreshComponent: true,
+        postComments: newStateComments,
+      });
     }
-  }
+  };
 
   render() {
+    if(this.props.isAuthenticated){
+      var{ user, isAuthenticated, id, token } = this.props;
+      var username = user.name
+      var userId = this.props.user._id;
+    }else{
+      var {user, isAuthenticated, id, token} = "";
+    }
     // const comments = this.state.postComments;
     const { postLikes, postComments: comments } = this.state;
     return (
       <div>
-      <p>{postLikes.length} likes</p>
+        <p>{postLikes.length} likes</p>
         <span>
           <button className="btn" onClick={this.handleLikeClick}>
             <span>
@@ -256,15 +318,21 @@ class LikeComment extends Component {
             </button>
           </span>
           {comments.map((comment) => (
-              <CommentTile
-                key={"commentTile" + comment._id}
-                commentId={comment._id}
-                commentOwner={comment.owner}
-                text={comment.text}
-                ownerId={comment.ownerId}
-                createdAt={comment.createdAt}
-              />
-            ))}
+            <CommentTile
+              key={"commentTile" + comment._id}
+              commentId={comment._id}
+              commentOwner={comment.owner}
+              text={comment.text}
+              ownerId={comment.ownerId}
+              createdAt={comment.createdAt}
+              user={username}
+              userId={userId}
+              isAuthenticated={isAuthenticated}
+              postId={id}
+              token={token}
+              isCovid={this.props.isCovid}
+            />
+          ))}
         </Collapse>
       </div>
     );
