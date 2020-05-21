@@ -115,12 +115,18 @@ class PostTileCovid extends Component {
   };
 
   render() {
+    
+    // Tommy's added code
     const { filteredPosts, limitedPosts } = this.state;
     if (this.props.isAuthenticated) {
       var { user, token } = this.props;
       var username = user.name;
       var userId = user._id;
+      var userEmail = user.email;
     }
+    console.log(userEmail)
+    const { posts } = this.state;
+    
     return (
       <div className="container">
         <div className="form-group has-search mt-4">
@@ -160,6 +166,7 @@ class PostTileCovid extends Component {
                   _id={post._id}
                   owner={post.owner}
                   ownerId={post.ownerId}
+                  ownerEmail={post.ownerEmail}
                   createdAt={post.createdAt}
                   title={post.title}
                   content={post.content}
@@ -170,6 +177,7 @@ class PostTileCovid extends Component {
                   username={username}
                   userId={userId}
                   token={token}
+                  userEmail={userEmail}
                 />
               </CSSTransition>
             </TransitionGroup>
