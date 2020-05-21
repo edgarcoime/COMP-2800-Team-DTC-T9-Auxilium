@@ -3,8 +3,10 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import InfiniteScroll from "react-infinite-scroll-component";
 import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import LikeComment from "./LikeComment";
+import loading from './images/loading_1.gif'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import './component.css'
@@ -18,6 +20,9 @@ class PostTile extends Component {
     this.state = {
       posts: [],
       filteredPosts: [],
+      limitedPosts: [],
+      index: 0,
+      hasMore: true,
     };
   }
 
@@ -44,6 +49,7 @@ class PostTile extends Component {
       // console.log(posts)
       this.setState({ posts: posts });
       this.setState({filteredPosts: posts});
+      this.loadData();
     });
   }
 
@@ -52,38 +58,85 @@ class PostTile extends Component {
     const lowerCaseValue = value.toLowerCase();
 
     this.setState(prevState => {
-      const filteredPosts = prevState.posts.filter(elm => 
+      const limitedPosts = prevState.posts.filter(elm => 
         elm.title.toLowerCase().includes(lowerCaseValue)
       );
 
-      return { filteredPosts };
+      return { limitedPosts };
     });
   }
 
+  loadData = () => {
+    const limitedPosts = this.state.limitedPosts;
+    const filteredPosts = this.state.filteredPosts;
+    const tempIndex = this.state.index;
+    this.setState({index: tempIndex + 9});
+    for(let i = tempIndex; i < this.state.index; i++) {
+      if(i >= filteredPosts.length -1) {
+        this.setState({hasMore: false});
+        return;
+      }
+      limitedPosts.push(filteredPosts[i]);
+    }
+    this.setState({limitedPosts: limitedPosts});
+  }
+
+  loadMoreData = () => {
+    const limitedPosts = this.state.limitedPosts;
+    const filteredPosts = this.state.filteredPosts;
+    if (limitedPosts.length >= filteredPosts.length) {
+      this.setState({hasMore: false});
+      return;
+    }
+
+    setTimeout(() => {
+      this.loadData();
+    }, 1000);    
+    
+  }
+
   render() {
-    const { filteredPosts } = this.state;
+    const { limitedPosts } = this.state;
     return (
       <div className="container">
         <div className="form-group has-search mt-4">
             <span className="form-control-logo"><FontAwesomeIcon icon={faSearch} size="lg"/></span>
             <input type="text" className="form-control" placeholder="Search by Title" onChange={this.handleSearchChange}/>
           </div>
-        {filteredPosts.map((post) => (
-          <TransitionGroup>
-            <CSSTransition key={post._id} classNames="fade" timeout={1500}>
-              <Post 
-                _id={post._id}
-                owner={post.owner}
-                createdAt={post.createdAt}
-                title={post.title}
-                content={post.content}
-                likes={post.likes}
-                comments={post.comments}
-                isAuthenticated={ this.props.isAuthenticated }
-              />
-            </CSSTransition>
-          </TransitionGroup>
-        ))}
+          <InfiniteScroll
+            className="scroll-box"
+            dataLength={limitedPosts.length}
+            next={this.loadMoreData}
+            hasMore={this.state.hasMore}
+            loader={
+              <Row className="text-center mt-1">
+                <Col>
+                  <img src={loading} alt="loading" height="70" width="70"/>
+                </Col>
+              </Row>
+            }
+            endMessage={
+              <h5 className="text-center mt-3"><strong>This is it. You have seen all of them</strong></h5>
+            }
+            >
+            {limitedPosts.map((post) => (
+              <TransitionGroup>
+                <CSSTransition key={post._id} classNames="fade" timeout={1500}>
+                  <Post 
+                    _id={post._id}
+                    owner={post.owner}
+                    createdAt={post.createdAt}
+                    title={post.title}
+                    content={post.content}
+                    likes={post.likes}
+                    comments={post.comments}
+                    isAuthenticated={ this.props.isAuthenticated }
+                  />
+                </CSSTransition>
+              </TransitionGroup>
+            ))}
+          </InfiniteScroll>
+        
       </div>
     );
   }
