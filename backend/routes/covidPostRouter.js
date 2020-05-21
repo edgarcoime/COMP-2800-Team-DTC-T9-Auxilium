@@ -57,7 +57,7 @@ covidPostRouter.post("/getset", async (req, res) => {
 // @desc      Create a post based on covid where they can ask for help
 // @access    Private (implement auth later)
 covidPostRouter.post("/", auth, async (req, res) => {
-  const { title, content, owner, ownerId } = req.body;
+  const { title, content, owner, ownerId, ownerEmail } = req.body;
   try {
     // Saving post in database
     const newCovidPost = new CovidPost({
@@ -65,9 +65,11 @@ covidPostRouter.post("/", auth, async (req, res) => {
       content,
       owner,
       ownerId,
+      ownerEmail
     });
+    console.log(newCovidPost)
     const registeredPost = await newCovidPost.save();
-    console.log(registeredPost);
+    // console.log(registeredPost);
 
     User.updateOne(
       { _id: ownerId },

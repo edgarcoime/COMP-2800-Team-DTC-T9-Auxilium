@@ -30,6 +30,10 @@ const CovidPostSchema = new Schema(
       type: String,
       required: true,
     },
+    ownerEmail:{
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
     },

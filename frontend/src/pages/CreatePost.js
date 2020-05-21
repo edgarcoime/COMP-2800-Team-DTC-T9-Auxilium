@@ -49,7 +49,10 @@ class CreatePost extends Component {
         content,
         owner: this.props.user.name,
         ownerId: this.props.user._id,
+        ownerEmail: this.props.user.email
       };
+      console.log(this.props.user._id)
+      console.log(this.props.user.email)
       console.log(newCovidPost);
       this.props.createCovidPost(newCovidPost);
       this.setState({ redirectToCovid: true })

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import LikeComment from "../LikeComment";
 import axios from "axios";
+import nodemailer from "nodemailer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 
@@ -80,8 +81,10 @@ export class CovidPost extends Component {
           token,
           username: loggedInUsername,
           userId: loggedInUserId,
+          userEmail: loggedInUserEmail,
           owner: postOwnerName,
           ownerId: postOwnerId,
+          ownerEmail: postOwnerEmail
         } = this.props;
 
         const postData = {
@@ -103,7 +106,29 @@ export class CovidPost extends Component {
         });
 
         // Setting state to force component re-render
-        console.log(response)
+        // console.log(response)
+
+        const emailData = {
+          userEmail:loggedInUserEmail,
+          username:loggedInUsername,
+          ownerEmail:postOwnerEmail
+        }
+        console.log(emailData)
+
+        // Creating Email request
+        const sendEmailRequest = await axios({
+          method: "post",
+          url: "http://localhost:5000/api/email",
+          headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "Access-Control-Allow-Origin": "*",
+                    "x-auth-token": token,
+          },
+          data: emailData,
+          });
+
+
+        // console.log(sendEmailRequest)
         this.setState({
           acceptedBy: {
             name: loggedInUsername,
@@ -115,7 +140,6 @@ export class CovidPost extends Component {
       console.log(error);
     }
   };
-
   deleteVolunteerRequest = async () => {
     try {
       const { isAuthenticated, _id: postId } = this.props;
@@ -151,7 +175,7 @@ export class CovidPost extends Component {
         });
 
         // Setting state to force component re-render
-        console.log(response);
+        // console.log(response);
         this.setState({
           acceptedBy: null,
         });
@@ -222,7 +246,7 @@ export class CovidPost extends Component {
       userId,
       ownerId,
     } = this.props;
-    // console.log(this.props.likes)
+    // console.log(this.props.ownerEmail)
 
     const userIsTheSame = userId === ownerId;
     const deleteBtn = (
