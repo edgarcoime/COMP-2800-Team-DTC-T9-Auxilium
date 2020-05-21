@@ -4,7 +4,7 @@ import LikeComment from "../LikeComment";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
-
+import "../../components/component.css"
 export class CovidPost extends Component {
   constructor(props) {
     console.log("Constructor runs");
@@ -184,10 +184,10 @@ export class CovidPost extends Component {
       <Fragment>
         <button
           type="submit"
-          className="btn btn-danger float-right"
+          className="btn close float-right"
           onClick={this.submitDeleteComment}
         >
-          Delete
+          x
         </button>
       </Fragment>
     );
@@ -209,12 +209,17 @@ export class CovidPost extends Component {
                       {this.postCreated(createdAt)}
                     </span>
                   </Col>
+                  <Col className="float-right delete">
+                  {
+                  userIsTheSame ? deleteBtn : null
+                }
+                </Col>
                 </Row>
               </CardTitle>
               <CardBody className="pt-0">
                 <h4>{title}</h4>
                 <p>{content}</p>
-                {userIsTheSame ? deleteBtn : null}
+                {/*userIsTheSame ? deleteBtn : null*/}
                 {!userIsTheSame ? this.acceptRequestButton() : null}
                 {/* {isAuthenticated ? this.acceptRequestButton() : null} */}
                 <LikeComment
