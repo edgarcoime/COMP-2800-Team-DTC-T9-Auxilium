@@ -21,7 +21,6 @@ class About extends Component {
         return (
             <div>
                 <Header history={this.props.history}/>
-                <h1 class="text-center page-header text-uppercase">About Us</h1>
                 <div className="container h-100">
                     <Row  className="h-100 justify-content-center align-items-center">
                         <Col className="col-12 col-sm-12  text-center">

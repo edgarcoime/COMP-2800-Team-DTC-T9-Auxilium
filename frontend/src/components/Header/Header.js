@@ -41,18 +41,6 @@ class Header extends Component {
                 <img src={logo} alt="an image" width="80"/>
               </NavLink>
             </Col>
-            <Col className="col-5 col-sm-3 d-none d-md-inline order-md-2">
-              <form class='navbar-form rounded'>
-                <div class='input-group mt-3 rounded'>
-                  <input class='form-control' type='text' name='search' placeholder='Location' />
-                  <span class="input-group-btn">
-                    <button type='submit' class='btn text-link'>
-                      <span class='fa fa-search fa-lg'></span>
-                    </button>
-                  </span>
-                </div>
-              </form>
-            </Col>
             <Col className="col col-sm col-md order-1 order-sm-1 order-md-3">
               <Navbar dark expand="md" className="mt-2 float-md-right">
               <NavbarToggler onClick={this.handleToggle} className="text-white"/>
