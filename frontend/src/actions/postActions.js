@@ -39,7 +39,6 @@ export const createPost = (newPost) => async (dispatch, getState) => {
 
 export const deletePost = (deleteReq) => async (dispatch, getState) => {
   try {
-    const postId = deleteReq.postId
     const response = await axios.delete(
       `/api/posts/`, 
       deleteReq,

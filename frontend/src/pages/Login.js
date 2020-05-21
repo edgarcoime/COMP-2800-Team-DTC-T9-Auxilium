@@ -70,6 +70,7 @@ class Login extends Component {
 
             <img
               src={logo}
+              alt="Auxilium Logo"
               className="d-block mx-auto  "
               height="150"
               width="150"

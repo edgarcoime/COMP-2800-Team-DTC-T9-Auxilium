@@ -7,7 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { tokenConfig } from "../actions/authActions";
 
 // Components
 import Post from "../components/partials/Post.component";
@@ -66,7 +65,7 @@ class User extends Component {
     return (
       <div>
         <Header history={this.props.history}/>
-        <div className="container">
+        <div className="container">?
         <h1 className="text-center">Profile</h1>
           <Row>
             <Col className="col-12 col-sm-6">
