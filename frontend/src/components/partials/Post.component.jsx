@@ -70,7 +70,6 @@ export default class Post extends Component {
       content,
       comments,
       isAuthenticated,
-      username,
       userId,
       ownerId
     } = this.props;

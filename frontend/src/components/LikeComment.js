@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,7 +6,7 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons";
-import { Collapse, Button, CardBody, Card } from "reactstrap";
+import { Collapse } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 
@@ -49,7 +49,7 @@ class LikeComment extends Component {
       if (userLiked) {
         this.setState({ isClicked: 1 });
       }
-    };
+    }
   };
 
   componentDidMount = async () => {
@@ -92,7 +92,7 @@ class LikeComment extends Component {
     if (!isAuthenticated) {
       alert("You must be signed in to like a post!");
     } else {
-      if (this.state.isClicked == 0) {
+      if (this.state.isClicked === 0) {
         this.likePost();
       } else {
         this.unLikePost();
@@ -191,10 +191,6 @@ class LikeComment extends Component {
       // parsing through resopnse data and setting Component state to display comment
       const updatedPost = response.data;
       console.log(updatedPost);
-      const newLike = {
-        ownerId: userId,
-        owner: name,
-      };
       let originalStateLikes = [...this.state.postLikes];
       const newStateLikes = originalStateLikes.filter(
         (like) => like.ownerId !== userId
@@ -214,7 +210,7 @@ class LikeComment extends Component {
   };
 
   handleCommentClick = (e) => {
-    if (this.state.isCommentClicked == 0) {
+    if (this.state.isCommentClicked === 0) {
       this.setState({ isCommentClicked: 1 });
     } else {
       this.setState({ isCommentClicked: 0 });
@@ -261,7 +257,7 @@ class LikeComment extends Component {
         },
         data: commentData,
       });
-      console.log(response.data)
+      console.log(response.data);
 
       // parsing through resopnse data and setting Component state to display comment
       const newComment = response.data;
@@ -277,14 +273,21 @@ class LikeComment extends Component {
   };
 
   render() {
-    if(this.props.isAuthenticated){
-      var{ user, isAuthenticated, id, token } = this.props;
-      var username = user.name
-      var userId = this.props.user._id;
-    }else{
-      var {user, isAuthenticated, id, token} = "";
-    }
-    // const comments = this.state.postComments;
+    // Setting initial state to prevent REACT crashing due to null
+    const { isAuthenticated } = this.props;
+    let token = "";
+    let user = "";
+    let id = "";
+    let username = "";
+    let userId = "";
+    if (isAuthenticated) {
+      token = this.props.token;
+      user = this.props.user;
+      id = this.props.id;
+      username = user.name;
+      userId = user._id;
+    } 
+
     const { postLikes, postComments: comments } = this.state;
     return (
       <div>
@@ -293,7 +296,7 @@ class LikeComment extends Component {
           <button className="btn" onClick={this.handleLikeClick}>
             <span>
               <FontAwesomeIcon
-                icon={this.state.isClicked == 1 ? faHeart1 : faHeart}
+                icon={this.state.isClicked === 1 ? faHeart1 : faHeart}
                 size="2x"
               />
             </span>

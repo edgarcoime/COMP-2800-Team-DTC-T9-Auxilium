@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
-import { Row, Col } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export class Comment extends Component {
@@ -64,7 +63,7 @@ export class Comment extends Component {
     const { commentId, commentOwner, text, ownerId:commentOwnerId } = this.props;
     let userIsTheSame = false;
     if (this.props.isAuthenticated) {
-      var { userId, user } = this.props;
+      var { userId } = this.props;
       userIsTheSame = commentOwnerId === userId;
     }
     const deleteBtn = (

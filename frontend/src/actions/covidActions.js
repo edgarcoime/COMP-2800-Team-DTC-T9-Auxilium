@@ -24,7 +24,6 @@ export const createCovidPost = (newPost) => async (dispatch, getState) => {
 
 export const deleteCovidPost = (deleteReq) => async (dispatch, getState) => {
   try {
-    const postId = deleteReq.postId
     const response = await axios.delete(
       `/api/posts/`, 
       deleteReq,

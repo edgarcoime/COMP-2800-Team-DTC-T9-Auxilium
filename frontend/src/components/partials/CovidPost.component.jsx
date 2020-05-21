@@ -8,21 +8,12 @@ import "font-awesome/css/font-awesome.min.css";
 
 export class CovidPost extends Component {
   constructor(props) {
-    console.log("Constructor runs");
     super(props);
 
     this.state = {
       isCovid: true,
       acceptedBy: this.props.assignedTo,
     };
-  }
-
-  componentDidMount() {
-    console.log("component mounting");
-  }
-
-  componentDidUpdate() {
-    console.log("component updated");
   }
 
   postCreated = (createdAt) => {
@@ -151,8 +142,6 @@ export class CovidPost extends Component {
           token,
           username: loggedInUsername,
           userId: loggedInUserId,
-          owner: postOwnerName,
-          ownerId: postOwnerId,
         } = this.props;
 
         // Forming request data
@@ -233,7 +222,6 @@ export class CovidPost extends Component {
   };
 
   render() {
-    console.log("component rerenders");
     const {
       _id,
       owner,
@@ -242,7 +230,6 @@ export class CovidPost extends Component {
       content,
       comments,
       isAuthenticated,
-      username,
       userId,
       ownerId,
     } = this.props;

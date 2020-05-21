@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { Row, Col, Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem } from "reactstrap";
+import React, { Component } from "react";
+import { Row, Col, Navbar, NavbarToggler, Collapse, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faViruses } from '@fortawesome/free-solid-svg-icons'
@@ -38,7 +38,7 @@ class Header extends Component {
           <Row>
             <Col className="col-4 col-sm-2 col-md-2 order-2 order-sm-2 order-md-1 ">
               <NavLink to="/" className="justify-content-end">
-                <img src={logo} alt="an image" width="80"/>
+                <img src={logo} alt="Auxilium logo" width="80"/>
               </NavLink>
             </Col>
             <Col className="col col-sm col-md order-1 order-sm-1 order-md-3">

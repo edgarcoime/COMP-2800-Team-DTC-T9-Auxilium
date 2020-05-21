@@ -1,4 +1,4 @@
-import { Row, Col, Card, CardBody, CardTitle } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 import React, { Component } from 'react'
 import tommy from './../images/me.jpg'
 import alireza from './../images/alireza.jpg'

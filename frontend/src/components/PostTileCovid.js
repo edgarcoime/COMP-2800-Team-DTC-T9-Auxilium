@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -115,6 +115,8 @@ class PostTileCovid extends Component {
   };
 
   render() {
+    
+    // Tommy's added code
     const { filteredPosts, limitedPosts } = this.state;
     if (this.props.isAuthenticated) {
       var { user, token } = this.props;
@@ -124,6 +126,7 @@ class PostTileCovid extends Component {
     }
     console.log(userEmail)
     const { posts } = this.state;
+    
     return (
       <div className="container">
         <div className="form-group has-search mt-4">

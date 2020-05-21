@@ -41,7 +41,7 @@ class CreatePost extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { title, content, relatedToCovid, askForHelp } = this.state;
+    const { title, content, relatedToCovid } = this.state;
 
     if (relatedToCovid) {
       const newCovidPost = {
