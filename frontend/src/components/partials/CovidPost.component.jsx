@@ -4,7 +4,7 @@ import LikeComment from "../LikeComment";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
-import "../../components/component.css"
+
 export class CovidPost extends Component {
   constructor(props) {
     console.log("Constructor runs");
@@ -75,7 +75,7 @@ export class CovidPost extends Component {
       if (!isAuthenticated) {
         alert("You must be logged in to volunteer to help individuals!");
       } else {
-        // console.log("Accepted request", e);
+        // Destructuring necessary variables to send request
         const {
           token,
           username: loggedInUsername,
@@ -90,16 +90,20 @@ export class CovidPost extends Component {
           covidPostId: postId,
         };
 
-        // const response = await axios({
-        //   method: "post",
-        //   url: "http://localhost:5000/api/covid/acceptrequest",
-        //   headers: {
-        //     "Content-Type": "application/json;charset=UTF-8",
-        //     "Access-Control-Allow-Origin": "*",
-        //     "x-auth-token": token,
-        //   },
-        //   data: postData,
-        // });
+        // Creating Post request
+        const response = await axios({
+          method: "post",
+          url: "http://localhost:5000/api/covid/acceptrequest",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token,
+          },
+          data: postData,
+        });
+
+        // Setting state to force component re-render
+        console.log(response)
         this.setState({
           acceptedBy: {
             name: loggedInUsername,
@@ -112,11 +116,49 @@ export class CovidPost extends Component {
     }
   };
 
-  deleteVolunteerRequest = () => {
-    console.log("Rescind request goes here");
-    this.setState({
-      acceptedBy: null,
-    });
+  deleteVolunteerRequest = async () => {
+    try {
+      const { isAuthenticated, _id: postId } = this.props;
+      if (!isAuthenticated) {
+        alert("You must be logged in to interact with volunteering!");
+      } else {
+        // Destructuring necessary variables to send request
+        const {
+          token,
+          username: loggedInUsername,
+          userId: loggedInUserId,
+          owner: postOwnerName,
+          ownerId: postOwnerId,
+        } = this.props;
+
+        // Forming request data
+        const postData = {
+          reqOwner: loggedInUsername,
+          reqOwnerId: loggedInUserId,
+          covidPostId: postId,
+        };
+
+        // Creating Post request
+        const response = await axios({
+          method: "post",
+          url: "http://localhost:5000/api/covid/deleterequest",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token,
+          },
+          data: postData,
+        });
+
+        // Setting state to force component re-render
+        console.log(response);
+        this.setState({
+          acceptedBy: null,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   acceptedRequestText = () => {
@@ -135,6 +177,8 @@ export class CovidPost extends Component {
 
   acceptRequestButton = () => {
     if (this.state.acceptedBy) {
+      // const samePerson = this.state.acceptedBy._id === this.props.userId;
+      // console.log(samePerson)
       if (this.state.acceptedBy._id === this.props.userId) {
         return (
           <Fragment>
@@ -143,13 +187,12 @@ export class CovidPost extends Component {
               onClick={this.deleteVolunteerRequest}
             >
               Rescind Request
+              {/* inside if statement */}
             </button>
           </Fragment>
         );
-      } else {
-        return null;
       }
-    } else {
+    } else if (this.props.ownerId !== this.props.userId){
       return (
         <Fragment>
           <button
@@ -160,6 +203,8 @@ export class CovidPost extends Component {
           </button>
         </Fragment>
       );
+    } else {
+      return null
     }
   };
 
@@ -184,10 +229,10 @@ export class CovidPost extends Component {
       <Fragment>
         <button
           type="submit"
-          className="btn close float-right"
+          className="btn btn-danger float-right"
           onClick={this.submitDeleteComment}
         >
-          x
+          Delete
         </button>
       </Fragment>
     );
@@ -209,19 +254,14 @@ export class CovidPost extends Component {
                       {this.postCreated(createdAt)}
                     </span>
                   </Col>
-                  <Col className="float-right delete">
-                  {
-                  userIsTheSame ? deleteBtn : null
-                }
-                </Col>
                 </Row>
               </CardTitle>
               <CardBody className="pt-0">
                 <h4>{title}</h4>
                 <p>{content}</p>
-                {/*userIsTheSame ? deleteBtn : null*/}
-                {!userIsTheSame ? this.acceptRequestButton() : null}
-                {/* {isAuthenticated ? this.acceptRequestButton() : null} */}
+                {userIsTheSame ? deleteBtn : null}
+                {/* {!userIsTheSame ? this.acceptRequestButton() : null} */}
+                {isAuthenticated ? this.acceptRequestButton() : null}
                 <LikeComment
                   id={_id}
                   comments={comments}
