@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import LikeComment from "../LikeComment";
 import axios from "axios";
-import nodemailer from "nodemailer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 
@@ -73,8 +72,6 @@ export class CovidPost extends Component {
           username: loggedInUsername,
           userId: loggedInUserId,
           userEmail: loggedInUserEmail,
-          owner: postOwnerName,
-          ownerId: postOwnerId,
           ownerEmail: postOwnerEmail
         } = this.props;
 
@@ -95,31 +92,29 @@ export class CovidPost extends Component {
           },
           data: postData,
         });
+        console.log(response)
 
-        // Setting state to force component re-render
-        // console.log(response)
-
+        // Creating email body data to send to server
         const emailData = {
           userEmail:loggedInUserEmail,
           username:loggedInUsername,
           ownerEmail:postOwnerEmail
         }
-        console.log(emailData)
-
+        
         // Creating Email request
         const sendEmailRequest = await axios({
           method: "post",
           url: "http://localhost:5000/api/email",
           headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                    "Access-Control-Allow-Origin": "*",
-                    "x-auth-token": token,
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token,
           },
           data: emailData,
-          });
+        });
+        console.log(sendEmailRequest)
 
-
-        // console.log(sendEmailRequest)
+        // Setting state to force component re-render
         this.setState({
           acceptedBy: {
             name: loggedInUsername,
@@ -164,7 +159,7 @@ export class CovidPost extends Component {
         });
 
         // Setting state to force component re-render
-        // console.log(response);
+        console.log(response);
         this.setState({
           acceptedBy: null,
         });

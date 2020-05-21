@@ -125,7 +125,6 @@ class PostTileCovid extends Component {
       var userEmail = user.email;
     }
     console.log(userEmail)
-    const { posts } = this.state;
     
     return (
       <div className="container">
