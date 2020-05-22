@@ -68,7 +68,7 @@ export class CovidPost extends Component {
   // Accepting a request for help from a covid post
   // 1. Sending a request to the API to register currently logged in user as accepting request
   // 2. Changing component state to reflect Database change
-  // 3. Sending a request to the API to send an email notification to the 
+  // 3. Sending a request to the API to send an email notification to the
   //    user who created the post that someone has volunteered and CCing the volunteer in the email.
   acceptRequest = async (e) => {
     try {
@@ -83,7 +83,7 @@ export class CovidPost extends Component {
           username: loggedInUsername,
           userId: loggedInUserId,
           userEmail: loggedInUserEmail,
-          ownerEmail: postOwnerEmail
+          ownerEmail: postOwnerEmail,
         } = this.props;
 
         const postData = {
@@ -103,15 +103,15 @@ export class CovidPost extends Component {
           },
           data: postData,
         });
-        console.log(response)
+        console.log(response);
 
         // Creating email body data to send to server
         const emailData = {
-          userEmail:loggedInUserEmail,
-          username:loggedInUsername,
-          ownerEmail:postOwnerEmail
-        }
-        
+          userEmail: loggedInUserEmail,
+          username: loggedInUsername,
+          ownerEmail: postOwnerEmail,
+        };
+
         // Creating Email request
         const sendEmailRequest = await axios({
           method: "post",
@@ -123,7 +123,7 @@ export class CovidPost extends Component {
           },
           data: emailData,
         });
-        console.log(sendEmailRequest)
+        console.log(sendEmailRequest);
 
         // Setting state to force component re-render
         this.setState({
@@ -214,7 +214,7 @@ export class CovidPost extends Component {
           </Fragment>
         );
       }
-    } else if (this.props.ownerId !== this.props.userId){
+    } else if (this.props.ownerId !== this.props.userId) {
       return (
         <Fragment>
           <button
@@ -226,7 +226,7 @@ export class CovidPost extends Component {
         </Fragment>
       );
     } else {
-      return null
+      return null;
     }
   };
 
@@ -241,7 +241,7 @@ export class CovidPost extends Component {
       isAuthenticated,
       userId,
       ownerId,
-      isUserProfilePage
+      isUserProfilePage,
     } = this.props;
 
     const userIsTheSame = userId === ownerId;

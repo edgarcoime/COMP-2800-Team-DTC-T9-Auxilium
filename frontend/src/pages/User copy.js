@@ -18,7 +18,7 @@ class User extends Component {
 
     this.state = {
       covidPostsAccepted: [],
-      covidPostsCreated: [],
+      covidPostsCreated: []
     };
   }
 
@@ -38,7 +38,15 @@ class User extends Component {
       const postData = {
         postSet: postIds,
       };
+
+      let createdPostIds = [];
+      covidPostsCreated.forEach((el) => createdPostIds.push(el._id));
+      const cPostsAccepted = {
+        postSet: createdPostIds,
+      };
+
       console.log(postData);
+      console.log(createdPostIds)
       const response = await axios({
         method: "post",
         url: "http://localhost:5000/api/covid/getset",
@@ -49,11 +57,6 @@ class User extends Component {
         data: postData,
       });
 
-      let covidIds = [];
-      covidPostsCreated.forEach((el) => covidIds.push(el._id));
-      const covidData = {
-        postSet: covidIds,
-      };
       const covidResponse = await axios({
         method: "post",
         url: "http://localhost:5000/api/covid/getset",
@@ -61,14 +64,14 @@ class User extends Component {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*",
         },
-        data: covidData,
+        data: cPostsAccepted,
       });
-      console.log(covidResponse);
 
-      // console.log(response);
+      console.log(response);
+      console.log(covidResponse);
       this.setState({
         covidPostsAccepted: response.data,
-        covidPostsCreated: covidResponse.data,
+        covidPostsCreated: cPostsAccepted.data,
       });
     }
   };
@@ -87,6 +90,7 @@ class User extends Component {
       var { user, token } = this.props;
       var username = user.name;
       var userId = user._id;
+      var userEmail = user.email;
     }
     return (
       <div>
@@ -147,6 +151,7 @@ class User extends Component {
               _id={post._id}
               owner={post.owner}
               ownerId={post.ownerId}
+              ownerEmail={post.ownerEmail}
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
@@ -157,6 +162,7 @@ class User extends Component {
               username={username}
               userId={userId}
               token={token}
+              userEmail={userEmail}
               isUserProfilePage={true}
             />
           ))}
@@ -180,7 +186,6 @@ class User extends Component {
               username={username}
               userId={userId}
               token={token}
-              isUserProfilePage={true}
             />
           ))}
         </div>
