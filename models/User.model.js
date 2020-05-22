@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-// Create Schema  
+// Create User model Schema that will store posts created and accepted  
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -22,16 +22,16 @@ const UserSchema = new Schema({
   lastName: {
     type: String,
   },
-  userType: {
-    type: Number, // 0=RegularUser, 1=Volunteer, 2=InNeedOfHelp
-  },
   postsCreated: [{
-    type:mongoose.Schema.Types.ObjectId, ref: 'post'
+    // References regular Post to populate later
+    type:mongoose.Schema.Types.ObjectId, ref: 'post' 
   }],
   covidPostsCreated: [{
+    // References Covid post to populate later
     type:mongoose.Schema.Types.ObjectId, ref: 'covidPost'
   }],
   covidPostsAccepted: [{
+    // References Covid post to populate later
     type:mongoose.Schema.Types.ObjectId, ref: 'covidPost'
   }]
 }, { timestamps: true });
