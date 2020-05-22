@@ -10,6 +10,18 @@ import auth from "../middleware/auth.middleware";
 
 const userRouter = express.Router();
 
+// <===================================================================================================================>
+// Creates a user and signs a token using JWT which initializes logging the user in
+// I found this code through a post in StackOverflow which led me to the GithubRepo of Brad's project
+
+// This has been vastly modified for our use case since we are using posts and mongoose population
+// of references
+
+// @author   Brad Traversy from https://traversymedia.com/
+// @see      https://github.com/bradtraversy/mern_shopping_list
+// <===================================================================================================================>
+
+
 // @route     POST api/auth
 // @desc      Authenticate the user by signing in to account
 // @access    Public (implement auth later)
