@@ -18,25 +18,27 @@ class User extends Component {
 
     this.state = {
       covidPostsAccepted: [],
+      covidPostsCreated: [],
     };
   }
 
   // Loads user Data upon clicking on register page and queries for covidPostsAccepted
   componentDidMount = async () => {
     // Redirects user if they are not authenticated (not logged in)
-    const { isAuthenticated, user: { covidPostsAccepted }} = this.props;
-    console.log(this.props.user)
+    const {
+      isAuthenticated,
+      user: { covidPostsAccepted, covidPostsCreated },
+    } = this.props;
+    console.log(this.props.user);
     if (!isAuthenticated) {
       this.props.history.push("/");
     } else {
       let postIds = [];
-      covidPostsAccepted.forEach(el => (
-        postIds.push(el._id)
-      ))
+      covidPostsAccepted.forEach((el) => postIds.push(el._id));
       const postData = {
-        postSet: postIds
-      }
-      console.log(postData)
+        postSet: postIds,
+      };
+      console.log(postData);
       const response = await axios({
         method: "post",
         url: "http://localhost:5000/api/covid/getset",
@@ -44,12 +46,32 @@ class User extends Component {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*",
         },
-        data: postData
+        data: postData,
       });
-      console.log(response)
-      this.setState({ covidPostsAccepted: response.data })
+
+      let covidIds = [];
+      covidPostsCreated.forEach((el) => covidIds.push(el._id));
+      const covidData = {
+        postSet: covidIds,
+      };
+      const covidResponse = await axios({
+        method: "post",
+        url: "http://localhost:5000/api/covid/getset",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+        },
+        data: covidData,
+      });
+      console.log(covidResponse);
+
+      // console.log(response);
+      this.setState({
+        covidPostsAccepted: response.data,
+        covidPostsCreated: covidResponse.data,
+      });
     }
-  }
+  };
 
   // Prevents crashing if logging out on user page
   // Redirects user to home route if they are unauthorized
@@ -58,19 +80,19 @@ class User extends Component {
     if (!isAuthenticated) {
       this.props.history.push("/");
     }
-  }
+  };
 
   render() {
-    if(this.props.isAuthenticated){
-      var {user, token} = this.props;
+    if (this.props.isAuthenticated) {
+      var { user, token } = this.props;
       var username = user.name;
       var userId = user._id;
-      }
+    }
     return (
       <div>
-        <Header history={this.props.history}/>
+        <Header history={this.props.history} />
         <div className="container">
-        <h1 className="text-center">Profile</h1>
+          <h1 className="text-center">Profile</h1>
           <Row>
             <Col className="col-12 col-sm-6">
               <p className="text-center mt-3">
@@ -93,7 +115,9 @@ class User extends Component {
               </p>
             </Col>
           </Row>
-          <h2 className="mt-5"><strong>Posts Created</strong></h2>
+          <h2 className="mt-5">
+            <strong>Posts Created</strong>
+          </h2>
           <hr />
           {this.props.user.postsCreated.map((post) => (
             <Post
@@ -106,17 +130,19 @@ class User extends Component {
               content={post.content}
               likes={post.likes}
               comments={post.comments}
-              isAuthenticated={ this.props.isAuthenticated }
-              username = {username}
-              userId = {userId}
-              token = {token}
+              isAuthenticated={this.props.isAuthenticated}
+              username={username}
+              userId={userId}
+              token={token}
               isUserProfilePage={true}
             />
           ))}
-          <h2 className="mt-5"><strong>COVID Posts Created</strong></h2>
+          <h2 className="mt-5">
+            <strong>COVID Posts Created</strong>
+          </h2>
           <hr />
-          {this.props.user.covidPostsCreated.map((post) => (
-            <Post
+          {this.state.covidPostsCreated.map((post) => (
+            <CovidPost
               key={post._id}
               _id={post._id}
               owner={post.owner}
@@ -127,14 +153,16 @@ class User extends Component {
               likes={post.likes}
               comments={post.comments}
               assignedTo={post.assignedTo}
-              isAuthenticated={ this.props.isAuthenticated }
-              username = {username}
-              userId = {userId}
-              token = {token}
+              isAuthenticated={this.props.isAuthenticated}
+              username={username}
+              userId={userId}
+              token={token}
               isUserProfilePage={true}
             />
           ))}
-          <h2 className="mt-5"><strong>COVID Posts Accepted</strong></h2>
+          <h2 className="mt-5">
+            <strong>COVID Posts Accepted</strong>
+          </h2>
           <hr />
           {this.state.covidPostsAccepted.map((post) => (
             <CovidPost
@@ -148,14 +176,14 @@ class User extends Component {
               likes={post.likes}
               comments={post.comments}
               assignedTo={post.assignedTo}
-              isAuthenticated={ this.props.isAuthenticated }
-              username = {username}
-              userId = {userId}
-              token = {token}
+              isAuthenticated={this.props.isAuthenticated}
+              username={username}
+              userId={userId}
+              token={token}
+              isUserProfilePage={true}
             />
           ))}
         </div>
-        
       </div>
     );
   }
