@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
 import PostTile from "./../components/PostTile";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-social/bootstrap-social.css"
 import "font-awesome/css/font-awesome.min.css";
 import './pages.css'
 
@@ -73,6 +74,10 @@ class Home extends Component {
                 </button>
               </Link>
             </Col>
+            <Col className="col-4 col-sm-4 mt-5">
+            <a className = "btn btn-social-icon btn-twitter" href="https://twitter.com/share?ref_src=twsrc%5Etfw" data-show-count="false"><span class="fa fa-twitter"></span></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </Col>
+
             {isAuthenticated ? createPostLink : null}
           </Row>
           <PostTile isAuthenticated={isAuthenticated}/>
