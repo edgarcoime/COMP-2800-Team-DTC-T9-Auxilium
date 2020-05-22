@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-// Create chridren schema : comment
+// Create subdocument schema : comment
 const commentSchema = new Schema({
   text: {
     type: String,
@@ -15,7 +15,7 @@ const commentSchema = new Schema({
   }
 }, { timestamps: true });
 
-// Create Schema
+// Create Covid Post Schema
 const CovidPostSchema = new Schema(
   {
     title: {

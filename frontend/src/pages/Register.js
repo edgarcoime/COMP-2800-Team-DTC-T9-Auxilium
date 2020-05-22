@@ -31,6 +31,7 @@ class Register extends Component {
     this.props.clearErrors();
   }
 
+  // Sets error message if API sends an error code and displays message on screen
   componentDidUpdate(prevProps) {
     const { error } = this.props;
     if (error !== prevProps.error) {
