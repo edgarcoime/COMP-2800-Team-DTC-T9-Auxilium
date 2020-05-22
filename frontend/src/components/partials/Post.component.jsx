@@ -2,8 +2,6 @@ import React, { Fragment, Component } from "react";
 import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import axios from "axios";
 import LikeComment from "../LikeComment";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 

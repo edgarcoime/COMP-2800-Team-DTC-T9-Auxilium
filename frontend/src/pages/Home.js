@@ -3,7 +3,7 @@ import Header from "./../components/Header/Header";
 import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle, fa } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import PostTile from "./../components/PostTile";
 import "bootstrap/dist/css/bootstrap.min.css";

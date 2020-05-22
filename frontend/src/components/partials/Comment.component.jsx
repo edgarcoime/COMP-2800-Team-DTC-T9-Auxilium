@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { Row, Col } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export class Comment extends Component {
