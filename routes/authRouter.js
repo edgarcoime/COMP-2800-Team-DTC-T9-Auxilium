@@ -37,7 +37,7 @@ userRouter.post("/", async (req, res) => {
     .populate("covidPostsCreated")
     .populate("covidPostsAccepted")
 
-    console.log(foundUser)
+    // console.log(foundUser)
 
     // Return error if user is not found
     if (!foundUser) return res.status(400).json({ msg: "There is no user found with that email." })
