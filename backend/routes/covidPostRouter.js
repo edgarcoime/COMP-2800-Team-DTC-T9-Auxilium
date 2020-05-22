@@ -57,7 +57,7 @@ covidPostRouter.post("/getset", async (req, res) => {
 // @desc      Create a post based on covid where they can ask for help
 // @access    Private (implement auth later)
 covidPostRouter.post("/", auth, async (req, res) => {
-  const { title, content, owner, ownerId } = req.body;
+  const { title, content, owner, ownerId, ownerEmail } = req.body;
   try {
     // Saving post in database
     const newCovidPost = new CovidPost({
@@ -65,15 +65,17 @@ covidPostRouter.post("/", auth, async (req, res) => {
       content,
       owner,
       ownerId,
+      ownerEmail
     });
+    // console.log(newCovidPost)
     const registeredPost = await newCovidPost.save();
-    console.log(registeredPost);
+    // console.log(registeredPost);
 
     User.updateOne(
       { _id: ownerId },
       { $push: { covidPostsCreated: registeredPost._id } }
     ).then((data) => {
-      console.log(data);
+      // console.log(data);
     });
 
     res.json({
@@ -99,12 +101,12 @@ covidPostRouter.delete("/", auth, async (req, res) => {
       res.json({ msg: "You do not have access to delete this post." });
     } else {
       // Delete made post in user profile
-      console.log(foundPost, reqOwnerId);
+      // console.log(foundPost, reqOwnerId);
       User.updateOne(
         { _id: reqOwnerId },
         { $pull: { covidPostsCreated: foundPost._id } }
       ).then((data) => {
-        console.log(data);
+        // console.log(data);
         const response = foundPost.remove();
         res.json({ success: true, msg: "Succesfully deleted post" });
       });
@@ -127,14 +129,14 @@ covidPostRouter.post("/acceptrequest", async (req, res) => {
       { _id: covidPostId },
       { $set: { assignedTo: reqOwnerId } }
     );
-    console.log(response);
+    // console.log(response);
 
     // assign covid post to user
     const userResponse = await User.updateOne(
       { _id: reqOwnerId },
       { $push: { covidPostsAccepted: covidPostId } }
     );
-    console.log(userResponse);
+    // console.log(userResponse);
     res.json({ success: true, msg: "Succesfully registed post to user" });
   } catch (error) {
     console.log(error);
@@ -153,14 +155,14 @@ covidPostRouter.post("/deleterequest", auth, async (req, res) => {
     const foundPost = await CovidPost.findById(covidPostId);
     foundPost.assignedTo = undefined;
     const response = await foundPost.save();
-    console.log(response);
+    // console.log(response);
 
     // Delete post in user profile
     const userResponse = await User.updateOne(
       { _id: reqOwnerId },
       { $pull: { covidPostsAccepted: covidPostId } }
     );
-    console.log(userResponse);
+    // console.log(userResponse);
     res.json({
       success: true,
       msg: "Succesfully assigned post from user Profile",

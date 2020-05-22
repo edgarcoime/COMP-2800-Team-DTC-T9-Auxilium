@@ -3,6 +3,7 @@ import * as actions from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
+// Action type function for creating a covid post which sends a dispatch to the reducer
 export const createCovidPost = (newPost) => async (dispatch, getState) => {
   try {
     const response = await axios.post(
@@ -22,9 +23,9 @@ export const createCovidPost = (newPost) => async (dispatch, getState) => {
   }
 };
 
+// Action type function for deleting a covid post which sends a dispatch to the reducer
 export const deleteCovidPost = (deleteReq) => async (dispatch, getState) => {
   try {
-    const postId = deleteReq.postId
     const response = await axios.delete(
       `/api/posts/`, 
       deleteReq,

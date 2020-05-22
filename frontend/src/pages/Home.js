@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Header from "./../components/Header/Header";
-import { Row, Col, Popover, PopoverHeader, PopoverBody } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, fa } from '@fortawesome/free-solid-svg-icons'
@@ -10,8 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import './pages.css'
 
-
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../actions/authActions";
@@ -89,11 +88,13 @@ class Home extends Component {
   }
 }
 
+// Sets the types of the Global Vars coming in as "props".
 Home.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
 };
 
+// Maps Redux store to the props of the Home component.
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,

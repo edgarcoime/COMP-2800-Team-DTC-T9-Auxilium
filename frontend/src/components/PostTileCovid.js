@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -13,6 +13,7 @@ import "./component.css";
 // Component
 import CovidPost from "./partials/CovidPost.component";
 
+// Initiates redux connection to the Global store to access Global state
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -29,6 +30,8 @@ class PostTileCovid extends Component {
     };
   }
 
+  // Function to convert createdAt timestamp from server
+  // into how long ago it was created from current time
   postCreated = (createdAt) => {
     let createdWhen = "";
     const created = Date.parse(createdAt);
@@ -46,23 +49,9 @@ class PostTileCovid extends Component {
     return `Created: ${createdWhen}`;
   };
 
-  postUpdated = (updatedAt) => {
-    let updatedWhen = "";
-    const created = Date.parse(updatedAt);
-    let now = Date.now();
-    const differenceInMilliSecond = now - created;
-    const h = differenceInMilliSecond / 1000 / 60 / 60;
-    if (h >= 24) {
-      updatedWhen = Math.trunc(h / 24) + "d ago";
-    } else if (h < 1) {
-      updatedWhen = Math.trunc(h * 60) + "m ago";
-    } else {
-      updatedWhen = Math.trunc(h) + "h ago";
-    }
-
-    return `Updated: ${updatedWhen}`;
-  };
-
+  // Gets all the Covid posts from the DB:
+  // 1. Sends a request to the API to grab all Covid posts.
+  // 2. Filters post to show a limited amount to display first
   componentDidMount() {
     axios.get("/api/covid/getall").then((res) => {
       const posts = res.data;
@@ -73,6 +62,7 @@ class PostTileCovid extends Component {
     });
   }
 
+  // Parses through posts to find post that matches user's search field query.
   handleSearchChange = (event) => {
     const { value } = event.target;
     const lowerCaseValue = value.toLowerCase();
@@ -86,6 +76,8 @@ class PostTileCovid extends Component {
     });
   };
 
+  // Function that loads 9 more posts from pool of posts. 
+  // (Upon page load only loads 9 first)
   loadData = () => {
     const limitedPosts = this.state.limitedPosts;
     const filteredPosts = this.state.filteredPosts;
@@ -101,6 +93,7 @@ class PostTileCovid extends Component {
     this.setState({ limitedPosts: limitedPosts });
   };
 
+  // Function that loads more post
   loadMoreData = () => {
     const limitedPosts = this.state.limitedPosts;
     const filteredPosts = this.state.filteredPosts;
@@ -115,13 +108,17 @@ class PostTileCovid extends Component {
   };
 
   render() {
+    
+    // Tommy's added code
     const { filteredPosts, limitedPosts } = this.state;
     if (this.props.isAuthenticated) {
       var { user, token } = this.props;
       var username = user.name;
       var userId = user._id;
+      var userEmail = user.email;
     }
-    const { posts } = this.state;
+    console.log(userEmail)
+    
     return (
       <div className="container">
         <div className="form-group has-search mt-4">
@@ -149,7 +146,7 @@ class PostTileCovid extends Component {
           }
           endMessage={
             <h5 className="text-center mt-3">
-              <strong>This is it. You have seen all of them</strong>
+              <strong>Oh! There are no more Covid Posts to show!</strong>
             </h5>
           }
         >
@@ -161,6 +158,7 @@ class PostTileCovid extends Component {
                   _id={post._id}
                   owner={post.owner}
                   ownerId={post.ownerId}
+                  ownerEmail={post.ownerEmail}
                   createdAt={post.createdAt}
                   title={post.title}
                   content={post.content}
@@ -171,6 +169,7 @@ class PostTileCovid extends Component {
                   username={username}
                   userId={userId}
                   token={token}
+                  userEmail={userEmail}
                 />
               </CSSTransition>
             </TransitionGroup>
@@ -180,6 +179,8 @@ class PostTileCovid extends Component {
     );
   }
 }
+
+// Sets the types of the Global Vars coming in as "props".
 PostTileCovid.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
@@ -188,6 +189,7 @@ PostTileCovid.propTypes = {
   token: PropTypes.string,
 };
 
+// Maps Redux store to the props of the PostTileCovid component.
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps;
   return {

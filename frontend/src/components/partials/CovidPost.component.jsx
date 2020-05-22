@@ -7,7 +7,6 @@ import "font-awesome/css/font-awesome.min.css";
 
 export class CovidPost extends Component {
   constructor(props) {
-    console.log("Constructor runs");
     super(props);
 
     this.state = {
@@ -16,14 +15,8 @@ export class CovidPost extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log("component mounting");
-  }
-
-  componentDidUpdate() {
-    console.log("component updated");
-  }
-
+  // Function to convert createdAt timestamp from server
+  // into how long ago it was created from current time
   postCreated = (createdAt) => {
     let createdWhen = "";
     const created = Date.parse(createdAt);
@@ -41,7 +34,10 @@ export class CovidPost extends Component {
     return `${createdWhen}`;
   };
 
-  submitDeleteComment = (e) => {
+  // Delete Covid Post functionality by:
+  // 1. Sending a request to API to delete Covid Post from Database
+  // 2. Visually deletes the CovidPost from the virtual dom
+  submitDeleteCovidPost = (e) => {
     const { isAuthenticated, _id } = this.props;
     if (!isAuthenticated) {
       alert("Only the post owner has the right to delete");
@@ -69,8 +65,14 @@ export class CovidPost extends Component {
     removeButton.parentNode.removeChild(removeButton);
   };
 
+  // Accepting a request for help from a covid post
+  // 1. Sending a request to the API to register currently logged in user as accepting request
+  // 2. Changing component state to reflect Database change
+  // 3. Sending a request to the API to send an email notification to the 
+  //    user who created the post that someone has volunteered and CCing the volunteer in the email.
   acceptRequest = async (e) => {
     try {
+      // Control structure to prevent unauthorized user to accept post
       const { isAuthenticated, _id: postId } = this.props;
       if (!isAuthenticated) {
         alert("You must be logged in to volunteer to help individuals!");
@@ -80,8 +82,8 @@ export class CovidPost extends Component {
           token,
           username: loggedInUsername,
           userId: loggedInUserId,
-          owner: postOwnerName,
-          ownerId: postOwnerId,
+          userEmail: loggedInUserEmail,
+          ownerEmail: postOwnerEmail
         } = this.props;
 
         const postData = {
@@ -101,9 +103,29 @@ export class CovidPost extends Component {
           },
           data: postData,
         });
+        console.log(response)
+
+        // Creating email body data to send to server
+        const emailData = {
+          userEmail:loggedInUserEmail,
+          username:loggedInUsername,
+          ownerEmail:postOwnerEmail
+        }
+        
+        // Creating Email request
+        const sendEmailRequest = await axios({
+          method: "post",
+          url: "http://localhost:5000/api/email",
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token,
+          },
+          data: emailData,
+        });
+        console.log(sendEmailRequest)
 
         // Setting state to force component re-render
-        console.log(response)
         this.setState({
           acceptedBy: {
             name: loggedInUsername,
@@ -116,6 +138,9 @@ export class CovidPost extends Component {
     }
   };
 
+  // Rescinds Volunteer request by:
+  // 1. Sending a request to the API to delete the user's volunteer status from the DB
+  // 2. Visually display change by changing component state of "acceptedBy" to null.
   deleteVolunteerRequest = async () => {
     try {
       const { isAuthenticated, _id: postId } = this.props;
@@ -127,8 +152,6 @@ export class CovidPost extends Component {
           token,
           username: loggedInUsername,
           userId: loggedInUserId,
-          owner: postOwnerName,
-          ownerId: postOwnerId,
         } = this.props;
 
         // Forming request data
@@ -161,6 +184,7 @@ export class CovidPost extends Component {
     }
   };
 
+  // Handles the logic of whether to display text of who accepted the post or not.
   acceptedRequestText = () => {
     if (!this.state.acceptedBy) {
       return null;
@@ -175,10 +199,9 @@ export class CovidPost extends Component {
     }
   };
 
+  // Handles logic for displaying accept button, rescind button or nothing at all
   acceptRequestButton = () => {
     if (this.state.acceptedBy) {
-      // const samePerson = this.state.acceptedBy._id === this.props.userId;
-      // console.log(samePerson)
       if (this.state.acceptedBy._id === this.props.userId) {
         return (
           <Fragment>
@@ -187,7 +210,6 @@ export class CovidPost extends Component {
               onClick={this.deleteVolunteerRequest}
             >
               Rescind Request
-              {/* inside if statement */}
             </button>
           </Fragment>
         );
@@ -209,7 +231,6 @@ export class CovidPost extends Component {
   };
 
   render() {
-    console.log("component rerenders");
     const {
       _id,
       owner,
@@ -218,12 +239,10 @@ export class CovidPost extends Component {
       content,
       comments,
       isAuthenticated,
-      username,
       userId,
       ownerId,
       isUserProfilePage
     } = this.props;
-    // console.log(this.props.likes)
 
     const userIsTheSame = userId === ownerId;
     const deleteBtn = (
@@ -231,7 +250,7 @@ export class CovidPost extends Component {
         <button
           type="submit"
           className="btn btn-danger float-right"
-          onClick={this.submitDeleteComment}
+          onClick={this.submitDeleteCovidPost}
         >
           Delete
         </button>
@@ -261,7 +280,6 @@ export class CovidPost extends Component {
                 <h4>{title}</h4>
                 <p>{content}</p>
                 {userIsTheSame && isUserProfilePage ? deleteBtn : null}
-                {/* {!userIsTheSame ? this.acceptRequestButton() : null} */}
                 {isAuthenticated ? this.acceptRequestButton() : null}
                 <LikeComment
                   id={_id}

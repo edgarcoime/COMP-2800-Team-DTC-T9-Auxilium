@@ -4,7 +4,7 @@ import Header from "./../components/Header/Header";
 import logo from "./../images/logo_transparent.png";
 import './pages.css'
 
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import { register } from "../actions/authActions";
 import { clearErrors } from "../actions/errorActions";
@@ -17,21 +17,24 @@ class Register extends Component {
       email: "",
       firstName: "",
       lastName: "",
-      username: "",
+      name: "",
       password: "",
       confirmPassword: "",
       msg: null,
     };
   }
 
+  // On change handler for input fields to change state.
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // Clears errors in props 
   componentWillUnmount() {
     this.props.clearErrors();
   }
 
+  // Sets error message if API sends an error code and displays message on screen
   componentDidUpdate(prevProps) {
     const { error } = this.props;
     if (error !== prevProps.error) {
@@ -49,6 +52,7 @@ class Register extends Component {
     }
   }
 
+  // Submit event handler to register a user based on Redux action type function
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -56,7 +60,7 @@ class Register extends Component {
       email,
       firstName,
       lastName,
-      username,
+      name,
       password,
       confirmPassword,
     } = this.state;
@@ -66,7 +70,7 @@ class Register extends Component {
       email,
       firstName,
       lastName,
-      username,
+      name,
       password,
       confirmPassword,
     };
@@ -86,6 +90,7 @@ class Register extends Component {
           <CardTitle className="text-center p-3">
             <img
               src={logo}
+              alt="Auxilium Logo"
               className="d-block mx-auto  "
               height="150"
               width="150"
@@ -119,8 +124,8 @@ class Register extends Component {
               />
               <input
                 type="text"
-                name="username"
-                id="username"
+                name="name"
+                id="name"
                 placeholder="Username"
                 className="form-control mt-4"
                 onChange={this.onChange}
@@ -152,6 +157,7 @@ class Register extends Component {
   }
 }
 
+// Sets the types of the Global Vars coming in as "props".
 Register.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
@@ -159,6 +165,7 @@ Register.propTypes = {
   clearErrors: PropTypes.func.isRequired,
 };
 
+// Maps Redux store to the props of the Register component.
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,

@@ -16,7 +16,7 @@ commentRouter.post("/getpostcomments", async (req, res) => {
   try {
     const { postId } = req.body;
     const foundPost = await Post.findById(postId);
-    console.log(foundPost.comments);
+    // console.log(foundPost.comments);
     res.json({ comments: foundPost.comments, likes: foundPost.likes });
     // console.log(req.body)
     // res.json("Hello comments")
@@ -33,7 +33,7 @@ commentRouter.post("/getcovidcomments", async (req, res) => {
   try {
     const { postId } = req.body;
     const foundPost = await CovidPost.findById(postId);
-    console.log(foundPost.comments);
+    // console.log(foundPost.comments);
     res.json({ comments: foundPost.comments, likes: foundPost.likes });
     // console.log(req.body)
     // res.json("Hello comments")

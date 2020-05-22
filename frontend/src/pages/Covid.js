@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import './pages.css'
 
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../actions/authActions"
@@ -76,11 +76,13 @@ class Covid extends Component {
   }
 }
 
+// Sets the types of the Global Vars coming in as "props".
 Covid.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
 };
 
+// Maps Redux store to the props of the Covid component.
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,

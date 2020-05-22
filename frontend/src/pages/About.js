@@ -1,4 +1,4 @@
-import { Row, Col, Card, CardBody, CardTitle } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import tommy from './../images/me.jpg'

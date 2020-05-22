@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "auxiliam-backend-api",
   "version": "1.0.0",
-  "description": "Shopping list built with the MERN stack",
+  "description": "Backend API for Auxiliam application",
   "main": "index.js",
   "module": "main.js",
   "scripts": {
@@ -18,7 +18,8 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.11"
+    "mongoose": "^5.9.11",
+    "nodemailer": "^6.4.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
