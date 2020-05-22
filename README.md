@@ -26,7 +26,7 @@ The application is created using the MERN Stack:
 
 
 ## Installation and Setup Process
-### Step 2. Setup Back-end:
+### Step 1. Setup Back-end:
 This environment should be executed using the latest version of npm or yarn:
 1. Install the latest version of Node or yarn.
 2. Navigate to the "./backend" directory/folder using the following commands:
@@ -37,7 +37,7 @@ This environment should be executed using the latest version of npm or yarn:
   - using npm : `npm run start`
   - using yarn: `yarn start`
 
-### Step 1. Setup Front-end:
+### Step 2. Setup Front-end:
 This project should be executed by create-react-app using yarn or npm:
 1. Install the latest version of Node or yarn
 2. Change from root directory to "./frontend" directory/folder using the example command:
