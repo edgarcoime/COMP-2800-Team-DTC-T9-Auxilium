@@ -69,7 +69,7 @@ class User extends Component {
     return (
       <div>
         <Header history={this.props.history}/>
-        <div className="container">?
+        <div className="container">
         <h1 className="text-center">Profile</h1>
           <Row>
             <Col className="col-12 col-sm-6">

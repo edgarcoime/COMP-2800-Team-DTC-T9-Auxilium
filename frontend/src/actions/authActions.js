@@ -30,7 +30,7 @@ export const register = ({
   email,
   firstName,
   lastName,
-  username,
+  name,
   password,
   confirmPassword,
 }) => async (dispatch) => {
@@ -44,13 +44,14 @@ export const register = ({
 
     // Request body
     const body = JSON.stringify({
-      name: username,
+      name,
       email,
       firstName,
       lastName,
       password,
       confirmPassword
     });
+    console.log(body)
     const response = await axios.post(
       "/api/users",
       body,

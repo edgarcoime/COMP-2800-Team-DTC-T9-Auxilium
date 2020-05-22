@@ -75,7 +75,7 @@ class PostTile extends Component {
     });
   };
 
-  // Function that loads 9 more posts from pool of posts. 
+  // Function that loads 9 more posts from pool of posts.
   // (Upon page load only loads 9 first)
   loadData = () => {
     const limitedPosts = this.state.limitedPosts;
@@ -108,10 +108,16 @@ class PostTile extends Component {
 
   render() {
     const { limitedPosts } = this.state;
-    if (this.props.isAuthenticated) {
-      var { user, token } = this.props;
-      var username = user.name;
-      var userId = user._id;
+    const { isAuthenticated } = this.props;
+    let user = "";
+    let username = "";
+    let userId = "";
+    let token = "";
+    if (isAuthenticated) {
+      user = this.props.user;
+      username = user.name;
+      userId = user._id;
+      token = this.props.token;
     }
     return (
       <div className="container">
@@ -140,7 +146,9 @@ class PostTile extends Component {
           }
           endMessage={
             <h5 className="text-center mt-3">
-              <strong>There's nothing left! You have reached the end of General Posts.</strong>
+              <strong>
+                There's nothing left! You have reached the end of General Posts.
+              </strong>
             </h5>
           }
         >

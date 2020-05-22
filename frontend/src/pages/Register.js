@@ -16,7 +16,7 @@ class Register extends Component {
       email: "",
       firstName: "",
       lastName: "",
-      username: "",
+      name: "",
       password: "",
       confirmPassword: "",
       msg: null,
@@ -59,7 +59,7 @@ class Register extends Component {
       email,
       firstName,
       lastName,
-      username,
+      name,
       password,
       confirmPassword,
     } = this.state;
@@ -69,7 +69,7 @@ class Register extends Component {
       email,
       firstName,
       lastName,
-      username,
+      name,
       password,
       confirmPassword,
     };
@@ -123,8 +123,8 @@ class Register extends Component {
               />
               <input
                 type="text"
-                name="username"
-                id="username"
+                name="name"
+                id="name"
                 placeholder="Username"
                 className="form-control mt-4"
                 onChange={this.onChange}
