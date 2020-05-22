@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "auxiliam-backend-api",
   "version": "1.0.0",
-  "description": "Shopping list built with the MERN stack",
+  "description": "Backend API for Auxiliam application",
   "main": "index.js",
   "module": "main.js",
   "scripts": {
