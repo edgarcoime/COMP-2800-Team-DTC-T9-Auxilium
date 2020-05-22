@@ -241,6 +241,7 @@ export class CovidPost extends Component {
       isAuthenticated,
       userId,
       ownerId,
+      isUserProfilePage
     } = this.props;
 
     const userIsTheSame = userId === ownerId;
@@ -278,7 +279,7 @@ export class CovidPost extends Component {
               <CardBody className="pt-0">
                 <h4>{title}</h4>
                 <p>{content}</p>
-                {userIsTheSame ? deleteBtn : null}
+                {userIsTheSame && isUserProfilePage ? deleteBtn : null}
                 {isAuthenticated ? this.acceptRequestButton() : null}
                 <LikeComment
                   id={_id}

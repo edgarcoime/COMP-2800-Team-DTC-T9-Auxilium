@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, CardBody, CardTitle, Alert } from "reactstrap";
 import Header from "./../components/Header/Header";
 import logo from "./../images/logo_transparent.png";
+import './pages.css'
 
 // Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
@@ -82,7 +83,7 @@ class Register extends Component {
     return (
       <div>
         <Header history={this.props.history}/>
-        <Card className="bg-dark shadow">
+        <Card className="card-background shadow  w-75 mx-auto mt-4">
           {this.state.msg ? (
             <Alert color="danger">{this.state.msg}</Alert>
           ) : null}

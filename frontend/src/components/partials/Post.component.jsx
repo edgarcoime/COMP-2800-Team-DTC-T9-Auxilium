@@ -2,6 +2,8 @@ import React, { Fragment, Component } from "react";
 import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import axios from "axios";
 import LikeComment from "../LikeComment";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 
@@ -76,7 +78,8 @@ export default class Post extends Component {
       comments,
       isAuthenticated,
       userId,
-      ownerId
+      ownerId,
+      isUserProfilePage
     } = this.props;
     // console.log(this.props.likes)
 
@@ -116,7 +119,7 @@ export default class Post extends Component {
                   <h4>{title}</h4>
                   <p>{content}</p>
                   {
-                    userIsTheSame ? deleteBtn : null
+                    userIsTheSame && isUserProfilePage ? deleteBtn : null
                   }
                   <LikeComment
                     id={_id}

@@ -1,5 +1,6 @@
 import { Row, Col } from 'reactstrap'
 import React, { Component } from 'react'
+import { Link } from "react-router-dom";
 import tommy from './../images/me.jpg'
 import alireza from './../images/alireza.jpg'
 import edgar from './../images/edgar.jpg'
@@ -90,7 +91,7 @@ class About extends Component {
                         </Col>
                     </Row>
                 </div>
-                </div>
+            </div>
         );
     }
 

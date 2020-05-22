@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { Row, Col } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export class Comment extends Component {
@@ -69,7 +72,7 @@ export class Comment extends Component {
 
   render() {
     // Destructuring props
-    const { commentId, commentOwner, text, ownerId:commentOwnerId } = this.props;
+    const { commentId, commentOwner, text, ownerId:commentOwnerId, createdAt } = this.props;
     let userIsTheSame = false;
 
     // Ensures that variables being passed to render method are not "null"
@@ -82,20 +85,25 @@ export class Comment extends Component {
       <Fragment>
         <button
           type="submit"
-          className="btn close position-relative"
+          className="btn close"
           onClick={this.submitDeleteComment}
         >
-          x
+          <FontAwesomeIcon icon={faTrashAlt} size="xs" />
         </button>
       </Fragment>
     );
     return (
-      <div class="comment-tile" id={"comment" + commentId}>
-        {
-          userIsTheSame ? deleteBtn : null
-        }
-        <p>{`${commentOwner}: ${text}`}</p>
+      <div className="container">
+        <div id={"comment" + commentId}>
+          {
+            userIsTheSame ? deleteBtn : null
+          }
+          <p><strong>{`${commentOwner}:`}</strong>{` ${text}`}</p>
+          <p className="text-right">{this.commentCreated(createdAt)}</p>
+        </div>
+        <hr className="bg-info"/>
       </div>
+      
     );
   }
 }

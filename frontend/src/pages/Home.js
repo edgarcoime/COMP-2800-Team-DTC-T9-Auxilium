@@ -3,7 +3,8 @@ import Header from "./../components/Header/Header";
 import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, fa } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import PostTile from "./../components/PostTile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -23,9 +24,7 @@ class Home extends Component {
     };
   }
 
-  handleSearchChange = (event) => {
-
-  }
+  
 
   render() {
     const { isAuthenticated } = this.props;
@@ -50,6 +49,13 @@ class Home extends Component {
       
       <div >
         <Header history={this.props.history}/>
+        <p className="text-right mr-2 mt-2"><strong>
+
+          <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class=" btn twitter-share-button twitter-btn" data-size="large" data-show-count="false">
+                <FontAwesomeIcon icon={faTwitter} size="lg" />
+                <span className="ml-2">Tweet Us</span>
+          </a>
+        </strong></p>
         <div className="container">
           
           <h1 className="text-center mt-3">General</h1>
@@ -72,6 +78,7 @@ class Home extends Component {
                 </button>
               </Link>
             </Col>
+            
             {isAuthenticated ? createPostLink : null}
           </Row>
           <PostTile isAuthenticated={isAuthenticated}/>

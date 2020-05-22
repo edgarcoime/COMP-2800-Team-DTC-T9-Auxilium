@@ -18,10 +18,15 @@
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
 
+
 .has-search .form-control {
     padding-left: 2.375rem;
     height: 70px;
     border-color: rgb(22, 168, 179);
+    
+}
+
+.aux-height-login {
     
 }
 
@@ -35,6 +40,15 @@
     text-align: center;
     pointer-events: none;
     color: #aaa;
+}
+
+.card-background {
+    background-color: #4492815e !important;
+}
+
+.twitter-btn {
+    background-color: #38A1F3 !important;
+    color: floralwhite;
 }
 
 #createpostbtn {
