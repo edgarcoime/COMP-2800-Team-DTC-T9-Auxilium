@@ -10,6 +10,18 @@ import auth from "../middleware/auth.middleware";
 
 const userRouter = express.Router();
 
+// <===================================================================================================================>
+// Creates a user and signs a token using JWT which initializes logging the user in
+// I found this code through a post in StackOverflow which led me to the GithubRepo of Brad's project
+
+// This has been vastly modified for our use case since we are using posts and mongoose population
+// of references
+
+// @author   Brad Traversy from https://traversymedia.com/
+// @see      https://github.com/bradtraversy/mern_shopping_list
+// <===================================================================================================================>
+
+
 // @route     POST api/auth
 // @desc      Authenticate the user by signing in to account
 // @access    Public (implement auth later)
@@ -25,8 +37,14 @@ userRouter.post("/", async (req, res) => {
     .populate("covidPostsCreated")
     .populate("covidPostsAccepted")
 
+    console.log(foundUser)
+
+    // Return error if user is not found
+    if (!foundUser) return res.status(400).json({ msg: "There is no user found with that email." })
+
     // Validate password
     const isMatch = await bcrypt.compare(password, foundUser.password);
+    // If passwords do not match send an error as a response
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
   
     // If passwords do match

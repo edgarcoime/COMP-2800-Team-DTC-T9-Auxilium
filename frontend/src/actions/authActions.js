@@ -49,6 +49,7 @@ export const register = ({
       firstName,
       lastName,
       password,
+      confirmPassword
     });
     const response = await axios.post(
       "/api/users",
