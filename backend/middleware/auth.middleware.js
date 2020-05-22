@@ -2,8 +2,17 @@
 // sent to that route in the headers of the request
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import { request } from "express";
 
 dotenv.config();
+
+// <===================================================================================================================>
+// Middleware that is passed through authorized routes which checks if there is an signed JWT
+// in the headers of the request
+
+// @author   Brad Traversy from https://traversymedia.com/
+// @see      https://github.com/bradtraversy/mern_shopping_list
+// <===================================================================================================================>
 
 const auth = (req, res, next) => {
   // Grab token from the req headers under "x-auth-token"
