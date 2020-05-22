@@ -221,6 +221,7 @@ export class CovidPost extends Component {
       username,
       userId,
       ownerId,
+      isUserProfilePage
     } = this.props;
     // console.log(this.props.likes)
 
@@ -259,7 +260,7 @@ export class CovidPost extends Component {
               <CardBody className="pt-0">
                 <h4>{title}</h4>
                 <p>{content}</p>
-                {userIsTheSame ? deleteBtn : null}
+                {userIsTheSame && isUserProfilePage ? deleteBtn : null}
                 {/* {!userIsTheSame ? this.acceptRequestButton() : null} */}
                 {isAuthenticated ? this.acceptRequestButton() : null}
                 <LikeComment

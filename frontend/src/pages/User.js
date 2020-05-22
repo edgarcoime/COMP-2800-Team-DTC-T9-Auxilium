@@ -107,12 +107,13 @@ class User extends Component {
               username = {username}
               userId = {userId}
               token = {token}
+              isUserProfilePage={true}
             />
           ))}
           <h2 className="mt-5"><strong>COVID Posts Created</strong></h2>
           <hr />
           {this.props.user.covidPostsCreated.map((post) => (
-            <CovidPost
+            <Post
               key={post._id}
               _id={post._id}
               owner={post.owner}
@@ -127,6 +128,7 @@ class User extends Component {
               username = {username}
               userId = {userId}
               token = {token}
+              isUserProfilePage={true}
             />
           ))}
           <h2 className="mt-5"><strong>COVID Posts Accepted</strong></h2>
