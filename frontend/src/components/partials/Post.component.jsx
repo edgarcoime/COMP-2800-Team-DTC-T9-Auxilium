@@ -14,6 +14,8 @@ export default class Post extends Component {
     };
   }
 
+  // Function to convert createdAt timestamp from server
+  // into how long ago it was created from current tim
   postCreated = (createdAt) => {
     let createdWhen = "";
     const created = Date.parse(createdAt);
@@ -31,7 +33,10 @@ export default class Post extends Component {
     return `${createdWhen}`;
   };
 
-  submitDeleteComment = (e) => {
+  // Deletes a regular Post by:
+  // 1. Sending request to API to delete regular post from Database
+  // 2. Visually deletes the Regular Post from the virtual dom
+  submitDeleteGeneralPost = (e) => {
     const { isAuthenticated, _id } = this.props;
     if (!isAuthenticated) {
       alert("Only the post owenr has the right to delete");
@@ -81,7 +86,7 @@ export default class Post extends Component {
         <button
           type="submit"
           className="btn btn-danger float-right"
-          onClick={this.submitDeleteComment}
+          onClick={this.submitDeleteGeneralPost}
         >
           Delete
         </button>

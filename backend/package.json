@@ -1,5 +1,5 @@
 {
-  "name": "Auxiliam backend API",
+  "name": "auxiliam-backend-api",
   "version": "1.0.0",
   "description": "Backend API for Auxiliam application",
   "main": "index.js",

@@ -13,6 +13,7 @@ import "./component.css";
 // Components
 import Post from "./partials/Post.component";
 
+// Initiates redux connection to the Global store to access Global state
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -28,6 +29,8 @@ class PostTile extends Component {
     };
   }
 
+  // Function to convert createdAt timestamp from server
+  // into how long ago it was created from current time
   postCreated = (createdAt) => {
     let createdWhen = "";
     const created = Date.parse(createdAt);
@@ -45,6 +48,9 @@ class PostTile extends Component {
     return `Created: ${createdWhen}`;
   };
 
+  // Gets all the regular posts from the DB:
+  // 1. Sends a request to the API to grab all regular posts.
+  // 2. Filters post to show a limited amount to display first.
   componentDidMount() {
     axios.get("/api/posts/getall").then((res) => {
       const posts = res.data;
@@ -55,6 +61,7 @@ class PostTile extends Component {
     });
   }
 
+  // Parses through posts to find post that matches user's search field query.
   handleSearchChange = (event) => {
     const { value } = event.target;
     const lowerCaseValue = value.toLowerCase();
@@ -68,6 +75,8 @@ class PostTile extends Component {
     });
   };
 
+  // Function that loads 9 more posts from pool of posts. 
+  // (Upon page load only loads 9 first)
   loadData = () => {
     const limitedPosts = this.state.limitedPosts;
     const filteredPosts = this.state.filteredPosts;
@@ -83,6 +92,7 @@ class PostTile extends Component {
     this.setState({ limitedPosts: limitedPosts });
   };
 
+  // Function that loads more posts
   loadMoreData = () => {
     const limitedPosts = this.state.limitedPosts;
     const filteredPosts = this.state.filteredPosts;
@@ -130,7 +140,7 @@ class PostTile extends Component {
           }
           endMessage={
             <h5 className="text-center mt-3">
-              <strong>This is it. You have seen all of them</strong>
+              <strong>There's nothing left! You have reached the end of General Posts.</strong>
             </h5>
           }
         >
@@ -160,6 +170,8 @@ class PostTile extends Component {
     );
   }
 }
+
+// Sets the types of the Global Vars coming in as "props".
 PostTile.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
@@ -168,6 +180,7 @@ PostTile.propTypes = {
   token: PropTypes.string,
 };
 
+// Maps Redux store to the props of the PostTile component.
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps;
   return {

@@ -10,6 +10,9 @@ export class Comment extends Component {
       commentOwner: props.ownerId,
     };
   }
+
+  // Function to convert createdAt timestamp from server
+  // into how long ago it was created from current time
   commentCreated = (createdAt) => {
     let createdWhen = "";
     const created = Date.parse(createdAt);
@@ -26,6 +29,10 @@ export class Comment extends Component {
 
     return `${createdWhen}`;
   };
+
+  // Delete comment functionality by
+  // 1. Sends request to API to delete comment from server
+  // 2. Visually deletes comment from the virtual dom
   submitDeleteComment = (e) => {
     const { isAuthenticated, commentId, isCovid } = this.props;
     console.log(commentId);
@@ -55,17 +62,22 @@ export class Comment extends Component {
       }).then((response) => console.log(response));
       this.forceUpdate();
       e.target.value = "";
+      const removeButton = document.getElementById("comment" + commentId);
+      removeButton.parentNode.removeChild(removeButton);
     }
-    const removeButton = document.getElementById("comment" + commentId);
-    removeButton.parentNode.removeChild(removeButton);
   };
+
   render() {
+    // Destructuring props
     const { commentId, commentOwner, text, ownerId:commentOwnerId } = this.props;
     let userIsTheSame = false;
+
+    // Ensures that variables being passed to render method are not "null"
     if (this.props.isAuthenticated) {
       var { userId } = this.props;
       userIsTheSame = commentOwnerId === userId;
     }
+
     const deleteBtn = (
       <Fragment>
         <button

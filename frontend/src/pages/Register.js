@@ -3,7 +3,7 @@ import { Card, CardBody, CardTitle, Alert } from "reactstrap";
 import Header from "./../components/Header/Header";
 import logo from "./../images/logo_transparent.png";
 
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import { register } from "../actions/authActions";
 import { clearErrors } from "../actions/errorActions";
@@ -23,10 +23,12 @@ class Register extends Component {
     };
   }
 
+  // On change handler for input fields to change state.
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // Clears errors in props 
   componentWillUnmount() {
     this.props.clearErrors();
   }
@@ -49,6 +51,7 @@ class Register extends Component {
     }
   }
 
+  // Submit event handler to register a user based on Redux action type function
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -153,6 +156,7 @@ class Register extends Component {
   }
 }
 
+// Sets the types of the Global Vars coming in as "props".
 Register.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
@@ -160,6 +164,7 @@ Register.propTypes = {
   clearErrors: PropTypes.func.isRequired,
 };
 
+// Maps Redux store to the props of the Register component.
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,

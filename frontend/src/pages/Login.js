@@ -6,7 +6,7 @@ import logo from "./../images/logo_transparent.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './pages.css'
 
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../actions/authActions";
@@ -22,10 +22,13 @@ class Login extends Component {
     };
   }
 
+  // On change handler for input fields to change state.
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // Upon sending request to login checks to see if error was found
+  // If error was found sets an error message in component state to display later.
   componentDidUpdate(prevProps) {
     const { error, isAuthenticated } = this.props;
     if (error !== prevProps.error) {
@@ -43,6 +46,7 @@ class Login extends Component {
     }
   }
 
+  // Submit event handler to log user in based on Redux action type function.
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -105,6 +109,7 @@ class Login extends Component {
   }
 }
 
+// Sets the types of the Global Vars coming in as "props".
 Login.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
@@ -112,6 +117,7 @@ Login.propTypes = {
   clearErrors: PropTypes.func.isRequired
 }
 
+// Maps Redux store to the props of the Login component.
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error

@@ -8,7 +8,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./header.css";
 
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import LoginRegisterBtn from "./LoginRegisterBtn";
@@ -88,11 +88,13 @@ class Header extends Component {
   }
 }
 
+// Sets the types of the global vars coming in as "props"
 Header.propTypes = {
   auth: PropTypes.object.isRequired,
   history: PropTypes.object
 };
 
+// Maps Redux store to the props of Header component
 const mapStateToProps = (state, ownProps) => {
   const { history } = ownProps
   return {

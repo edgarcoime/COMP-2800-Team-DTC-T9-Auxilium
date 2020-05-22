@@ -4,7 +4,7 @@ import Header from "./../components/Header/Header";
 import { Row, Col } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -21,7 +21,9 @@ class User extends Component {
     };
   }
 
+  // Loads user Data upon clicking on register page and queries for covidPostsAccepted
   componentDidMount = async () => {
+    // Redirects user if they are not authenticated (not logged in)
     const { isAuthenticated, user: { covidPostsAccepted }} = this.props;
     console.log(this.props.user)
     if (!isAuthenticated) {
@@ -49,6 +51,8 @@ class User extends Component {
     }
   }
 
+  // Prevents crashing if logging out on user page
+  // Redirects user to home route if they are unauthorized
   componentDidUpdate = () => {
     const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
@@ -155,12 +159,14 @@ class User extends Component {
   }
 }
 
+// Sets the types of the Global Vars coming in as "props".
 User.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
   user: PropTypes.object,
 };
 
+// Maps Redux store to the props of the User component.
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,

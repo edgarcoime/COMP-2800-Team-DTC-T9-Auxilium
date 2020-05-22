@@ -10,7 +10,7 @@ const emailRouter = express.Router();
 emailRouter.post("/",auth, async (req, res, next) => {
     try {
         const {userEmail, username, ownerEmail} = req.body;
-        console.log(userEmail, username, ownerEmail)
+        // console.log(userEmail, username, ownerEmail)
         const transporter = nodemailer.createTransport({
             service:"gmail",
             auth: {
