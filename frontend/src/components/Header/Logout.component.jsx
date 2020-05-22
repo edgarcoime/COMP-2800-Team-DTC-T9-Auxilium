@@ -5,7 +5,7 @@ import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./header.css";
 
-// Redux
+// Initiates redux connection to global store to access Global state
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/authActions";
@@ -17,6 +17,7 @@ export class Logout extends Component {
     this.state = {};
   }
 
+  // Logouts user by using the logout action type via Redux
   logOutClickHandler = () => {
     const { logout, history } = this.props;
     logout();

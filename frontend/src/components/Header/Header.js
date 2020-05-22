@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { Row, Col, Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem } from "reactstrap";
+import React, { Component } from "react";
+import { Row, Col, Navbar, NavbarToggler, Collapse, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faViruses } from '@fortawesome/free-solid-svg-icons'
@@ -8,7 +8,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./header.css";
 
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import LoginRegisterBtn from "./LoginRegisterBtn";
@@ -38,20 +38,8 @@ class Header extends Component {
           <Row>
             <Col className="col-4 col-sm-2 col-md-2 order-2 order-sm-2 order-md-1 ">
               <NavLink to="/" className="justify-content-end">
-                <img src={logo} alt="an image" width="80"/>
+                <img src={logo} alt="Auxilium logo" width="80"/>
               </NavLink>
-            </Col>
-            <Col className="col-5 col-sm-3 d-none d-md-inline order-md-2">
-              <form class='navbar-form rounded'>
-                <div class='input-group mt-3 rounded'>
-                  <input class='form-control' type='text' name='search' placeholder='Location' />
-                  <span class="input-group-btn">
-                    <button type='submit' class='btn text-link'>
-                      <span class='fa fa-search fa-lg'></span>
-                    </button>
-                  </span>
-                </div>
-              </form>
             </Col>
             <Col className="col col-sm col-md order-1 order-sm-1 order-md-3">
               <Navbar dark expand="md" className="mt-2 float-md-right">
@@ -100,11 +88,13 @@ class Header extends Component {
   }
 }
 
+// Sets the types of the global vars coming in as "props"
 Header.propTypes = {
   auth: PropTypes.object.isRequired,
   history: PropTypes.object
 };
 
+// Maps Redux store to the props of Header component
 const mapStateToProps = (state, ownProps) => {
   const { history } = ownProps
   return {

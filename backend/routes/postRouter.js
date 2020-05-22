@@ -61,11 +61,11 @@ postRouter.post("/", auth, async (req, res) => {
       ownerId
     });
     const registeredPost = await newPost.save();
-    console.log(registeredPost)
+    // console.log(registeredPost)
 
     User.updateOne({ _id: ownerId }, { $push: { postsCreated: registeredPost._id } }).then(
       (data) => {
-        console.log(data);
+        // console.log(data);
       }
     );
 
@@ -81,7 +81,7 @@ postRouter.post("/", auth, async (req, res) => {
 // @route     delete api/posts/:id
 // @desc      Delete a post
 // @access    Private (implement auth later)
-postRouter.delete("/:id", auth, async (req, res) => {
+postRouter.delete("/", auth, async (req, res) => {
   try {
     const { reqOwner, reqOwnerId, postId } = req.body;
 
@@ -93,10 +93,10 @@ postRouter.delete("/:id", auth, async (req, res) => {
     } else {
       
       // Delete made post in user profile
-      console.log(foundPost, reqOwnerId)
+      // console.log(foundPost, reqOwnerId)
       User.updateOne({ _id: reqOwnerId }, { $pull: { postsCreated: foundPost._id } }).then(
         (data) => {
-          console.log(data);
+          // console.log(data);
           const response = foundPost.remove();
           res.json({ success: true, msg: "Succesfully deleted post" })
         }

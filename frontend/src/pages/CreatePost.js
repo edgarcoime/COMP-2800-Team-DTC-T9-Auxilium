@@ -11,7 +11,7 @@ import "./pages.css"
 // Components
 import Header from "./../components/Header/Header";
 
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { createPost } from "../actions/postActions";
@@ -31,17 +31,22 @@ class CreatePost extends Component {
     };
   }
 
+  // On change handler for input fields to change state.
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // On change handler for checkbox input fields to change state.
   onChangeCheckBox = (e) => {
     this.setState({ [e.target.name]: e.target.checked})
   }
 
+  // Creates a new post depending on checkbox 
+  // 1. Checks to see if checkbox was checked
+  // 2. Depending on step one either creates a general post or a covid post
   handleSubmit = (e) => {
     e.preventDefault();
-    const { title, content, relatedToCovid, askForHelp } = this.state;
+    const { title, content, relatedToCovid } = this.state;
 
     if (relatedToCovid) {
       const newCovidPost = {
@@ -49,25 +54,26 @@ class CreatePost extends Component {
         content,
         owner: this.props.user.name,
         ownerId: this.props.user._id,
+        ownerEmail: this.props.user.email
       };
-      console.log(newCovidPost);
+      console.log(newCovidPost)
       this.props.createCovidPost(newCovidPost);
       this.setState({ redirectToCovid: true })
     } else {
-      
       const newPost = {
         title,
         content,
         owner: this.props.user.name,
         ownerId: this.props.user._id,
       };
-      console.log(newPost);
+      console.log(newPost)
       this.props.createPost(newPost);
-      // this.props.history.push("/");
       this.setState({ redirectToHome: true });
     }
   };
 
+  // Redirects user back to the landing page(General page) if the user is not authorized.
+  // Unauthorized users cannot create posts
   componentDidMount = () => {
     if (!this.props.isAuthenticated) this.props.history.push("/");
   };
@@ -94,7 +100,7 @@ class CreatePost extends Component {
         <div className="container mt-3">
             <Card className="bg-light shadow-sm mx-auto">
               <CardHeader>
-                <p><strong>Creat a Post</strong></p>
+                <p><strong>Create a Post</strong></p>
               </CardHeader>
               <CardBody className=" w-75 mx-auto">
                 <form onSubmit={this.handleSubmit}>
@@ -170,12 +176,14 @@ class CreatePost extends Component {
   }
 }
 
+// Sets the types of the Global Vars coming in as "props".
 CreatePost.propTypes = {
   createPost: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
+// Maps Redux store to the props of the LikeComment component.
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,

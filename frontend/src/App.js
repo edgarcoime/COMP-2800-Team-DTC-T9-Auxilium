@@ -9,7 +9,7 @@ import Register from "./pages/Register";
 import EasterEgg from 'react-easter'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 
-import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import easter from './images/happy-easter-wishies-color-eggs-gif.gif'
 import './pages/pages.css'
 

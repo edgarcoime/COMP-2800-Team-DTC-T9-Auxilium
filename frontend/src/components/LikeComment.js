@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,14 +6,14 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons";
-import { Collapse, Button, CardBody, Card } from "reactstrap";
+import { Collapse } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 
 // Components
 import CommentTile from "./partials/Comment.component";
 
-// Redux
+// Initiates redux connection to the Global store to access Global state
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -25,12 +25,13 @@ class LikeComment extends Component {
       isClicked: 0,
       isCommentClicked: 0,
       postComments: [],
-      postLikes: [],
+      postLikes: this.props.likes,
       comment: "",
       refreshComponent: true,
     };
   }
 
+  // Resets component to collapse comment windows and reset like button
   componentWillUnmount = () => {
     const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
@@ -41,6 +42,8 @@ class LikeComment extends Component {
     }
   };
 
+  // Calls "userAlreadyLiked" and depending on return will display button as clicked
+  // or not clicked if the user has liked the post or not.
   componentDidUpdate = () => {
     const { isClicked } = this.state;
     const { isAuthenticated } = this.props;
@@ -49,9 +52,10 @@ class LikeComment extends Component {
       if (userLiked) {
         this.setState({ isClicked: 1 });
       }
-    };
+    }
   };
 
+  // Fetches comment data from the server when component mounts to display comments
   componentDidMount = async () => {
     try {
       const { id, isCovid } = this.props;
@@ -72,6 +76,7 @@ class LikeComment extends Component {
     }
   };
 
+  // Function to check if currently logged in user has liked this post already.
   userAlreadyLiked = () => {
     const {
       user: { name: username, _id: userId },
@@ -87,12 +92,13 @@ class LikeComment extends Component {
     return alreadyLiked;
   };
 
+  // Handles like post click handler and which like function to call. 
   handleLikeClick = () => {
     const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
       alert("You must be signed in to like a post!");
     } else {
-      if (this.state.isClicked == 0) {
+      if (this.state.isClicked === 0) {
         this.likePost();
       } else {
         this.unLikePost();
@@ -100,6 +106,10 @@ class LikeComment extends Component {
     }
   };
 
+  // Function that likes the post depending on user information
+  // 1. Sends a request to the API to register user info in DB array of users who
+  //    have liked the post.
+  // 2. Visually displays that the user has liked comment by changing state of post.
   likePost = async () => {
     try {
       // Destructuring objects
@@ -155,6 +165,10 @@ class LikeComment extends Component {
     }
   };
 
+  // Function that unlikes the post based on user information
+  // 1. Sends a request to the API to delete logged in user's comment information
+  //    from the post's array of users who liked post.
+  // 2. Visually displays that the user has unliked comment by updating component state.
   unLikePost = async () => {
     try {
       // Destructuring objects
@@ -191,10 +205,6 @@ class LikeComment extends Component {
       // parsing through resopnse data and setting Component state to display comment
       const updatedPost = response.data;
       console.log(updatedPost);
-      const newLike = {
-        ownerId: userId,
-        owner: name,
-      };
       let originalStateLikes = [...this.state.postLikes];
       const newStateLikes = originalStateLikes.filter(
         (like) => like.ownerId !== userId
@@ -213,18 +223,25 @@ class LikeComment extends Component {
     }
   };
 
+  // Handles the comment click handler and changes state to collapse or uncollapse comment
+  // section.
   handleCommentClick = (e) => {
-    if (this.state.isCommentClicked == 0) {
+    if (this.state.isCommentClicked === 0) {
       this.setState({ isCommentClicked: 1 });
     } else {
       this.setState({ isCommentClicked: 0 });
     }
   };
 
+  // On change handler for input fields to change state.
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // Function that handles submitting the comments the server.
+  // 1. Sends a request to the API to create a comment based on user's input field
+  //    to write to the DB.
+  // 2. Visually displays the user's new comment by updating the component state.
   submitComment = async (e) => {
     const { isAuthenticated, isCovid } = this.props;
     if (!isAuthenticated) {
@@ -261,6 +278,7 @@ class LikeComment extends Component {
         },
         data: commentData,
       });
+      console.log(response.data);
 
       // parsing through resopnse data and setting Component state to display comment
       const newComment = response.data;
@@ -276,7 +294,21 @@ class LikeComment extends Component {
   };
 
   render() {
-    // const comments = this.state.postComments;
+    // Setting initial state to prevent REACT crashing due to null
+    const { isAuthenticated } = this.props;
+    let token = "";
+    let user = "";
+    let id = "";
+    let username = "";
+    let userId = "";
+    if (isAuthenticated) {
+      token = this.props.token;
+      user = this.props.user;
+      id = this.props.id;
+      username = user.name;
+      userId = user._id;
+    } 
+
     const { postLikes, postComments: comments } = this.state;
     return (
       <div>
@@ -285,7 +317,7 @@ class LikeComment extends Component {
           <button className="btn" onClick={this.handleLikeClick}>
             <span>
               <FontAwesomeIcon
-                icon={this.state.isClicked == 1 ? faHeart1 : faHeart}
+                icon={this.state.isClicked === 1 ? faHeart1 : faHeart}
                 size="2x"
               />
             </span>
@@ -317,6 +349,12 @@ class LikeComment extends Component {
               text={comment.text}
               ownerId={comment.ownerId}
               createdAt={comment.createdAt}
+              user={username}
+              userId={userId}
+              isAuthenticated={isAuthenticated}
+              postId={id}
+              token={token}
+              isCovid={this.props.isCovid}
             />
           ))}
         </Collapse>
@@ -325,6 +363,7 @@ class LikeComment extends Component {
   }
 }
 
+// Sets the types of the Global Vars coming in as "props".
 LikeComment.propTypes = {
   isAuthenticated: PropTypes.bool,
   error: PropTypes.object.isRequired,
@@ -334,6 +373,7 @@ LikeComment.propTypes = {
   token: PropTypes.string,
 };
 
+// Maps Redux store to the props of the LikeComment component.
 const mapStateToProps = (state, ownProps) => {
   const { id, comments } = ownProps;
   return {

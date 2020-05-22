@@ -1,15 +1,20 @@
-import React, { Component } from 'react'
-import { Row, Col } from 'reactstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React, { Component, Fragment } from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export class Comment extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      commentOwner: props.ownerId
-    }
+      commentOwner: props.ownerId,
+    };
   }
+
+  // Function to convert createdAt timestamp from server
+  // into how long ago it was created from current time
   commentCreated = (createdAt) => {
     let createdWhen = "";
     const created = Date.parse(createdAt);
@@ -26,22 +31,80 @@ export class Comment extends Component {
 
     return `${createdWhen}`;
   };
+
+  // Delete comment functionality by
+  // 1. Sends request to API to delete comment from server
+  // 2. Visually deletes comment from the virtual dom
+  submitDeleteComment = (e) => {
+    const { isAuthenticated, commentId, isCovid } = this.props;
+    console.log(commentId);
+    if (!isAuthenticated) {
+      alert("Only the comment owenr has the right to delete");
+    } else {
+      const { text, user, userId, token, postId } = this.props;
+      const commentData = {
+        text: text,
+        owner: user,
+        ownerId: userId,
+        postId: postId,
+      };
+      console.log(commentData);
+
+      axios({
+        method: "post",
+        url: isCovid
+          ? `http://localhost:5000/api/comment/covid/delete/${commentId}`
+          : `http://localhost:5000/api/comment/delete/${commentId}`,
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "x-auth-token": token,
+        },
+        data: commentData,
+      }).then((response) => console.log(response));
+      this.forceUpdate();
+      e.target.value = "";
+      const removeButton = document.getElementById("comment" + commentId);
+      removeButton.parentNode.removeChild(removeButton);
+    }
+  };
+
   render() {
-    const { commentId, commentOwner, text, ownerId, createdAt } = this.props;
+    // Destructuring props
+    const { commentId, commentOwner, text, ownerId:commentOwnerId, createdAt } = this.props;
+    let userIsTheSame = false;
+
+    // Ensures that variables being passed to render method are not "null"
+    if (this.props.isAuthenticated) {
+      var { userId } = this.props;
+      userIsTheSame = commentOwnerId === userId;
+    }
+
+    const deleteBtn = (
+      <Fragment>
+        <button
+          type="submit"
+          className="btn close"
+          onClick={this.submitDeleteComment}
+        >
+          <FontAwesomeIcon icon={faTrashAlt} size="xs" />
+        </button>
+      </Fragment>
+    );
     return (
-      <div className="mt-4">
-        <Row>
-          <Col className="col-12">
-            <b className="d-inline"><i>{`${commentOwner} : `}</i></b>
-            <span>{`${text}`}</span><br />
-            <span className="float-right">{this.commentCreated(createdAt)}</span>
-          </Col>
-          
-        </Row>
-        <hr className="bg-info"/> 
+      <div className="container">
+        <div id={"comment" + commentId}>
+          {
+            userIsTheSame ? deleteBtn : null
+          }
+          <p><strong>{`${commentOwner}:`}</strong>{` ${text}`}</p>
+          <p className="text-right">{this.commentCreated(createdAt)}</p>
+        </div>
+        <hr className="bg-info"/>
       </div>
-    )
+      
+    );
   }
 }
 
-export default Comment
+export default Comment;
