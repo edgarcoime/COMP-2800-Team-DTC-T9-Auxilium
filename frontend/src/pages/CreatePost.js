@@ -56,6 +56,7 @@ class CreatePost extends Component {
         ownerId: this.props.user._id,
         ownerEmail: this.props.user.email
       };
+      console.log(newCovidPost)
       this.props.createCovidPost(newCovidPost);
       this.setState({ redirectToCovid: true })
     } else {
@@ -65,6 +66,7 @@ class CreatePost extends Component {
         owner: this.props.user.name,
         ownerId: this.props.user._id,
       };
+      console.log(newPost)
       this.props.createPost(newPost);
       this.setState({ redirectToHome: true });
     }
@@ -98,7 +100,7 @@ class CreatePost extends Component {
         <div className="container mt-3">
             <Card className="bg-light shadow-sm mx-auto">
               <CardHeader>
-                <p><strong>Creat a Post</strong></p>
+                <p><strong>Create a Post</strong></p>
               </CardHeader>
               <CardBody className=" w-75 mx-auto">
                 <form onSubmit={this.handleSubmit}>
